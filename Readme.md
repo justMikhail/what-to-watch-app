@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Mikhail Sitnikov](https://up.htmlacademy.ru/react/8/user/1537799).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Баумгертнер](https://htmlacademy.ru/profile/alexbaumgertner).
 
 ---
 
