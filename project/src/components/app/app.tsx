@@ -8,11 +8,11 @@ type PromoFilmProps  = {
 
 function App({title, genre, year}: PromoFilmProps): JSX.Element {
   return (
-    <MainPage
-      title={title}
-      genre={genre}
-      year={year}
-    />
+     <MainPage
+       title={title}
+       genre={genre}
+       year={year}
+     />
   )
 }
 
