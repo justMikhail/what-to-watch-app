@@ -1,6 +1,12 @@
 import FilmCard from '../film-card';
 
-function MainPage(): JSX.Element {
+type FilmProps = {
+  title: string;
+  genre: string;
+  year: number;
+}
+
+function MainPage({title, genre, year}: FilmProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -46,10 +52,16 @@ function MainPage(): JSX.Element {
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">
+                {title}
+              </h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">
+                  {genre}
+                </span>
+                <span className="film-card__year">
+                  {year}
+                </span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
