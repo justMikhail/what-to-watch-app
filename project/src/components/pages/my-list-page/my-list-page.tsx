@@ -159,7 +159,7 @@ function MyListPage(): JSX.Element {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
 export default MyListPage;

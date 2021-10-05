@@ -6,7 +6,7 @@ const PromoFilmData = {
   TITLE: 'The Grand Budapest Hotel',
   GENRE: 'Drama',
   YEAR: 2014,
-}
+};
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,5 +16,5 @@ ReactDOM.render(
       year={PromoFilmData.YEAR}
     />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

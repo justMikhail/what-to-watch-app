@@ -15,7 +15,7 @@ function MovieCard(): JSX.Element {
         </a>
       </h3>
     </article>
-  )
+  );
 }
 
 export default MovieCard;

@@ -65,7 +65,7 @@ function SignInPage(): JSX.Element {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
 export default SignInPage;

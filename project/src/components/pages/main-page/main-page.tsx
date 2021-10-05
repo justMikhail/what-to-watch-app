@@ -162,7 +162,7 @@ function MainPage({title, genre, year}: FilmProps): JSX.Element {
         </footer>
       </div>
     </>
-);
+  );
 }
 
 export default MainPage;

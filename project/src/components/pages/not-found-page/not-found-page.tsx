@@ -3,7 +3,7 @@ function NotFoundPage(): JSX.Element {
     <div>
       <p>404 Not Found Page</p>
     </div>
-  )
+  );
 }
 
 export default NotFoundPage;
