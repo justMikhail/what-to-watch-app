@@ -1,4 +1,4 @@
-import FilmCard from '../film-card';
+import MovieCard from '../../movie-card/movie-card';
 
 type FilmProps = {
   title: string;
@@ -137,7 +137,10 @@ function MainPage({title, genre, year}: FilmProps): JSX.Element {
             </li>
           </ul>
           <div className="catalog__films-list">
-            {<FilmCard />}
+            {<MovieCard />}
+            {<MovieCard />}
+            {<MovieCard />}
+            {<MovieCard />}
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
