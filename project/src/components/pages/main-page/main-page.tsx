@@ -137,10 +137,10 @@ function MainPage({title, genre, year}: FilmProps): JSX.Element {
             </li>
           </ul>
           <div className="catalog__films-list">
-            {<MovieCard />}
-            {<MovieCard />}
-            {<MovieCard />}
-            {<MovieCard />}
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
