@@ -19,29 +19,29 @@ function App({title, genre, year}: PromoFilmProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={AppRoute.Main}>
+        <Route exact path={AppRoute.MAIN}>
           <MainPage
             title={title}
             genre={genre}
             year={year}
           />
         </Route>
-        <Route exact path={AppRoute.SignIn}>
+        <Route exact path={AppRoute.SIGN_IN}>
           <SignInPage />
         </Route>
-        <Route exact path={AppRoute.MyList}>
+        <Route exact path={AppRoute.MY_LIST}>
           <MyListPage />
         </Route>
-        <Route exact path={AppRoute.SignIn}>
+        <Route exact path={AppRoute.SIGN_IN}>
           <SignInPage />
         </Route>
-        <Route exact path={AppRoute.Film}>
+        <Route exact path={AppRoute.FILM}>
           <MoviePage />
         </Route>
-        <Route exact path={AppRoute.AddReview}>
+        <Route exact path={AppRoute.ADD_REVIEW}>
           <AddReviewPage />
         </Route>
-        <Route exact path={AppRoute.Player}>
+        <Route exact path={AppRoute.PLAYER}>
           <PlayerPage />
         </Route>
       </Switch>
