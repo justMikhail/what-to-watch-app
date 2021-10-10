@@ -1,6 +1,7 @@
-import {AppRoute} from '../../../const/app-route';
 import {useLocation} from 'react-router-dom';
 import {Link} from 'react-router-dom';
+
+import {AppRoute} from '../../../const/app-route';
 import styles from './not-found-page.module.css';
 import img from'./img/not-found-page-img.jpg';
 

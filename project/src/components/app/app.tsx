@@ -1,6 +1,6 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {AppRoute} from '../../const/app-route';
-import {AuthorizationStatus} from '../../const/const';
+import {AuthorizationStatus} from '../../const/authorization-status';
 import PrivateRoute from '../private-route/private-route';
 
 import MainPage from '../pages/main-page/main-page';
