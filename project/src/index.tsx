@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
-//Mock Data
+// Mock Data
 import {MOCK_FILMS} from './mocks/mock-films';
 
 const PromoFilmData = {

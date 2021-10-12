@@ -13,13 +13,14 @@ import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 import {FilmType} from '../../types/film-type';
 
-type PromoFilmProps  = {
+type AppProps  = {
   title: string;
   genre: string;
   year: number;
+  films: FilmType[];
 }
 
-function App({title, genre, year}: PromoFilmProps, {films}: FilmType): JSX.Element {
+function App({title, genre, year, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -28,6 +29,7 @@ function App({title, genre, year}: PromoFilmProps, {films}: FilmType): JSX.Eleme
             title={title}
             genre={genre}
             year={year}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
