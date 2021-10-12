@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
+//Mock Data
+import {MOCK_FILMS} from './mocks/mock-films';
+
 const PromoFilmData = {
   TITLE: 'The Grand Budapest Hotel',
   GENRE: 'Drama',
@@ -14,7 +17,9 @@ ReactDOM.render(
       title={PromoFilmData.TITLE}
       genre={PromoFilmData.GENRE}
       year={PromoFilmData.YEAR}
+      films = {MOCK_FILMS}
     />
   </React.StrictMode>,
   document.getElementById('root'),
 );
+

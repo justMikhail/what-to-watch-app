@@ -11,6 +11,7 @@ import AddReviewPage from '../pages/add-review-page/add-review-page';
 import PlayerPage from '../pages/player-page/player-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
+import {FilmType} from '../../types/film-type';
 
 type PromoFilmProps  = {
   title: string;
@@ -18,7 +19,7 @@ type PromoFilmProps  = {
   year: number;
 }
 
-function App({title, genre, year}: PromoFilmProps): JSX.Element {
+function App({title, genre, year}: PromoFilmProps, {films}: FilmType): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
