@@ -13,9 +13,14 @@ function FilmsList(props: FilmListProps): JSX.Element {
 
   return (
     <div className="catalog__films-list">
-      <FilmCard film={films[0]}/>
-      <FilmCard film={films[1]}/>
-      <FilmCard film={films[2]}/>
+      {films.map((film) =>
+        (
+          <FilmCard
+            key={film.id}
+            film={film}
+          />
+        ),
+      )}
     </div>
   );
 }
