@@ -1,7 +1,7 @@
-import MovieCard from '../../movie-card/movie-card';
-import Logo from '../../logo/Logo';
-
 import {FilmType} from '../../../types/film-type';
+
+import Logo from '../../logo/Logo';
+import FilmsList from '../../films-list/films-list';
 
 type MainPageProps = {
   title: string;
@@ -80,9 +80,12 @@ function MainPage({title, genre, year, films}: MainPageProps): JSX.Element {
           </div>
         </div>
       </section>
+
       <div className="page-content">
+
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
+
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
               <a href="#" className="catalog__genres-link">
@@ -135,21 +138,23 @@ function MainPage({title, genre, year, films}: MainPageProps): JSX.Element {
               </a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            <MovieCard />
-          </div>
+
+          <FilmsList films={films} />
+
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
             </button>
           </div>
         </section>
+
         <footer className="page-footer">
           <Logo isLight/>
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
           </div>
         </footer>
+
       </div>
     </>
   );

@@ -1,4 +1,14 @@
-function MovieCard(): JSX.Element {
+import {FilmType} from '../../types/film-type';
+
+
+type FilmCardProps = {
+  film: FilmType,
+}
+
+function FilmCard(props: FilmCardProps): JSX.Element {
+  const {film} = props;
+  console.log(film);
+
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
@@ -18,4 +28,4 @@ function MovieCard(): JSX.Element {
   );
 }
 
-export default MovieCard;
+export default FilmCard;

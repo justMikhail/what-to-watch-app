@@ -1,6 +1,6 @@
 import Logo from '../../logo/Logo';
 
-function MoviePage(): JSX.Element {
+function FilmPage(): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -188,4 +188,4 @@ function MoviePage(): JSX.Element {
   );
 }
 
-export default MoviePage;
+export default FilmPage;
