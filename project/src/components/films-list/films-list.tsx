@@ -1,23 +1,25 @@
-//import {useState} from 'react';
-
+import FilmCard from '../film-card/film-card';
 import {FilmType} from '../../types/film-type';
 
-import FilmCard from '../film-card/film-card';
+import {useState} from 'react';
 
 type FilmListProps = {
-  films: FilmType[];
+  films: FilmType[],
 }
 
 function FilmsList(props: FilmListProps): JSX.Element {
   const {films} = props;
+  const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
 
   return (
     <div className="catalog__films-list">
       {films.map((film) =>
         (
           <FilmCard
-            key={film.id}
             film={film}
+            activeFilm={activeFilm}
+            setActiveFilm={setActiveFilm}
+            key={film.id}
           />
         ),
       )}
