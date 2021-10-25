@@ -6,13 +6,12 @@ import {MouseEvent} from 'react';
 
 type FilmCardProps = {
   film: FilmType,
-  activeFilm: FilmType | null,
   setActiveFilm: (film: FilmType | null) => void
 }
 
 function FilmCard(props: FilmCardProps): JSX.Element {
-  const {film, activeFilm, setActiveFilm} = props;
-  const generatedFilmPath = generatePath(AppRoute.FILM, {id: film.id});
+  const {film, setActiveFilm} = props;
+  const generatedFilmPagePath = generatePath(AppRoute.FILM, {id: film.id});
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -30,7 +29,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link className="small-film-card__link" to={generatedFilmPath}>
+      <Link className="small-film-card__link" to={generatedFilmPagePath}>
         <h3 className="small-film-card__title">{film.name}</h3>
         <div className="small-film-card__image">
           <img

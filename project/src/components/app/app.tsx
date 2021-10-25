@@ -42,13 +42,13 @@ function App({title, genre, year, films}: AppProps): JSX.Element {
           authorizationStatus={AuthorizationStatus.NO_AUTH}
         />
         <Route exact path={AppRoute.FILM}>
-          <FilmPage />
+          <FilmPage films={films}/>
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.ADD_REVIEW}
           render={() => <AddReviewPage />}
-          authorizationStatus={AuthorizationStatus.NO_AUTH}
+          authorizationStatus={AuthorizationStatus.AUTH}
         />
         <Route exact path={AppRoute.PLAYER}>
           <PlayerPage />
