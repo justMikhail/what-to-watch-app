@@ -1,13 +1,17 @@
-import MovieCard from '../../movie-card/movie-card';
-import Logo from '../../logo/Logo';
+import {FilmType} from '../../../types/film-type';
 
-type FilmProps = {
+import Logo from '../../logo/Logo';
+import FilmsList from '../../films-list/films-list';
+
+type MainPageProps = {
   title: string;
   genre: string;
   year: number;
+  films: FilmType[];
 }
 
-function MainPage({title, genre, year}: FilmProps): JSX.Element {
+function MainPage({title, genre, year, films}: MainPageProps): JSX.Element {
+
   return (
     <>
       <section className="film-card">
@@ -76,9 +80,12 @@ function MainPage({title, genre, year}: FilmProps): JSX.Element {
           </div>
         </div>
       </section>
+
       <div className="page-content">
+
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
+
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
               <a href="#" className="catalog__genres-link">
@@ -131,24 +138,23 @@ function MainPage({title, genre, year}: FilmProps): JSX.Element {
               </a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-          </div>
+
+          <FilmsList films={films} />
+
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
             </button>
           </div>
         </section>
+
         <footer className="page-footer">
           <Logo isLight/>
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
           </div>
         </footer>
+
       </div>
     </>
   );

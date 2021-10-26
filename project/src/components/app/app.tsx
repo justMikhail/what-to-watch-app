@@ -6,19 +6,21 @@ import PrivateRoute from '../private-route/private-route';
 import MainPage from '../pages/main-page/main-page';
 import SignInPage from '../pages/sign-in-page/sign-in-page';
 import MyListPage from '../pages/my-list-page/my-list-page';
-import MoviePage from '../pages/movie-page/movie-page';
+import FilmPage from '../pages/film-page/film-page';
 import AddReviewPage from '../pages/add-review-page/add-review-page';
 import PlayerPage from '../pages/player-page/player-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
+import {FilmType} from '../../types/film-type';
 
-type PromoFilmProps  = {
+type AppProps  = {
   title: string;
   genre: string;
   year: number;
+  films: FilmType[];
 }
 
-function App({title, genre, year}: PromoFilmProps): JSX.Element {
+function App({title, genre, year, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -27,6 +29,7 @@ function App({title, genre, year}: PromoFilmProps): JSX.Element {
             title={title}
             genre={genre}
             year={year}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
@@ -35,17 +38,17 @@ function App({title, genre, year}: PromoFilmProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MY_LIST}
-          render={() => <MyListPage />}
-          authorizationStatus={AuthorizationStatus.NO_AUTH}
+          render={() => <MyListPage films={films}/>}
+          authorizationStatus={AuthorizationStatus.AUTH}
         />
         <Route exact path={AppRoute.FILM}>
-          <MoviePage />
+          <FilmPage films={films}/>
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.ADD_REVIEW}
           render={() => <AddReviewPage />}
-          authorizationStatus={AuthorizationStatus.NO_AUTH}
+          authorizationStatus={AuthorizationStatus.AUTH}
         />
         <Route exact path={AppRoute.PLAYER}>
           <PlayerPage />
