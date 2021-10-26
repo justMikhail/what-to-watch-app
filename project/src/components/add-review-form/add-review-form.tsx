@@ -1,5 +1,4 @@
-import {Fragment, ChangeEvent} from 'react';
-import {useState} from 'react';
+import {Fragment, ChangeEvent, useState} from 'react';
 
 function AddReviewForm (): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;

@@ -1,8 +1,8 @@
-import {FilmType} from '../../types/film-type';
-
-import {Link, generatePath} from 'react-router-dom';
-import {AppRoute} from '../../const/app-route';
 import {MouseEvent} from 'react';
+import {Link, generatePath} from 'react-router-dom';
+
+import {FilmType} from '../../types/film-type';
+import {AppRoute} from '../../const/app-route';
 
 type FilmCardProps = {
   film: FilmType,
