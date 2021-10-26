@@ -3,12 +3,11 @@ import {useState} from 'react';
 
 function AddReviewForm (): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;
-  //const MIN_REVIEW_LENGTH = 50;
-  //const MAX_REVIEW_LENGTH = 400;
+  const MIN_REVIEW_LENGTH = 50;
+  const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');
-  const [currentRating, setCurrentRating] = useState(5);
-  //const [isFetching, setFetchingStatus] = useState(false);
+  const [currentRating, setCurrentRating] = useState(0);
 
   const ratingScaleSteps: number[] = Array(RATING_SCALE_STEPS_COUNT).fill('').map((_, i) => i + 1).reverse();
 
@@ -59,7 +58,11 @@ function AddReviewForm (): JSX.Element {
           onChange={handleReviewTextChange}
         />
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">
+          <button
+            className="add-review__btn"
+            type="submit"
+            disabled={reviewText.length < MIN_REVIEW_LENGTH || reviewText.length > MAX_REVIEW_LENGTH || currentRating === 0}
+          >
             Post
           </button>
         </div>
