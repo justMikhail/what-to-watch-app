@@ -1,12 +1,11 @@
 import Logo from '../../logo/Logo';
+import FilmsList from '../../films-list/films-list';
 
 import {FilmType} from '../../../types/film-type';
 
 import {Link} from 'react-router-dom';
 import {generatePath} from 'react-router-dom';
 import {AppRoute} from '../../../const/app-route';
-import FilmCard from '../../film-card/film-card';
-import FilmsList from '../../films-list/films-list';
 
 type FilmPageProps = {
   films: FilmType[],
