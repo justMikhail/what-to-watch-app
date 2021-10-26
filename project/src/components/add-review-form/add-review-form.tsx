@@ -1,119 +1,51 @@
+import {Fragment, ChangeEvent} from 'react';
 import {useState} from 'react';
 
 function AddReviewForm (): JSX.Element {
-  //const STARS_COUNT = 10;
+  const RATING_SCALE_STEPS_COUNT = 10;
   //const MIN_REVIEW_LENGTH = 50;
   //const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');
-  //const [rating, setRating] = useState(0);
+  const [currentRating, setCurrentRating] = useState(5);
   //const [isFetching, setFetchingStatus] = useState(false);
+
+  const ratingScaleSteps: number[] = Array(RATING_SCALE_STEPS_COUNT).fill('').map((_, i) => i + 1).reverse();
+
+  const handleReviewTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    setReviewText(evt.target.value);
+  };
+
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setCurrentRating(+evt.target.value);
+  };
 
   return (
     <form action="#" className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
-          <input
-            className="rating__input"
-            id="star-10"
-            type="radio"
-            name="rating"
-            defaultValue={10}
-          />
-          <label className="rating__label" htmlFor="star-10">
-            Rating 10
-          </label>
-          <input
-            className="rating__input"
-            id="star-9"
-            type="radio"
-            name="rating"
-            defaultValue={9}
-          />
-          <label className="rating__label" htmlFor="star-9">
-            Rating 9
-          </label>
-          <input
-            className="rating__input"
-            id="star-8"
-            type="radio"
-            name="rating"
-            defaultValue={8}
-            defaultChecked
-          />
-          <label className="rating__label" htmlFor="star-8">
-            Rating 8
-          </label>
-          <input
-            className="rating__input"
-            id="star-7"
-            type="radio"
-            name="rating"
-            defaultValue={7}
-          />
-          <label className="rating__label" htmlFor="star-7">
-            Rating 7
-          </label>
-          <input
-            className="rating__input"
-            id="star-6"
-            type="radio"
-            name="rating"
-            defaultValue={6}
-          />
-          <label className="rating__label" htmlFor="star-6">
-            Rating 6
-          </label>
-          <input
-            className="rating__input"
-            id="star-5"
-            type="radio"
-            name="rating"
-            defaultValue={5}
-          />
-          <label className="rating__label" htmlFor="star-5">
-            Rating 5
-          </label>
-          <input
-            className="rating__input"
-            id="star-4"
-            type="radio"
-            name="rating"
-            defaultValue={4}
-          />
-          <label className="rating__label" htmlFor="star-4">
-            Rating 4
-          </label>
-          <input
-            className="rating__input"
-            id="star-3"
-            type="radio"
-            name="rating"
-            defaultValue={3}
-          />
-          <label className="rating__label" htmlFor="star-3">
-            Rating 3
-          </label>
-          <input
-            className="rating__input"
-            id="star-2"
-            type="radio"
-            name="rating"
-            defaultValue={2}
-          />
-          <label className="rating__label" htmlFor="star-2">
-            Rating 2
-          </label>
-          <input
-            className="rating__input"
-            id="star-1"
-            type="radio"
-            name="rating"
-            defaultValue={1}
-          />
-          <label className="rating__label" htmlFor="star-1">
-            Rating 1
-          </label>
+          {ratingScaleSteps.map((idx: number) => {
+            const isChecked = idx === currentRating;
+
+            return (
+              <Fragment key={idx}>
+                <input
+                  className="rating__input"
+                  id={`star-${idx}`} type="radio"
+                  name="rating"
+                  value={idx}
+                  checked={isChecked}
+                  onChange={handleRatingChange}
+                />
+                <label
+                  className="rating__label"
+                  htmlFor={`star-${idx}`}
+                >
+                Rating {idx}
+                </label>
+              </Fragment>
+            );
+          })}
         </div>
       </div>
 
@@ -124,7 +56,7 @@ function AddReviewForm (): JSX.Element {
           id="review-text"
           placeholder="Review text"
           value={reviewText}
-          onChange={(evt) => setReviewText(evt.target.value)}
+          onChange={handleReviewTextChange}
         />
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">
