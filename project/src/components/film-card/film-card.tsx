@@ -4,14 +4,18 @@ import {Link, generatePath} from 'react-router-dom';
 import {FilmType} from '../../types/film-type';
 import {AppRoute} from '../../const/app-route';
 
+import VideoPlayer from '../video-player/video-player';
+
 type FilmCardProps = {
   film: FilmType,
+  activeFilm: FilmType | null,
   setActiveFilm: (film: FilmType | null) => void
 }
 
 function FilmCard(props: FilmCardProps): JSX.Element {
-  const {film, setActiveFilm} = props;
+  const {film, activeFilm, setActiveFilm} = props;
   const generatedFilmPagePath = generatePath(AppRoute.FILM, {id: film.id});
+  const isActiveFilm = activeFilm !== null && film.id === activeFilm.id; //todo сделать проверку лаконичнее
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -32,11 +36,10 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       <Link className="small-film-card__link" to={generatedFilmPagePath}>
         <h3 className="small-film-card__title">{film.name}</h3>
         <div className="small-film-card__image">
-          <img
-            src={film.previewImage}
-            width={280}
-            height={175}
-            alt={film.name}
+          <VideoPlayer
+            src={film.previewVideoLink}
+            poster={film.previewImage}
+            isPlaying={isActiveFilm}
           />
         </div>
       </Link>

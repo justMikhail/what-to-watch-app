@@ -40,7 +40,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
       height="175"
       muted
       preload="none"
-      //style={{objectFit: 'cover'}}
+      style={{objectFit: 'cover'}}
     />
   );
 }
