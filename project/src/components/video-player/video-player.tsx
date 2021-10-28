@@ -16,7 +16,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
     let timeout: ReturnType<typeof setTimeout>;
 
     if (videoRef.current && isPlaying) {
-      timeout = setTimeout(() = > videoRef.current?.play(), START_VIDEO_DELAY);
+      timeout = setTimeout(() => videoRef.current?.play(), START_VIDEO_DELAY);
       return;
     }
 
