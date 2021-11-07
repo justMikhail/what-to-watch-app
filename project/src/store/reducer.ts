@@ -1,7 +1,10 @@
+import {State} from '../types/state';
+import {ActionType, Actions} from '../types/actions-types';
 import {Genres} from '../const/const';
 
-import {MOCK_FILMS} from '../mocks/mock-films';
 import {filterFilmsBySelectedGenre} from '../utils/utils';
+
+import {MOCK_FILMS} from '../mocks/mock-films';
 
 const initialState = {
   selectedGenre: Genres.All,
@@ -10,9 +13,9 @@ const initialState = {
 
 export function reducer(state: State = initialState, action: Actions): State {
   switch (action.type) {
-    case ActionType.SelectedGenre:
-      return {...state, genre: action.payload};
-    case ActionType.FilterFilmsBySelectedGanre:
+    case ActionType.SelectGenre:
+      return {...state, selectedGenre: action.payload};
+    case ActionType.FilterFilmsBySelectedGenre:
       return {...state, filteredFilmsBySelectedGenre: filterFilmsBySelectedGenre(action.payload, state.selectedGenre)};
   }
 }
