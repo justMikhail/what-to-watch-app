@@ -1,10 +1,11 @@
 import {Genres} from '../const/const';
 
 import {MOCK_FILMS} from '../mocks/mock-films';
+import {filterFilmsBySelectedGenre} from '../utils/utils';
 
 const initialState = {
   selectedGenre: Genres.All,
-  filteredFilms: MOCK_FILMS,
+  filteredFilmsBySelectedGenre: MOCK_FILMS,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -12,6 +13,6 @@ export function reducer(state: State = initialState, action: Actions): State {
     case ActionType.SelectedGenre:
       return {...state, genre: action.payload};
     case ActionType.FilterFilmsBySelectedGanre:
-      return {...state, filteredFilms: FilterFilmsBySelectedGanre(action.payload, state.selectedGenre)};
+      return {...state, filteredFilmsBySelectedGenre: filterFilmsBySelectedGenre(action.payload, state.selectedGenre)};
   }
 }
