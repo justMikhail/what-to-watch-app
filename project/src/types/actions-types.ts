@@ -15,4 +15,6 @@ export type FilterFilmsBySelectedGenreActions = {
   payload: FilmType[];
 }
 
-export type Actions = SelectGenreAction | FilterFilmsBySelectedGenreActions;
+export type Actions =
+  | SelectGenreAction
+  | FilterFilmsBySelectedGenreActions;

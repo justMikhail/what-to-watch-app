@@ -17,5 +17,7 @@ export function reducer(state: State = initialState, action: Actions): State {
       return {...state, selectedGenre: action.payload};
     case ActionType.FilterFilmsBySelectedGenre:
       return {...state, filteredFilmsBySelectedGenre: filterFilmsBySelectedGenre(action.payload, state.selectedGenre)};
+    default:
+      return state;
   }
 }
