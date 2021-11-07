@@ -22,11 +22,11 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store = {store}>
       <App
-        title={PromoFilmData.TITLE}
-        genre={PromoFilmData.GENRE}
-        year={PromoFilmData.YEAR}
+        title = {PromoFilmData.TITLE}
+        genre = {PromoFilmData.GENRE}
+        year = {PromoFilmData.YEAR}
         films = {MOCK_FILMS}
       />
     </Provider>
