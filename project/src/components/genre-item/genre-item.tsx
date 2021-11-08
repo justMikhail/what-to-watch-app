@@ -12,7 +12,7 @@ function GenreItem(props: GenreItemProp): JSX.Element {
       className={`catalog__genres-item ${isActiveGenre ? 'catalog__genres-item--active' : ''}`}
       onClick={() => onClick(genre)}
     >
-      <a className="catalog__genres-link">{genre}</a>
+      <span className="catalog__genres-link">{genre}</span>
     </li>
   );
 }
