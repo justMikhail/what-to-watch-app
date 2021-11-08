@@ -8,7 +8,7 @@ import {MOCK_FILMS} from '../mocks/mock-films';
 
 const initialState = {
   selectedGenre: Genres.All,
-  filteredFilmsBySelectedGenre: MOCK_FILMS,
+  allFilms: MOCK_FILMS,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
