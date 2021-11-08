@@ -1,13 +1,18 @@
 type GenreItemProp = {
   genre: string;
+  isActiveGenre: boolean;
+  onClick: (genre: string) => void;
 }
 
 function GenreItem(props: GenreItemProp): JSX.Element {
-  const {genre} = props;
+  const {genre, isActiveGenre, onClick} = props;
 
   return (
-    <li className="catalog__genres-item catalog__genres-item--active">
-      <a href="#" className="catalog__genres-link">{genre}</a>
+    <li
+      className={`catalog__genres-item ${isActiveGenre ? 'catalog__genres-item--active' : ''}`}
+      onClick={() => onClick(genre)}
+    >
+      <a className="catalog__genres-link">{genre}</a>
     </li>
   );
 }
