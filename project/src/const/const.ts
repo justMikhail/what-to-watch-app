@@ -22,5 +22,5 @@ export enum Genres {
   Romance = 'Romance',
   SciFi = 'Sci-Fi',
   Thriller = 'Thriller',
-};
+}
 
