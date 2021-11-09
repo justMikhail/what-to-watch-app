@@ -1,13 +1,7 @@
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
-import {FilmType} from '../../../types/film-type';
 
-type MyListPageProps = {
-  films: FilmType[];
-}
-
-function MyListPage(props: MyListPageProps): JSX.Element {
-  const {films} = props;
+function MyListPage(): JSX.Element {
 
   return (
     <div className="user-page">
@@ -28,7 +22,7 @@ function MyListPage(props: MyListPageProps): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={films} />
+        <FilmsList />
       </section>
 
       <footer className="page-footer">
