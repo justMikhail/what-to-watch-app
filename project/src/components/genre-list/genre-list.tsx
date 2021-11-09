@@ -1,17 +1,34 @@
-import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {selectGenre} from '../../store/action';
-import {State} from '../../types/state';
 import {Genres} from '../../const/const';
 
 import GenreItem from '../genre-item/genre-item';
 
+import {State} from '../../types/state';
+import {Actions} from '../../types/actions-types';
+
+const mapStateToProps = ({selectedGenre}: State) => ({
+  selectedGenre,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  handleGenreClick(selectedGenre: string) {
+    dispatch(selectGenre(selectedGenre));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
 type GenreListProps = {
-  selectedGenre: string;
-  handleGenreClick : any;
 }
 
-function GenreList(props: GenreListProps): JSX.Element {
-  const {selectedGenre, handleGenreClick } = props;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type ConnectedComponentProps = PropsFromRedux & GenreListProps;
+
+function GenreList(props: ConnectedComponentProps): JSX.Element {
+  const {selectedGenre, handleGenreClick} = props;
 
   return (
     <ul className="catalog__genres-list">
@@ -21,6 +38,7 @@ function GenreList(props: GenreListProps): JSX.Element {
             key = {genresName}
             genre = {genresName}
             isActiveGenre = {genresName === selectedGenre}
+            //handleGenreClick={handleGenreClick(selectedGenre)}
             onClick={(selectedGenre) => {
               handleGenreClick(selectedGenre);
             }}
@@ -30,12 +48,5 @@ function GenreList(props: GenreListProps): JSX.Element {
   );
 }
 
-const mapStateToProps = ({selectedGenre}: State) => ({
-  selectedGenre,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  handleGenreClick : (selectedGenre: string) => dispatch(selectGenre(selectedGenre)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GenreList);
+export {GenreList};
+export default connector(GenreList);

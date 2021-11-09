@@ -10,7 +10,10 @@ function GenreItem(props: GenreItemProp): JSX.Element {
   return (
     <li
       className={`catalog__genres-item ${isActiveGenre ? 'catalog__genres-item--active' : ''}`}
-      onClick={() => onClick(genre)}
+      onClick={(evt) => {
+        evt.preventDefault();
+        onClick(genre);
+      }}
     >
       <span className="catalog__genres-link">{genre}</span>
     </li>
