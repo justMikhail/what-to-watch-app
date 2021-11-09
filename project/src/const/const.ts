@@ -1,6 +1,6 @@
 export const Genres = {
   All: 'All genres',
-  Comedies: 'Comedies',
+  Comedies: 'Comedy',
   Crime: 'Crime',
   Documentary: 'Documentary',
   Drama: 'Dramas',
