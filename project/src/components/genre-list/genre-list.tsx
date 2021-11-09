@@ -34,7 +34,7 @@ function GenreList(props: ConnectedComponentProps): JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
-      {Object.values(Genres).map((genresName) => {
+      {[...Object.values(Genres)].map((genresName) => {
         const isActiveGenre = genresName === selectedGenre;
 
         return (
