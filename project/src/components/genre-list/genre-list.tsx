@@ -3,8 +3,6 @@ import {connect, ConnectedProps} from 'react-redux';
 import {selectGenre} from '../../store/action';
 import {Genres} from '../../const/const';
 
-import GenreItem from '../genre-item/genre-item';
-
 import {State} from '../../types/state';
 import {Actions} from '../../types/actions-types';
 
@@ -13,7 +11,7 @@ const mapStateToProps = ({selectedGenre}: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  handleGenreClick(selectedGenre: string) {
+  setActiveGenre(selectedGenre: string) {
     dispatch(selectGenre(selectedGenre));
   },
 });
@@ -28,22 +26,29 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & GenreListProps;
 
 function GenreList(props: ConnectedComponentProps): JSX.Element {
-  const {selectedGenre, handleGenreClick} = props;
+  const {selectedGenre, setActiveGenre} = props;
+  const handleGenreClick = (evt: React.MouseEvent<HTMLAnchorElement>, genre: string) => { //todo Why DOM MouseEvent<HTMLAnchorElement> dont work?
+    evt.preventDefault();
+    setActiveGenre(genre);
+  };
 
   return (
     <ul className="catalog__genres-list">
-      {Object.values(Genres).map((genresName) =>
-        (
-          <GenreItem
-            key = {genresName}
-            genre = {genresName}
-            isActiveGenre = {genresName === selectedGenre}
-            //handleGenreClick={handleGenreClick(selectedGenre)}
-            onClick={(selectedGenre) => {
-              handleGenreClick(selectedGenre);
-            }}
-          />
-        ))}
+      {Object.values(Genres).map((genresName) => {
+        const isActiveGenre = genresName === selectedGenre;
+
+        return (
+          <li className={`catalog__genres-item ${isActiveGenre ? 'catalog__genres-item--active' : ''}`} key={genresName}>
+            <a
+              className="catalog__genres-link"
+              href="./"
+              onClick={(evt) => handleGenreClick(evt, genresName)}
+            >
+              {genresName}
+            </a>
+          </li>
+        );},
+      )}
     </ul>
   );
 }
