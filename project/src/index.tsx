@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/app';
-
 import {createStore} from '@reduxjs/toolkit';
-import {reducer} from './store/reducer';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
+
+import {reducer} from './store/reducer';
+
+import App from './components/app/app';
 
 import {MOCK_FILMS} from './mocks/mock-films';
 
