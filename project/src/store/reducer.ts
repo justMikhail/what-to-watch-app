@@ -2,11 +2,12 @@ import {State} from '../types/state';
 import {ActionType, Actions} from '../types/actions-types';
 import {Genres} from '../const/const';
 
-import {MOCK_FILMS} from '../mocks/mock-films';
+import {AuthorizationStatus} from '../const/authorization-status';
 
 const initialState = {
+  authorizationStatus: AuthorizationStatus.Unknow,
+  allFilmsData: [],
   selectedGenre: Genres.All,
-  allFilms: MOCK_FILMS,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {

@@ -39,7 +39,7 @@ function App({title, genre, year, films}: AppProps): JSX.Element {
           exact
           path={AppRoute.MY_LIST}
           render={() => <MyListPage />}
-          authorizationStatus={AuthorizationStatus.AUTH}
+          authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.FILM}>
           <FilmPage films={films}/>
@@ -48,7 +48,7 @@ function App({title, genre, year, films}: AppProps): JSX.Element {
           exact
           path={AppRoute.ADD_REVIEW}
           render={() => <AddReviewPage />}
-          authorizationStatus={AuthorizationStatus.AUTH}
+          authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.PLAYER}>
           <PlayerPage />
