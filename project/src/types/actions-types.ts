@@ -1,9 +1,15 @@
+import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
+import {AxiosInstance} from 'axios';
+
+import {State} from './state';
+
 import {
   requireAuthorizationStatus,
   requireLogout,
   loadFilmsData,
   selectGenre
 } from '../store/action';
+
 
 export enum ActionType {
   RequireAuthorizationStatus = 'user/requireAuthorizationStatus',
@@ -18,3 +24,5 @@ export type Actions =
   | ReturnType<typeof loadFilmsData>
   | ReturnType<typeof selectGenre>
 
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

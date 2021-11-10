@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {AppRoute} from '../../const/app-route';
+import {Route} from '../../const/route';
 import {AuthorizationStatus} from '../../const/authorization-status';
 import PrivateRoute from '../private-route/private-route';
 
@@ -24,7 +24,7 @@ function App({title, genre, year, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={AppRoute.MAIN}>
+        <Route exact path={Route.MAIN}>
           <MainPage
             title={title}
             genre={genre}
@@ -32,25 +32,25 @@ function App({title, genre, year, films}: AppProps): JSX.Element {
             films={films}
           />
         </Route>
-        <Route exact path={AppRoute.SIGN_IN}>
+        <Route exact path={Route.SIGN_IN}>
           <SignInPage />
         </Route>
         <PrivateRoute
           exact
-          path={AppRoute.MY_LIST}
+          path={Route.MY_LIST}
           render={() => <MyListPage />}
           authorizationStatus={AuthorizationStatus.Auth}
         />
-        <Route exact path={AppRoute.FILM}>
+        <Route exact path={Route.FILM}>
           <FilmPage films={films}/>
         </Route>
         <PrivateRoute
           exact
-          path={AppRoute.ADD_REVIEW}
+          path={Route.ADD_REVIEW}
           render={() => <AddReviewPage />}
           authorizationStatus={AuthorizationStatus.Auth}
         />
-        <Route exact path={AppRoute.PLAYER}>
+        <Route exact path={Route.PLAYER}>
           <PlayerPage />
         </Route>
         <Route>
