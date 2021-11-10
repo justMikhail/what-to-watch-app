@@ -1,13 +1,13 @@
 import {State} from '../types/state';
 import {ActionType, Actions} from '../types/actions-types';
-import {Genres} from '../const/const';
+import {Genre} from '../const/const';
 
 import {AuthorizationStatus} from '../const/authorization-status';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.Unknow,
   allFilmsData: [],
-  selectedGenre: Genres.All,
+  selectedGenre: Genre.DefaultGenre,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
