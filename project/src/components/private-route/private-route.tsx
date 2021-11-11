@@ -1,5 +1,5 @@
 import {Route, Redirect, RouteProps} from 'react-router-dom';
-import {AppRout} from '../../const/routs';
+import {AppRoute} from '../../const/routs';
 import {AuthorizationStatus} from '../../const/authorization-status';
 
 type PrivateRouteProps = RouteProps & {
@@ -15,7 +15,7 @@ function PrivateRoute({exact, path, render, authorizationStatus} : PrivateRouteP
       render={() => (
         authorizationStatus === AuthorizationStatus.Auth
           ? render()
-          : <Redirect to={AppRout.SignIn} />
+          : <Redirect to={AppRoute.SignIn} />
       )}
     />
   );

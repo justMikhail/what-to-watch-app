@@ -5,6 +5,12 @@ import {FilmType} from '../../types/film-type';
 import {State} from '../../types/state';
 import {filterFilmsBySelectedGenre} from '../../utils/utils';
 
+const mapStateToProps = (state: State) => ({
+  films: filterFilmsBySelectedGenre(state.allFilmsData, state.selectedGenre),
+});
+
+const connector = connect(mapStateToProps);
+
 type FilmListProps = {
   films: FilmType[],
 }
@@ -29,8 +35,5 @@ function FilmsList(props: FilmListProps): JSX.Element {
   );
 }
 
-const mapStateToProps = (state: State) => ({
-  films: filterFilmsBySelectedGenre(state.allFilmsData, state.selectedGenre),
-});
-
-export default connect(mapStateToProps)(FilmsList);
+export {FilmsList};
+export default connector(FilmsList);

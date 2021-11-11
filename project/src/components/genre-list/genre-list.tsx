@@ -1,12 +1,13 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {selectGenre} from '../../store/action';
-import {Genre} from '../../const/const';
 
 import {State} from '../../types/state';
 import {Actions} from '../../types/actions-types';
+import {getGenresFromFilmList} from '../../utils/utils';
 
-const mapStateToProps = ({selectedGenre}: State) => ({
+const mapStateToProps = ({allFilmsData, selectedGenre}: State) => ({
+  genres: getGenresFromFilmList((allFilmsData)),
   selectedGenre,
 });
 
@@ -26,7 +27,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & GenreListProps;
 
 function GenreList(props: ConnectedComponentProps): JSX.Element {
-  const {selectedGenre, setActiveGenre} = props;
+  const {genres, selectedGenre, setActiveGenre} = props;
   const handleGenreClick = (evt: React.MouseEvent<HTMLAnchorElement>, genre: string) => { //todo Why DOM MouseEvent<HTMLAnchorElement> dont work?
     evt.preventDefault();
     setActiveGenre(genre);
@@ -34,7 +35,7 @@ function GenreList(props: ConnectedComponentProps): JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
-      {[...Object.values(Genre)].map((genresName) => {
+      {(genres).map((genresName) => {
         const isActiveGenre = genresName === selectedGenre;
 
         return (

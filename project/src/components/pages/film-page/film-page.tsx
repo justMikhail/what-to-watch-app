@@ -5,7 +5,7 @@ import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
 
 import {FilmType} from '../../../types/film-type';
-import {AppRout} from '../../../const/routs';
+import {AppRoute} from '../../../const/routs';
 
 type FilmPageProps = {
   films: FilmType[],
@@ -14,7 +14,7 @@ type FilmPageProps = {
 function FilmPage(props: FilmPageProps): JSX.Element {
   const {films} = props;
   const film = films[0];
-  const generatedAddReviewPagePath = generatePath(AppRout.AddReview, {id: film.id});
+  const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: film.id});
 
   return (
     <>
