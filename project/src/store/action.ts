@@ -11,9 +11,9 @@ export const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
-export const loadFilmsData = (films: FilmType[] | null) => ({
+export const loadFilmsData = (filmsData: FilmType[]) => ({
   type: ActionType.LoadFilmsData,
-  payload: {films},
+  payload: filmsData,
 } as const);
 
 export const selectGenre = (selectedGenre: string) => ({

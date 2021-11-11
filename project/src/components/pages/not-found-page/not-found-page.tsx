@@ -1,7 +1,7 @@
 import {useLocation} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 
-import {Route} from '../../../const/route';
+import {Routs} from '../../../const/appRout';
 import styles from './not-found-page.module.css';
 import img from'./img/not-found-page-img.jpg';
 
@@ -18,7 +18,7 @@ function NotFoundPage(): JSX.Element {
           <p className={styles.text}>
             No match for <u>{locationPath}</u>
           </p>
-          <Link to={Route.MAIN}>
+          <Link to={Routs.Main}>
             <button className="btn film-card__button" type="button">
               <span>Back to main page</span>
             </button>

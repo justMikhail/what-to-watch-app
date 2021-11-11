@@ -1,16 +1,18 @@
 import {saveToken, dropToken, Token} from '../services/token';
+import {adaptServerFilmsToClient} from '../services/adapter';
 
-import {ApiRoute} from '../const/route';
+import {ApiRoute} from '../const/routs';
 import {AuthorizationStatus} from '../const/authorization-status';
 
 import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
 
+
 import {
-  loadFilmsData,
   requireAuthorizationStatus,
-  requireLogout
+  requireLogout,
+  loadFilmsData
 } from './action';
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
@@ -39,5 +41,6 @@ export const logoutAction = (): ThunkActionResult =>
 export const fetchFilmAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
-    dispatch(loadFilmsData(data));
+    const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
+    dispatch(loadFilmsData(adaptedData));
   };
