@@ -2,7 +2,7 @@ import {MouseEvent} from 'react';
 import {Link, generatePath} from 'react-router-dom';
 
 import {FilmType} from '../../types/film-type';
-import {Routs} from '../../const/appRout';
+import {AppRout} from '../../const/routs';
 
 import VideoPlayer from '../video-player/video-player';
 
@@ -14,7 +14,7 @@ type FilmCardProps = {
 
 function FilmCard(props: FilmCardProps): JSX.Element {
   const {film, activeFilm, setActiveFilm} = props;
-  const generatedFilmPagePath = generatePath(Routs.Film, {id: film.id});
+  const generatedFilmPagePath = generatePath(AppRout.Film, {id: film.id});
   const isActiveFilm = activeFilm !== null && film.id === activeFilm.id; //todo сделать проверку лаконичнее
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {

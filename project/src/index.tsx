@@ -37,11 +37,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App
-        title = {PromoFilmData.TITLE}
-        genre = {PromoFilmData.GENRE}
-        year = {PromoFilmData.YEAR}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

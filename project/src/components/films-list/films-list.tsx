@@ -9,8 +9,6 @@ type FilmListProps = {
   films: FilmType[],
 }
 
-// function connect(map)
-
 function FilmsList(props: FilmListProps): JSX.Element {
   const {films} = props;
   const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
@@ -32,7 +30,7 @@ function FilmsList(props: FilmListProps): JSX.Element {
 }
 
 const mapStateToProps = (state: State) => ({
-  films: filterFilmsBySelectedGenre(state.allFilms, state.selectedGenre),
+  films: filterFilmsBySelectedGenre(state.allFilmsData, state.selectedGenre),
 });
 
 export default connect(mapStateToProps)(FilmsList);

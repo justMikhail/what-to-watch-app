@@ -17,6 +17,12 @@ import Loader from '../loader/loader';
 
 import {State} from '../../types/state';
 
+const PromoFilmData = {
+  TITLE: 'The Grand Budapest Hotel',
+  GENRE: 'Drama',
+  YEAR: 2014,
+};
+
 const mapStateToProps = ({authorizationStatus, isDataLoaded}: State) => ({
   authorizationStatus,
   isDataLoaded,
@@ -40,10 +46,9 @@ function App(props: PropsFromRedux): JSX.Element {
       <Switch>
         <Route exact path={AppRout.Main}>
           <MainPage
-            title={title}
-            genre={genre}
-            year={year}
-            films={films}
+            title = {PromoFilmData.TITLE}
+            genre = {PromoFilmData.GENRE}
+            year = {PromoFilmData.YEAR}
           />
         </Route>
         <Route exact path={AppRout.SignIn}>
@@ -56,7 +61,7 @@ function App(props: PropsFromRedux): JSX.Element {
           authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRout.Film}>
-          <FilmPage />
+          {/*<FilmPage />*/}
         </Route>
         <PrivateRoute
           exact

@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {selectGenre} from '../../store/action';
-import {Genres} from '../../const/const';
+import {Genre} from '../../const/const';
 
 import {State} from '../../types/state';
 import {Actions} from '../../types/actions-types';
@@ -34,7 +34,7 @@ function GenreList(props: ConnectedComponentProps): JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
-      {[...Object.values(Genres)].map((genresName) => {
+      {[...Object.values(Genre)].map((genresName) => {
         const isActiveGenre = genresName === selectedGenre;
 
         return (
