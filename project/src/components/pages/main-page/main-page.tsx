@@ -1,5 +1,3 @@
-import {FilmType} from '../../../types/film-type';
-
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
 import GenreList from '../../genre-list/genre-list';
@@ -8,10 +6,10 @@ type MainPageProps = {
   title: string;
   genre: string;
   year: number;
-  films: FilmType[];
 }
 
-function MainPage({title, genre, year, films}: MainPageProps): JSX.Element {
+function MainPage(props: MainPageProps): JSX.Element {
+  const {title, genre, year} = props;
 
   return (
     <>
