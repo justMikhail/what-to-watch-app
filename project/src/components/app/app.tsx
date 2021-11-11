@@ -61,7 +61,7 @@ function App(props: PropsFromRedux): JSX.Element {
           authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.Film}>
-          {/*<FilmPage />*/}
+          <FilmPage />
         </Route>
         <PrivateRoute
           exact
