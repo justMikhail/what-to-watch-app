@@ -14,12 +14,6 @@ import {AuthorizationStatus} from './const/authorization-status';
 import {ThunkAppDispatch} from './types/actions-types';
 import {checkAuthStatusAction, fetchFilmAction} from './store/api-actions';
 
-const PromoFilmData = {
-  TITLE: 'The Grand Budapest Hotel',
-  GENRE: 'Drama',
-  YEAR: 2014,
-};
-
 const api = createApi(
   () => store.dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth)),
 );

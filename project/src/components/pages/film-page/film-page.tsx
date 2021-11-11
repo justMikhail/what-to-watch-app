@@ -26,7 +26,6 @@ function FilmPage(props: PropsFromRedux): JSX.Element {
   const {allFilms} = props;
   const params = useParams<FilmPageParams>();
   const paramsId = parseInt(params.id, 10);
-  //const film = allFilms[0];
   const film: FilmType | undefined = allFilms.find((item) => item.id === paramsId);
 
   if (film) {
