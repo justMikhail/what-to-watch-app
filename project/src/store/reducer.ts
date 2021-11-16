@@ -8,6 +8,7 @@ const initialState = {
   allFilmsData: [],
   selectedGenre: Genre.DefaultGenre,
   isDataLoaded: false,
+  activeFilmId: null,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {

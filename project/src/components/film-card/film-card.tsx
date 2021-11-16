@@ -27,16 +27,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type FilmCardProps = {
   film: FilmType,
-  activeFilm: FilmType | null,
-  setActiveFilm: (film: FilmType | null) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type ConnectedComponentProps = PropsFromRedux & FilmCardProps;
 
-function FilmCard(props: FilmCardProps): JSX.Element {
-  const {film, activeFilm, setActiveFilm} = props;
+function FilmCard(props: ConnectedComponentProps): JSX.Element {
+  const {film, activeFilmId, getActiveFilmId} = props;
   const generatedFilmPagePath = generatePath(AppRoute.Film, {id: film.id});
   const isActiveFilm = activeFilmId !== null && film.id === activeFilmId;
 
