@@ -1,8 +1,8 @@
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
+import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const/routs';
-import {AuthorizationStatus} from '../../const/authorization-status';
 import PrivateRoute from '../private-route/private-route';
 import {isCheckedAuth} from '../../utils/utils';
 
@@ -42,7 +42,7 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainPage
@@ -58,7 +58,6 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.MyList}
           render={() => <MyListPage />}
-          authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.Film}>
           <FilmPage />
@@ -67,7 +66,6 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.AddReview}
           render={() => <AddReviewPage />}
-          authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.Player}>
           <PlayerPage />

@@ -1,7 +1,6 @@
 import {State} from '../types/state';
 import {Actions, ActionType} from '../types/actions-types';
 import {Genre} from '../const/const';
-
 import {AuthorizationStatus} from '../const/authorization-status';
 
 const initialState = {
