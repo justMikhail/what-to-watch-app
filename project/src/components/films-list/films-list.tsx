@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import { connect } from 'react-redux';
 import FilmCard from '../film-card/film-card';
 import {FilmType} from '../../types/film-type';
