@@ -24,6 +24,8 @@ export function reducer(state: State = initialState, action: Actions): State {
       return {...state, allFilmsData: action.payload};
     case ActionType.SelectGenre:
       return {...state, selectedGenre: action.payload};
+    case ActionType.SetActiveFilmId:
+      return {...state, activeFilmId: action.payload};
     default:
       return state;
   }

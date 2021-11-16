@@ -22,6 +22,11 @@ export const selectGenre = (selectedGenre: string) => ({
   payload: selectedGenre,
 } as const);
 
+export const setActiveFilmId = (activeFilmId: number | null) => ({
+  type: ActionType.SetActiveFilmId,
+  payload: activeFilmId,
+} as const);
+
 export const redirectToRoute = (url: AppRoute) => ({
   type: ActionType.RedirectToRoute,
   payload: url,

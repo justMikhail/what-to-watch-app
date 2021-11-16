@@ -1,10 +1,29 @@
 import {MouseEvent} from 'react';
 import {Link, generatePath} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 
 import {FilmType} from '../../types/film-type';
 import {AppRoute} from '../../const/routs';
 
+import {State} from '../../types/state';
+
+import {Actions} from '../../types/actions-types';
+import {setActiveFilmId} from '../../store/action';
+
 import VideoPlayer from '../video-player/video-player';
+
+const mapStateToProps = ({activeFilmId}: State) => ({
+  activeFilmId,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  getActiveFilmId(activeFilmId: null | number) {
+    dispatch(setActiveFilmId(activeFilmId));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type FilmCardProps = {
   film: FilmType,
@@ -12,19 +31,23 @@ type FilmCardProps = {
   setActiveFilm: (film: FilmType | null) => void
 }
 
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type ConnectedComponentProps = PropsFromRedux & FilmCardProps;
+
 function FilmCard(props: FilmCardProps): JSX.Element {
   const {film, activeFilm, setActiveFilm} = props;
   const generatedFilmPagePath = generatePath(AppRoute.Film, {id: film.id});
-  const isActiveFilm = activeFilm !== null && film.id === activeFilm.id; //todo сделать проверку лаконичнее
+  const isActiveFilm = activeFilmId !== null && film.id === activeFilmId;
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    setActiveFilm(film);
+    getActiveFilmId(film.id);
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    setActiveFilm(null);
+    getActiveFilmId(null);
   };
 
   return (
@@ -47,4 +70,5 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   );
 }
 
-export default FilmCard;
+export {FilmCard};
+export default connector(FilmCard);
