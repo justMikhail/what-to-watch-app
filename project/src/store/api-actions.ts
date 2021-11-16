@@ -8,7 +8,6 @@ import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
 
-
 import {
   requireAuthorizationStatus,
   requireLogout,

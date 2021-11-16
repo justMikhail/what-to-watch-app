@@ -1,6 +1,39 @@
+import {useRef, FormEvent} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {loginAction} from '../../../store/api-actions';
+import {ThunkAppDispatch} from '../../../types/actions-types';
+import {AuthData} from '../../../types/auth-data';
+
 import Logo from '../../logo/Logo';
 
-function SignInPage(): JSX.Element {
+const mapDispatchTpProps = (dispatch: ThunkAppDispatch) => ({
+  onSubmit(authData: AuthData) {
+    dispatch(loginAction(authData));
+  },
+});
+
+const connector = connect(null, mapDispatchTpProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function SignInPage(props: PropsFromRedux): JSX.Element {
+  const {onSubmit} = props;
+
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -8,7 +41,11 @@ function SignInPage(): JSX.Element {
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
       <div className="sign-in user-page__content">
-        <form className="sign-in__form" action="#" method="post">
+        <form
+          className="sign-in__form"
+          action="#"
+          onSubmit={handleSubmit}
+        >
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -17,11 +54,9 @@ function SignInPage(): JSX.Element {
                 placeholder="Email address"
                 name="userEmail"
                 id="userEmail"
+                ref={loginRef}
               />
-              <label
-                className="sign-in__label visually-hidden"
-                htmlFor="userEmail"
-              >
+              <label className="sign-in__label visually-hidden" htmlFor="userEmail">
                 Email address
               </label>
             </div>
@@ -32,11 +67,9 @@ function SignInPage(): JSX.Element {
                 placeholder="Password"
                 name="userPassword"
                 id="userPassword"
+                ref={passwordRef}
               />
-              <label
-                className="sign-in__label visually-hidden"
-                htmlFor="userPassword"
-              >
+              <label className="sign-in__label visually-hidden" htmlFor="userPassword">
                 Password
               </label>
             </div>
@@ -58,4 +91,5 @@ function SignInPage(): JSX.Element {
   );
 }
 
-export default SignInPage;
+export {SignInPage};
+export default connector(SignInPage);
