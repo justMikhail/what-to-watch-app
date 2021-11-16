@@ -1,3 +1,5 @@
+import {toast} from 'react-toastify';
+
 import {saveToken, dropToken, Token} from '../services/token';
 import {adaptServerFilmsToClient} from '../services/adapter';
 
@@ -16,12 +18,16 @@ import {
   redirectToRoute
 } from './action';
 
+const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(ApiRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-      });
+    try {
+      await api.get(ApiRoute.Login);
+      dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
   };
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
