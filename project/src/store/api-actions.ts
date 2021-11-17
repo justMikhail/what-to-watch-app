@@ -24,7 +24,7 @@ export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       await api.get(ApiRoute.Login);
-      dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+      dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
     }

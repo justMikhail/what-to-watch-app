@@ -18,7 +18,7 @@ const mapStateToProps = ({activeFilmId}: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  getActiveFilmId(activeFilmId: null | number) {
+  setActiveFilmIdActionCreater(activeFilmId: null | number) {
     dispatch(setActiveFilmId(activeFilmId));
   },
 });
@@ -34,18 +34,18 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & FilmCardProps;
 
 function FilmCard(props: ConnectedComponentProps): JSX.Element {
-  const {film, activeFilmId, getActiveFilmId} = props;
+  const {film, activeFilmId, setActiveFilmIdActionCreater} = props;
   const generatedFilmPagePath = generatePath(AppRoute.Film, {id: film.id});
   const isActiveFilm = activeFilmId !== null && film.id === activeFilmId;
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    getActiveFilmId(film.id);
+    setActiveFilmIdActionCreater(film.id);
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    getActiveFilmId(null);
+    setActiveFilmIdActionCreater(null);
   };
 
   return (
