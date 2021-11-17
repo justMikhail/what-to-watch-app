@@ -1,6 +1,7 @@
 import {ActionType} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
+import {AppRoute} from '../const/routs';
 
 export const requireAuthorizationStatus = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorizationStatus,
@@ -19,4 +20,14 @@ export const loadFilmsData = (filmsData: FilmType[]) => ({
 export const selectGenre = (selectedGenre: string) => ({
   type: ActionType.SelectGenre,
   payload: selectedGenre,
+} as const);
+
+export const setActiveFilmId = (activeFilmId: number | null) => ({
+  type: ActionType.SetActiveFilmId,
+  payload: activeFilmId,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);

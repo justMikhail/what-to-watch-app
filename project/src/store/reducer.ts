@@ -1,7 +1,6 @@
 import {State} from '../types/state';
 import {Actions, ActionType} from '../types/actions-types';
 import {Genre} from '../const/const';
-
 import {AuthorizationStatus} from '../const/authorization-status';
 
 const initialState = {
@@ -9,6 +8,7 @@ const initialState = {
   allFilmsData: [],
   selectedGenre: Genre.DefaultGenre,
   isDataLoaded: false,
+  activeFilmId: null,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -25,6 +25,8 @@ export function reducer(state: State = initialState, action: Actions): State {
       return {...state, allFilmsData: action.payload};
     case ActionType.SelectGenre:
       return {...state, selectedGenre: action.payload};
+    case ActionType.SetActiveFilmId:
+      return {...state, activeFilmId: action.payload};
     default:
       return state;
   }

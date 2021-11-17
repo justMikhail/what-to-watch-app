@@ -28,6 +28,7 @@ type ConnectedComponentProps = PropsFromRedux & GenreListProps;
 
 function GenreList(props: ConnectedComponentProps): JSX.Element {
   const {genres, selectedGenre, setActiveGenre} = props;
+
   const handleGenreClick = (evt: React.MouseEvent<HTMLAnchorElement>, genre: string) => { //todo Why DOM MouseEvent<HTMLAnchorElement> dont work?
     evt.preventDefault();
     setActiveGenre(genre);

@@ -1,6 +1,9 @@
+import {toast} from 'react-toastify';
+
 import {saveToken, dropToken, Token} from '../services/token';
 import {adaptServerFilmsToClient} from '../services/adapter';
 
+import {AppRoute} from '../const/routs';
 import {ApiRoute} from '../const/routs';
 import {AuthorizationStatus} from '../const/authorization-status';
 
@@ -8,19 +11,23 @@ import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
 
-
 import {
   requireAuthorizationStatus,
   requireLogout,
-  loadFilmsData
+  loadFilmsData,
+  redirectToRoute
 } from './action';
+
+const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(ApiRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-      });
+    try {
+      await api.get(ApiRoute.Login);
+      dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
   };
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
@@ -28,6 +35,7 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
     const {data: {token}} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
 
