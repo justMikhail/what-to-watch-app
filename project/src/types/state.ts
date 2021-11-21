@@ -1,10 +1,16 @@
-import {AuthorizationStatus} from '../const/authorization-status';
+import {RootState} from '../store/root-reducer';
 import {FilmType} from './film-type';
+import {AuthorizationStatus} from '../const/authorization-status';
 
-export type State = {
+export type UserData = {
   authorizationStatus: AuthorizationStatus,
+}
+
+export type AllFilmsData = {
+  isDataLoaded: boolean,
   allFilmsData: FilmType[],
   selectedGenre: string,
   activeFilmId: null | number,
-  isDataLoaded: boolean,
 }
+
+export type State = RootState;

@@ -1,33 +1,42 @@
+import {createAction} from '@reduxjs/toolkit';
 import {ActionType} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {AppRoute} from '../const/routs';
 
-export const requireAuthorizationStatus = (authStatus: AuthorizationStatus) => ({
-  type: ActionType.RequireAuthorizationStatus,
-  payload: authStatus,
-} as const);
+export const requireAuthorizationStatus = createAction(
+  ActionType.RequireAuthorizationStatus,
+  (authStatus: AuthorizationStatus) => ({
+    payload: authStatus,
+  }),
+);
 
-export const requireLogout = () => ({
-  type: ActionType.RequireLogout,
-} as const);
+export const requireLogout = createAction(ActionType.RequireLogout);
 
-export const loadFilmsData = (filmsData: FilmType[]) => ({
-  type: ActionType.LoadFilmsData,
-  payload: filmsData,
-} as const);
+export const loadAllFilmsData = createAction(
+  ActionType.LoadAllFilmsData,
+  (allFilmsData: FilmType[]) => ({
+    payload: allFilmsData,
+  }),
+);
 
-export const selectGenre = (selectedGenre: string) => ({
-  type: ActionType.SelectGenre,
-  payload: selectedGenre,
-} as const);
+export const selectGenre = createAction(
+  ActionType.SelectGenre,
+  (selectedGenre: string) => ({
+    payload: selectedGenre,
+  }),
+);
 
-export const setActiveFilmId = (activeFilmId: number | null) => ({
-  type: ActionType.SetActiveFilmId,
-  payload: activeFilmId,
-} as const);
+export const setActiveFilmId = createAction(
+  ActionType.SetActiveFilmId,
+  (activeFilmId: number | null) => ({
+    payload: activeFilmId,
+  }),
+);
 
-export const redirectToRoute = (url: AppRoute) => ({
-  type: ActionType.RedirectToRoute,
-  payload: url,
-} as const);
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (url: AppRoute) => ({
+    payload: url,
+  }),
+);

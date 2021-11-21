@@ -1,36 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {applyMiddleware, createStore} from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {configureStore} from '@reduxjs/toolkit';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {createApi} from './services/api';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/root-reducer';
+import {requireAuthorizationStatus} from './store/action';
+import {checkAuthStatusAction, fetchFilmAction} from './store/api-actions';
 import {redirect} from './middlewares/redirect';
+import {AuthorizationStatus} from './const/authorization-status';
 
 import App from './components/app/app';
-import {requireAuthorizationStatus} from './store/action';
-import {AuthorizationStatus} from './const/authorization-status';
-import {ThunkAppDispatch} from './types/actions-types';
-import {checkAuthStatusAction, fetchFilmAction} from './store/api-actions';
 
 const api = createApi(
   () => store.dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth)),
 );
 
-const store = createStore(
-  reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
-  ),
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
-(store.dispatch as ThunkAppDispatch)(checkAuthStatusAction());
-(store.dispatch as ThunkAppDispatch)(fetchFilmAction());
+store.dispatch(checkAuthStatusAction());
+store.dispatch(fetchFilmAction());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,29 +1,22 @@
 import {Link} from 'react-router-dom';
 import {generatePath, useParams} from 'react-router-dom';
 
+import {AppRoute} from '../../../const/routs';
+import {FilmType} from '../../../types/film-type';
+
+import Loader from '../../loader/loader';
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
-
-import {AppRoute} from '../../../const/routs';
-import {State} from '../../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {FilmType} from '../../../types/film-type';
-import Loader from '../../loader/loader';
-
-const mapStateToProps = (state: State) => ({
-  allFilms: state.allFilmsData,
-});
+import {useSelector} from 'react-redux';
+import {getAllFilmsData} from '../../../store/all-films-data/selectors';
 
 type FilmPageParams = {
   id: string;
 }
 
-const connector = connect(mapStateToProps);
+function FilmPage(): JSX.Element {
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function FilmPage(props: PropsFromRedux): JSX.Element {
-  const {allFilms} = props;
+  const allFilms = useSelector(getAllFilmsData);
   const params = useParams<FilmPageParams>();
   const paramsId = parseInt(params.id, 10);
   const film: FilmType | undefined = allFilms.find((item) => item.id === paramsId);
@@ -160,5 +153,4 @@ function FilmPage(props: PropsFromRedux): JSX.Element {
   return <Loader />;
 }
 
-export {FilmPage};
-export default connector(FilmPage);
+export default FilmPage;

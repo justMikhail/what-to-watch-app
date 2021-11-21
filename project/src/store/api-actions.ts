@@ -14,7 +14,7 @@ import {AuthData} from '../types/auth-data';
 import {
   requireAuthorizationStatus,
   requireLogout,
-  loadFilmsData,
+  loadAllFilmsData,
   redirectToRoute
 } from './action';
 
@@ -50,5 +50,5 @@ export const fetchFilmAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
     const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
-    dispatch(loadFilmsData(adaptedData));
+    dispatch(loadAllFilmsData(adaptedData));
   };

@@ -1,26 +1,20 @@
-import { connect } from 'react-redux';
-import FilmCard from '../film-card/film-card';
-import {FilmType} from '../../types/film-type';
-import {State} from '../../types/state';
+import {useSelector} from 'react-redux';
+
 import {filterFilmsBySelectedGenre} from '../../utils/utils';
 
-const mapStateToProps = (state: State) => ({
-  films: filterFilmsBySelectedGenre(state.allFilmsData, state.selectedGenre),
-});
+import FilmCard from '../film-card/film-card';
+import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data/selectors';
 
-const connector = connect(mapStateToProps);
+// type FilmListProps = {
+// }
 
-type FilmListProps = {
-  films: FilmType[],
-}
-
-function FilmsList(props: FilmListProps): JSX.Element {
-  const {films} = props;
-  /*const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);*/
+function FilmsList(): JSX.Element {
+  const selectedGenre = useSelector(getSelectedGenre);
+  const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
 
   return (
     <div className="catalog__films-list">
-      {films.map((film) =>
+      {filmForRender.map((film) =>
         (
           <FilmCard
             film={film}
@@ -32,5 +26,4 @@ function FilmsList(props: FilmListProps): JSX.Element {
   );
 }
 
-export {FilmsList};
-export default connector(FilmsList);
+export default FilmsList;
