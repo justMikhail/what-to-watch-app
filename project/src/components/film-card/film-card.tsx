@@ -1,51 +1,35 @@
 import {MouseEvent} from 'react';
 import {Link, generatePath} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dispatch} from 'redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {FilmType} from '../../types/film-type';
 import {AppRoute} from '../../const/routs';
 
-import {State} from '../../types/state';
-
-import {Actions} from '../../types/actions-types';
+import VideoPlayer from '../video-player/video-player';
+import {getActiveFilmId} from '../../store/all-films-data/selectors';
 import {setActiveFilmId} from '../../store/action';
 
-import VideoPlayer from '../video-player/video-player';
-
-const mapStateToProps = ({activeFilmId}: State) => ({
-  activeFilmId,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  setActiveFilmIdActionCreater(activeFilmId: null | number) {
-    dispatch(setActiveFilmId(activeFilmId));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type FilmCardProps = {
   film: FilmType,
 }
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function FilmCard(props: FilmCardProps): JSX.Element {
+  const {film} = props;
+  const dispatch = useDispatch();
+  const activeFilmId = useSelector(getActiveFilmId);
 
-type ConnectedComponentProps = PropsFromRedux & FilmCardProps;
-
-function FilmCard(props: ConnectedComponentProps): JSX.Element {
-  const {film, activeFilmId, setActiveFilmIdActionCreater} = props;
   const generatedFilmPagePath = generatePath(AppRoute.Film, {id: film.id});
   const isActiveFilm = activeFilmId !== null && film.id === activeFilmId;
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    setActiveFilmIdActionCreater(film.id);
+    dispatch(setActiveFilmId(film.id));
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    setActiveFilmIdActionCreater(null);
+    dispatch(setActiveFilmId(null));
   };
 
   return (
@@ -68,5 +52,4 @@ function FilmCard(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {FilmCard};
-export default connector(FilmCard);
+export default FilmCard;

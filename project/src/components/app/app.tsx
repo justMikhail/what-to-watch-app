@@ -1,5 +1,5 @@
 import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const/routs';
@@ -14,8 +14,8 @@ import AddReviewPage from '../pages/add-review-page/add-review-page';
 import PlayerPage from '../pages/player-page/player-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import Loader from '../loader/loader';
-
-import {State} from '../../types/state';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
+import {getLoadedDataStatus} from '../../store/all-films-data/selectors';
 
 const PromoFilmData = {
   TITLE: 'The Grand Budapest Hotel',
@@ -23,17 +23,9 @@ const PromoFilmData = {
   YEAR: 2014,
 };
 
-const mapStateToProps = ({authorizationStatus, isDataLoaded}: State) => ({
-  authorizationStatus,
-  isDataLoaded,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus, isDataLoaded} = props;
+function App(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getLoadedDataStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -78,5 +70,4 @@ function App(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {App};
-export default connector(App);
+export default App;

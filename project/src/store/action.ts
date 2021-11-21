@@ -29,7 +29,7 @@ export const selectGenre = createAction(
 
 export const setActiveFilmId = createAction(
   ActionType.SetActiveFilmId,
-  (activeFilmId: number) => ({
+  (activeFilmId: number | null) => ({
     payload: activeFilmId,
   }),
 );
