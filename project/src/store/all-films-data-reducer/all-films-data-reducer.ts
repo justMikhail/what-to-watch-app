@@ -11,7 +11,7 @@ const initialState: AllFilmsData = {
   activeFilmId: null,
 };
 
-export const allFilmsData = createReducer(initialState, (builder) => {
+export const allFilmsDataReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(loadAllFilmsData, (state, action) => {
       state.isDataLoaded = true;

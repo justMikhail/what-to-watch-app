@@ -14,8 +14,8 @@ import AddReviewPage from '../pages/add-review-page/add-review-page';
 import PlayerPage from '../pages/player-page/player-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import Loader from '../loader/loader';
-import {getAuthorizationStatus} from '../../store/user-data/selectors';
-import {getLoadedDataStatus} from '../../store/all-films-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-data-reducer/selectors';
+import {getLoadedDataStatus} from '../../store/all-films-data-reducer/selectors';
 
 const PromoFilmData = {
   TITLE: 'The Grand Budapest Hotel',

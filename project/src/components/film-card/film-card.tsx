@@ -6,7 +6,7 @@ import {FilmType} from '../../types/film-type';
 import {AppRoute} from '../../const/routs';
 
 import VideoPlayer from '../video-player/video-player';
-import {getActiveFilmId} from '../../store/all-films-data/selectors';
+import {getActiveFilmId} from '../../store/all-films-data-reducer/selectors';
 import {setActiveFilmId} from '../../store/action';
 
 

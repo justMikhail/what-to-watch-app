@@ -3,10 +3,7 @@ import {useSelector} from 'react-redux';
 import {filterFilmsBySelectedGenre} from '../../utils/utils';
 
 import FilmCard from '../film-card/film-card';
-import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data/selectors';
-
-// type FilmListProps = {
-// }
+import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data-reducer/selectors';
 
 function FilmsList(): JSX.Element {
   const selectedGenre = useSelector(getSelectedGenre);

@@ -2,10 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectGenre} from '../../store/action';
 
 import {getGenresFromFilmList} from '../../utils/utils';
-import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data/selectors';
-
-// type GenreListProps = {
-// }
+import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data-reducer/selectors';
 
 function GenreList(): JSX.Element {
   const genres = getGenresFromFilmList(useSelector(getAllFilmsData));
