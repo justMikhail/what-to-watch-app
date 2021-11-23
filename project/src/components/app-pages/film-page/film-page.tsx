@@ -8,7 +8,7 @@ import Loader from '../../loader/loader';
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
 import {useSelector} from 'react-redux';
-import {getAllFilmsData} from '../../../store/all-films-data-reducer/selectors';
+import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
 
 type FilmPageParams = {
   id: string;

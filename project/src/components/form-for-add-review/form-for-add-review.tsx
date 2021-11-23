@@ -1,6 +1,6 @@
 import {Fragment, ChangeEvent, useState} from 'react';
 
-function AddReviewForm (): JSX.Element {
+function FormForAddReview (): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;
   const MIN_REVIEW_LENGTH = 50;
   const MAX_REVIEW_LENGTH = 400;
@@ -70,4 +70,4 @@ function AddReviewForm (): JSX.Element {
   );
 }
 
-export default AddReviewForm;
+export default FormForAddReview;

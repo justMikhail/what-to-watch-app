@@ -6,7 +6,7 @@ export type UserData = {
   authorizationStatus: AuthorizationStatus,
 }
 
-export type AllFilmsData = {
+export type FilmsData = {
   isDataLoaded: boolean,
   allFilmsData: FilmType[],
   selectedGenre: string,

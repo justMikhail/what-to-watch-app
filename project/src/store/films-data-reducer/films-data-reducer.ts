@@ -1,17 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {AllFilmsData} from '../../types/state';
+import {FilmsData} from '../../types/state';
 import {loadAllFilmsData, selectGenre, setActiveFilmId} from '../action';
 import {Genre} from '../../const/const';
 
-const initialState: AllFilmsData = {
+const initialState: FilmsData = {
   isDataLoaded: false,
   allFilmsData: [],
   selectedGenre: Genre.DefaultGenre,
   activeFilmId: null,
 };
 
-export const allFilmsDataReducer = createReducer(initialState, (builder) => {
+export const filmsDataReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(loadAllFilmsData, (state, action) => {
       state.isDataLoaded = true;

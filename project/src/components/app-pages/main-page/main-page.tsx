@@ -1,6 +1,7 @@
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
 import GenreList from '../../genre-list/genre-list';
+import Footer from '../../footer/footer';
 
 type MainPageProps = {
   title: string;
@@ -86,19 +87,9 @@ function MainPage(props: MainPageProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
           <FilmsList />
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
         </section>
 
-        <footer className="page-footer">
-          <Logo isLight/>
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
 
       </div>
     </>

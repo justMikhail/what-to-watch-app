@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../../const/routs';
 import styles from './not-found-page.module.css';
 import img from'./img/not-found-page-img.jpg';
+import Footer from '../../footer/footer';
 
 function NotFoundPage(): JSX.Element {
   const location = useLocation();
@@ -25,6 +26,8 @@ function NotFoundPage(): JSX.Element {
           </Link>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

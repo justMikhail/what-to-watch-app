@@ -1,5 +1,5 @@
 import Logo from '../../logo/Logo';
-import AddReviewForm from '../../add-review-form/add-review-form';
+import FormForAddReview from '../../form-for-add-review/form-for-add-review';
 
 function AddReviewPage(): JSX.Element {
   return (
@@ -53,7 +53,7 @@ function AddReviewPage(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <AddReviewForm />
+        <FormForAddReview />
       </div>
     </section>
   );
