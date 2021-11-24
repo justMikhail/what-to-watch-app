@@ -1,7 +1,19 @@
 import Logo from '../../logo/Logo';
 import FormForAddReview from '../../form-for-add-review/form-for-add-review';
+import {useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+
 
 function AddReviewPage(): JSX.Element {
+  const params = useParams<{ id: string }>();
+  const filmId = parseInt(params.id, 10);
+  const currentFilm = useSelector(getAllFilmsData).find((filmItem) => filmItem.id === filmId);
+
+  const onPostHandler = (reviewData: {rating: number, comment: string}) => {
+    console.log(reviewData)
+  }
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">

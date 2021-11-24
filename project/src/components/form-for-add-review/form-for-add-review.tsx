@@ -2,7 +2,7 @@ import {Fragment, ChangeEvent, useState} from 'react';
 
 function FormForAddReview (): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;
-  const MIN_REVIEW_LENGTH = 50;
+  const MIN_REVIEW_LENGTH = 5;
   const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');
@@ -71,3 +71,4 @@ function FormForAddReview (): JSX.Element {
 }
 
 export default FormForAddReview;
+
