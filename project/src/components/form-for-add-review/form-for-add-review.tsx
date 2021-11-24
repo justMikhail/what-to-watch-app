@@ -7,7 +7,7 @@ type FormForAddReviewType = {
 
 function FormForAddReview (props: FormForAddReviewType): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;
-  const MIN_REVIEW_LENGTH = 5;
+  const MIN_REVIEW_LENGTH = 10; //todo 50
   const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');

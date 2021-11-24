@@ -1,15 +1,15 @@
 import {useEffect, useState} from 'react';
 import {TabList, Tabs, Tab, TabPanel} from 'react-tabs';
-//import Overview from './overview/overview';
-//import Details from './details/details';
-//import Review from './reviews/review/review';
+import Overview from './overview/overview';
+import Details from './details/details';
+import Reviews from './reviews/reviews';
 import {FilmType} from '../../types/film-type';
 
 type FilmTabsProps = {
   film: FilmType,
 }
 
-function FilmTabs(props: FilmTabsProps): JSX.Element {
+function FilmInfoTabs(props: FilmTabsProps): JSX.Element {
   const [tabIndex, setTabIndex] = useState(0);
   const {film} = props;
 
@@ -40,17 +40,17 @@ function FilmTabs(props: FilmTabsProps): JSX.Element {
           </TabList>
         </nav>
         <TabPanel>
-          {/*<Overview film={film}/>*/}
+          <Overview film={film}/>
         </TabPanel>
         <TabPanel>
-          {/*<Details film={film}/>*/}
+          <Details film={film}/>
         </TabPanel>
         <TabPanel>
-          {/*<Reviews filmId={film.id}/>*/}
+          <Reviews filmId={film.id}/>
         </TabPanel>
       </Tabs>
     </div>
   );
 }
 
-export default FilmTabs;
+export default FilmInfoTabs;
