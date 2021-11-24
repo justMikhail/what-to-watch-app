@@ -7,6 +7,7 @@ import {
   requireAuthorizationStatus,
   setUserInfo,
   requireLogout,
+  loadPromoFilmData,
   loadAllFilmsData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
@@ -20,6 +21,7 @@ export enum ActionType {
   RequireAuthorizationStatus = 'user/requireAuthorizationStatus',
   SetUserInfo = 'user/setUserInfo',
   RequireLogout = 'user/requireLogout',
+  LoadPromoFilmData = 'data/loadPromoFilmData',
   LoadAllFilmsData = 'data/loadAllFilmsData',
   LoadCurrentFilmData = 'data/loadCurrentFilmData',
   LoadSimilarFilmsData = 'data/loadSimilarFilmsData',
@@ -32,6 +34,7 @@ export type Actions =
   | ReturnType<typeof requireAuthorizationStatus>
   | ReturnType<typeof setUserInfo>
   | ReturnType<typeof requireLogout>
+  | ReturnType<typeof loadPromoFilmData>
   | ReturnType<typeof loadAllFilmsData>
   | ReturnType<typeof loadCurrentFilmData>
   | ReturnType<typeof loadSimilarFilmsData>

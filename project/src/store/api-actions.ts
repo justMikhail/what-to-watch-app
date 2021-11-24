@@ -20,6 +20,7 @@ import {
   requireAuthorizationStatus,
   setUserInfo,
   requireLogout,
+  loadPromoFilmData,
   loadAllFilmsData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
@@ -61,6 +62,17 @@ export const logOutAction = (): ThunkActionResult =>
     dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(setUserInfo(null));
     dispatch(requireLogout());
+  };
+
+export const fetchPromoFilmDataAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await  api.get((ApiRoute.Promo));
+      const adaptedData = adaptServerFilmToClient(data);
+      dispatch(loadPromoFilmData(adaptedData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
   };
 
 export const fetchAllFilmsDataAction = (): ThunkActionResult =>

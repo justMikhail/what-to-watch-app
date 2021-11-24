@@ -1,6 +1,6 @@
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
-import {getSelectedGenre} from '../../../store/films-data-reducer/selectors';
+import {getPromoFilmsData, getSelectedGenre} from '../../../store/films-data-reducer/selectors';
 import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
 import {filterFilmsBySelectedGenre} from '../../../utils/utils';
 
@@ -8,17 +8,29 @@ import FilmsList from '../../films-list/films-list';
 import GenreList from '../../genre-list/genre-list';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
+import {useEffect} from 'react';
+import {fetchPromoFilmDataAction} from '../../../store/api-actions';
+import PrimaryButton from '../../primary-button/primary-button';
+import {redirectToRoute} from '../../../store/action';
+import {AppRoute} from '../../../const/routs';
 
-type MainPageProps = {
-  title: string;
-  genre: string;
-  year: number;
-}
-
-function MainPage(props: MainPageProps): JSX.Element {
-  const {title, genre, year} = props;
+function MainPage(): JSX.Element {
+  const dispatch = useDispatch();
+  const promoFilm = useSelector(getPromoFilmsData);
   const selectedGenre = useSelector(getSelectedGenre);
   const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
+
+  const onPlayButtonClickHandler = () => {
+    dispatch(redirectToRoute(AppRoute.Player));
+  };
+
+  const onAddToMyListButtonClickHandler = () => {
+    console.log('Add film to favorites');
+  };
+
+  useEffect(() => {
+    dispatch(fetchPromoFilmDataAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -45,30 +57,33 @@ function MainPage(props: MainPageProps): JSX.Element {
               />
             </div>
             <div className="film-card__desc">
+
               <h2 className="film-card__title">
-                {title}
+                {promoFilm.name}
               </h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">
-                  {genre}
+                  {promoFilm.genre}
                 </span>
                 <span className="film-card__year">
-                  {year}
+                  {promoFilm.released}
                 </span>
               </p>
+
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width={19} height={19}>
+
+                <PrimaryButton buttonText="Play" onButtonClickHandler={onPlayButtonClickHandler}>
+                  <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s" />
                   </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                </PrimaryButton>
+
+                <PrimaryButton buttonText="My List" onButtonClickHandler={onAddToMyListButtonClickHandler}>
+                  <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#add" />
                   </svg>
-                  <span>My list</span>
-                </button>
+                </PrimaryButton>
+
               </div>
             </div>
           </div>
@@ -76,15 +91,12 @@ function MainPage(props: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
           <FilmsList filmsForRender={filmForRender} />
         </section>
-
         <Footer />
-
       </div>
     </>
   );

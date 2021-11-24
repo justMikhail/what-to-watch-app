@@ -39,11 +39,11 @@ function FilmPage(): JSX.Element {
     const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: currentFilmData.id});
 
     const onPlayButtonClickHandler = () => {
-
+      dispatch(redirectToRoute(AppRoute.Player));
     };
 
     const onAddToMyListButtonClickHandler = () => {
-
+      console.log('Add film to favorites');
     };
 
     const onAddReviewButtonClickHandler = () => {

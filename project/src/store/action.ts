@@ -22,6 +22,13 @@ export const setUserInfo = createAction(
   }),
 );
 
+export const loadPromoFilmData = createAction(
+  ActionType.LoadPromoFilmData,
+  (promoFilmData: FilmType) => ({
+    payload: promoFilmData,
+  }),
+);
+
 export const loadAllFilmsData = createAction(
   ActionType.LoadAllFilmsData,
   (allFilmsData: FilmType[]) => ({

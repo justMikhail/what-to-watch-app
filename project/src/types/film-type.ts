@@ -17,5 +17,3 @@ export type FilmType = {
   videoLink: string,
   previewVideoLink: string
 };
-
-//export type CurrnetFilm

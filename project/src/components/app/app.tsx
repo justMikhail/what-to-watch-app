@@ -17,12 +17,6 @@ import Loader from '../loader/loader';
 import {getAuthorizationStatus} from '../../store/user-data-reducer/selectors';
 import {getLoadedDataStatus} from '../../store/films-data-reducer/selectors';
 
-const PromoFilmData = {
-  TITLE: 'The Grand Budapest Hotel',
-  GENRE: 'Drama',
-  YEAR: 2014,
-};
-
 function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getLoadedDataStatus);
@@ -37,11 +31,7 @@ function App(): JSX.Element {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainPage
-            title = {PromoFilmData.TITLE}
-            genre = {PromoFilmData.GENRE}
-            year = {PromoFilmData.YEAR}
-          />
+          <MainPage />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <SignInPage />

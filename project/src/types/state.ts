@@ -12,6 +12,7 @@ export type UserData = {
 export type FilmsData = {
   isDataLoaded: boolean;
   allFilmsData: FilmType[];
+  promoFilmData: FilmType;
   selectedGenre: string;
   activeFilmId: null | number;
 }

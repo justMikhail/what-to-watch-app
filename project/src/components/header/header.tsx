@@ -21,11 +21,7 @@ function Header(props: HeaderProps): JSX.Element {
   const userInfo = useSelector(getUserInfo);
   const dispatch = useDispatch();
 
-  const className = (`
-    page-header
-    ${userPage && 'user-page__head'}
-    ${filmCard && 'film-card__head'}
-  `);
+  const className = (`page-header ${userPage && 'user-page__head'} ${filmCard && 'film-card__head'}`);
 
   const onLogInButtonClickHandler = () => {
     dispatch(redirectToRoute(AppRoute.SignIn));
