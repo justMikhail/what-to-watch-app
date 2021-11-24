@@ -20,6 +20,8 @@ function MainPage(): JSX.Element {
   const selectedGenre = useSelector(getSelectedGenre);
   const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
 
+  //todo redirect to player. Add engine for player.
+
   const onPlayButtonClickHandler = () => {
     dispatch(redirectToRoute(AppRoute.Player));
   };
