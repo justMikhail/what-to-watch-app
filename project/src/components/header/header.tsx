@@ -15,7 +15,8 @@ type HeaderProps = {
   filmCard?: boolean,
 }
 
-function Header({ children, userPage, filmCard }: HeaderProps): JSX.Element {
+function Header(props: HeaderProps): JSX.Element {
+  const {children, userPage, filmCard} = props;
   const isAuthorizedUser = useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
   const userInfo = useSelector(getUserInfo);
   const dispatch = useDispatch();

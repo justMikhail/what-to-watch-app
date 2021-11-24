@@ -2,7 +2,8 @@ import {useRef, FormEvent} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {logInAction} from '../../../store/api-actions';
-import Logo from '../../logo/Logo';
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
 
 function SignInPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -23,10 +24,11 @@ function SignInPage(): JSX.Element {
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo/>
+
+      <Header userPage>
         <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      </Header>
+
       <div className="sign-in user-page__content">
         <form
           className="sign-in__form"
@@ -68,12 +70,7 @@ function SignInPage(): JSX.Element {
           </div>
         </form>
       </div>
-      <footer className="page-footer">
-        <Logo isLight/>
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

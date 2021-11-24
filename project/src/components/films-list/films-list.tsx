@@ -27,15 +27,17 @@ function FilmsList(): JSX.Element {
           ),
         )}
       </div>
-      <div className="catalog__more">
-        <button
-          className="catalog__button"
-          type="button"
-          onClick={onShowMoreButtonClickHandler}
-        >
-          Show more
-        </button>
-      </div>
+      {visibleFilms <= filmForRender.length && (
+        <div className="catalog__more">
+          <button
+            className="catalog__button"
+            type="button"
+            onClick={onShowMoreButtonClickHandler}
+          >
+            Show more
+          </button>
+        </div>
+      )}
     </>
   );
 }
