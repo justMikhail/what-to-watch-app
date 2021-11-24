@@ -20,7 +20,7 @@ export type FilmsData = {
 export type CurrentFilmData = {
   currentFilm: FilmType | null;
   similarFilms: FilmType[];
-  filmReviews: ReviewType[] | [];
+  filmReviews: ReviewType[];
   isCurrentFilmLoaded: boolean;
   isCommentPosting: boolean;
 }

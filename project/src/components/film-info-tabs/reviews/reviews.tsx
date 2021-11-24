@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getFilmReviewsData} from '../../../store/current-film-reducer/selectors';
 
 import Review from './review/review';
+import {fetchFilmReviewsAction} from '../../../store/api-actions';
 
 type ReviewsProps = {
   filmId: number,
@@ -11,10 +12,10 @@ type ReviewsProps = {
 function Reviews(props: ReviewsProps): JSX.Element {
   const {filmId} = props;
   const dispatch = useDispatch();
-  const reviews = useSelector(getFilmReviewsData(filmId));
+  const reviews = useSelector(getFilmReviewsData);
 
   useEffect(() => {
-    dispatch(getFilmReviewsData(filmId));
+    dispatch(fetchFilmReviewsAction(filmId));
   }, [filmId, dispatch]);
 
   const reviewElements = reviews.map((review) => (<Review key={review.id} review={review}/>));

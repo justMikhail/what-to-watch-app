@@ -53,8 +53,8 @@ export const loadCurrentFilmData = createAction(
 
 export const loadFilmReviews = createAction(
   ActionType.LoadFilmReview,
-  (filmReview: ReviewType) => ({
-    payload: filmReview,
+  (filmReviews: ReviewType[]) => ({
+    payload: filmReviews,
   }),
 );
 

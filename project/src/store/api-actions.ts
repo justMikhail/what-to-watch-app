@@ -24,8 +24,10 @@ import {
   loadAllFilmsData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
-  redirectToRoute, loadFilmReviews
+  redirectToRoute,
+  loadFilmReviews
 } from './action';
+import {ReviewType} from '../types/review-type';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
 const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
@@ -107,11 +109,11 @@ export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
     }
   };
 
-export const fetchFilmReviewAction = (id: number): ThunkActionResult =>
+export const fetchFilmReviewsAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
       const filmPath = generatePath(ApiRoute.FilmComments, {id});
-      const {data} = await api.get(filmPath);
+      const {data} = await api.get<ReviewType[]>(filmPath);
       dispatch(loadFilmReviews(data));
     } catch (error) {
       toast.info(SOMETHING_ERROR_MESSAGE);
