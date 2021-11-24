@@ -3,7 +3,8 @@ import {CurrentFilmData} from '../../types/state';
 import {
   loadCurrentFilmData,
   loadSimilarFilmsData,
-  loadFilmReviews
+  loadFilmReviews,
+  postFilmReviews
 } from '../action';
 
 const initialState: CurrentFilmData = {
@@ -11,7 +12,7 @@ const initialState: CurrentFilmData = {
   similarFilms: [],
   filmReviews: [],
   isCurrentFilmLoaded: false,
-  isCommentPosting: false,
+  isCommentPosted: false,
 };
 
 export const currentFilmDataReducer = createReducer(initialState, (builder) => {
@@ -25,5 +26,8 @@ export const currentFilmDataReducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilmReviews, (state, action) => {
       state.filmReviews = action.payload;
+    })
+    .addCase(postFilmReviews, (state, action) => {
+      state.isCommentPosted = action.payload;
     });
 });

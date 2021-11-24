@@ -14,6 +14,7 @@ import {
   loadFilmReviews,
   selectGenre,
   setActiveFilmId,
+  postFilmReviews,
   redirectToRoute
 } from '../store/action';
 
@@ -29,6 +30,7 @@ export enum ActionType {
   LoadFilmReview = 'data/loadFilmReview',
   SelectGenre = 'data/selectGenre',
   SetActiveFilmId = 'data/setActiveFilmId',
+  PostFilmReviews = 'data/postFilmReviews',
   RedirectToRoute = 'app/redirectToRoute',
 }
 
@@ -43,6 +45,7 @@ export type Actions =
   | ReturnType<typeof loadFilmReviews>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
+  | ReturnType<typeof postFilmReviews>
   | ReturnType<typeof redirectToRoute>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

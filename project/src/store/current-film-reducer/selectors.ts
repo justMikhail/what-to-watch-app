@@ -6,3 +6,4 @@ import {ReviewType} from '../../types/review-type';
 export const getCurrentFilmData = (state: State): null | FilmType => state[NameSpace.currentFilmData].currentFilm;
 export const getSimilarFilmsData = (state: State): FilmType[] => state[NameSpace.currentFilmData].similarFilms;
 export const getFilmReviewsData = (state: State): ReviewType[] => state[NameSpace.currentFilmData].filmReviews;
+export const getIsCommentPosted = (state: State): boolean => state[NameSpace.currentFilmData].isCommentPosted;

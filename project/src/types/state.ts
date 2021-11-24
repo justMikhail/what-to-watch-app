@@ -22,7 +22,7 @@ export type CurrentFilmData = {
   similarFilms: FilmType[];
   filmReviews: ReviewType[];
   isCurrentFilmLoaded: boolean;
-  isCommentPosting: boolean;
+  isCommentPosted: boolean;
 }
 
 export type State = RootState;
