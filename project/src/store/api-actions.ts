@@ -16,6 +16,8 @@ import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
 
+import {getToken} from '../services/token';
+
 import {
   requireAuthorizationStatus,
   setUserInfo,
@@ -36,6 +38,7 @@ const SOMETHING_ERROR_MESSAGE = 'Something went wrong try again later';
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
+      // This API call is required
       await api.get(ApiRoute.Login);
       const token = getToken();
       if (token) {

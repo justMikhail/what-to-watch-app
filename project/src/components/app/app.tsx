@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const/routs';
@@ -16,10 +17,17 @@ import NotFoundPage from '../app-pages/not-found-page/not-found-page';
 import Loader from '../loader/loader';
 import {getAuthorizationStatus} from '../../store/user-data-reducer/selectors';
 import {getLoadedDataStatus} from '../../store/films-data-reducer/selectors';
+import {checkAuthStatusAction, fetchAllFilmsDataAction} from '../../store/api-actions';
 
 function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getLoadedDataStatus);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthStatusAction());
+    dispatch(fetchAllFilmsDataAction());
+  }, []);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

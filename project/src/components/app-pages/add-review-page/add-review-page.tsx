@@ -65,7 +65,7 @@ function AddReviewPage(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <FormForAddReview />
+        <FormForAddReview onPost={onPostHandler} />
       </div>
     </section>
   );

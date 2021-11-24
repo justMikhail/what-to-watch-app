@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import {createApi} from './services/api';
 import {rootReducer} from './store/root-reducer';
 import {requireAuthorizationStatus} from './store/action';
-import {checkAuthStatusAction, fetchAllFilmsDataAction} from './store/api-actions';
 import {redirect} from './middlewares/redirect';
 import {AuthorizationStatus} from './const/authorization-status';
 
@@ -27,9 +26,6 @@ const store = configureStore({
       },
     }).concat(redirect),
 });
-
-store.dispatch(checkAuthStatusAction());
-store.dispatch(fetchAllFilmsDataAction());
 
 ReactDOM.render(
   <React.StrictMode>
