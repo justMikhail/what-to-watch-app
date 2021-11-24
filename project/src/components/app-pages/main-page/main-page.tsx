@@ -25,7 +25,7 @@ function MainPage(): JSX.Element {
   };
 
   const onAddToMyListButtonClickHandler = () => {
-    console.log('Add film to favorites');
+    dispatch(redirectToRoute(AppRoute.Player));
   };
 
   useEffect(() => {
