@@ -1,5 +1,4 @@
 import Logo from '../../logo/Logo';
-import FilmsList from '../../films-list/films-list';
 
 function MyListPage(): JSX.Element {
 
@@ -22,7 +21,7 @@ function MyListPage(): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList />
+        {/*<FilmsList />*/}
       </section>
 
       <footer className="page-footer">

@@ -1,3 +1,9 @@
+import {useSelector} from 'react-redux';
+
+import {getSelectedGenre} from '../../../store/films-data-reducer/selectors';
+import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+import {filterFilmsBySelectedGenre} from '../../../utils/utils';
+
 import FilmsList from '../../films-list/films-list';
 import GenreList from '../../genre-list/genre-list';
 import Footer from '../../footer/footer';
@@ -11,6 +17,8 @@ type MainPageProps = {
 
 function MainPage(props: MainPageProps): JSX.Element {
   const {title, genre, year} = props;
+  const selectedGenre = useSelector(getSelectedGenre);
+  const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
 
   return (
     <>
@@ -72,7 +80,7 @@ function MainPage(props: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
-          <FilmsList />
+          <FilmsList filmsForRender={filmForRender} />
         </section>
 
         <Footer />

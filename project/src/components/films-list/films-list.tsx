@@ -1,15 +1,15 @@
 import {useState} from 'react';
-import {useSelector} from 'react-redux';
-
-import {filterFilmsBySelectedGenre} from '../../utils/utils';
 
 import FilmCard from '../film-card/film-card';
-import {getAllFilmsData, getSelectedGenre} from '../../store/films-data-reducer/selectors';
+import {FilmType} from '../../types/film-type';
 
-function FilmsList(): JSX.Element {
+type FilmListType = {
+  filmsForRender: FilmType[];
+}
+
+function FilmsList(props: FilmListType): JSX.Element {
+  const {filmsForRender} = props;
   const [visibleFilms, setVisibleFilms] = useState(8);
-  const selectedGenre = useSelector(getSelectedGenre);
-  const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
 
   const onShowMoreButtonClickHandler = () => {
     setVisibleFilms((prevValue) => prevValue + 8);
@@ -18,7 +18,7 @@ function FilmsList(): JSX.Element {
   return (
     <>
       <div className="catalog__films-list">
-        {filmForRender.slice(0, visibleFilms).map((film) =>
+        {filmsForRender.slice(0, visibleFilms).map((film) =>
           (
             <FilmCard
               film={film}
@@ -27,7 +27,7 @@ function FilmsList(): JSX.Element {
           ),
         )}
       </div>
-      {visibleFilms <= filmForRender.length && (
+      {visibleFilms <= filmsForRender.length && (
         <div className="catalog__more">
           <button
             className="catalog__button"

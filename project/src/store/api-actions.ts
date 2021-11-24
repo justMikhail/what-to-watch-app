@@ -22,6 +22,7 @@ import {
   requireLogout,
   loadAllFilmsData,
   loadCurrentFilmData,
+  loadSimilarFilmsData,
   redirectToRoute
 } from './action';
 
@@ -67,6 +68,19 @@ export const fetchAllFilmsDataAction = (): ThunkActionResult =>
     const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
     const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
     dispatch(loadAllFilmsData(adaptedData));
+  };
+
+export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const similarFilmsPath = generatePath(ApiRoute.SimilarFilms, {id});
+      const {data} = await api.get<FilmType[]>(similarFilmsPath);
+      const adaptedData = data.map((serverFilm) =>
+        adaptServerFilmsToClient(serverFilm)).filter((film) => film.id !== id);
+      dispatch(loadSimilarFilmsData(adaptedData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
   };
 
 export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>

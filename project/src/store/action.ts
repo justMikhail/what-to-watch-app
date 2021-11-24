@@ -29,6 +29,13 @@ export const loadAllFilmsData = createAction(
   }),
 );
 
+export const loadSimilarFilmsData = createAction(
+  ActionType.LoadSimilarFilmsData,
+  (similarFilmsData: FilmType[]) => ({
+    payload: similarFilmsData,
+  }),
+);
+
 export const loadCurrentFilmData = createAction(
   ActionType.LoadCurrentFilmData,
   (currentFilmData: FilmType) => ({

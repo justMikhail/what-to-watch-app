@@ -1,14 +1,19 @@
 import {Link} from 'react-router-dom';
 import {generatePath, useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
 
 import {AppRoute} from '../../../const/routs';
 import {FilmType} from '../../../types/film-type';
 
+import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+import {getSimilarFilmsData} from '../../../store/current-film-reducer/selectors';
+import {fetchSimilarFilmsDataAction} from '../../../store/api-actions';
+
 import Loader from '../../loader/loader';
 import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
-import {useSelector} from 'react-redux';
-import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+import Footer from '../../footer/footer';
 
 type FilmPageParams = {
   id: string;
@@ -16,10 +21,17 @@ type FilmPageParams = {
 
 function FilmPage(): JSX.Element {
 
+  const dispatch = useDispatch();
+  const similarFilms = useSelector(getSimilarFilmsData);
   const allFilms = useSelector(getAllFilmsData);
   const params = useParams<FilmPageParams>();
   const paramsId = parseInt(params.id, 10);
   const film: FilmType | undefined = allFilms.find((item) => item.id === paramsId);
+
+  useEffect(() => {
+    dispatch(fetchSimilarFilmsDataAction(paramsId));
+  }, [dispatch, paramsId]);
+
 
   if (film) {
     const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: film.id});
@@ -137,14 +149,9 @@ function FilmPage(): JSX.Element {
         <div className="page-content">
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
-            <FilmsList />
+            <FilmsList filmsForRender={similarFilms} />
           </section>
-          <footer className="page-footer">
-            <Logo />
-            <div className="copyright">
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </>
     );
