@@ -1,24 +1,11 @@
 import {useRef, FormEvent} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {logInAction} from '../../../store/api-actions';
-import {ThunkAppDispatch} from '../../../types/actions-types';
-import {AuthData} from '../../../types/auth-data';
-
 import Logo from '../../logo/Logo';
 
-const mapDispatchTpProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(logInAction(authData));
-  },
-});
-
-const connector = connect(null, mapDispatchTpProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function SignInPage(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+function SignInPage(): JSX.Element {
+  const dispatch = useDispatch();
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -27,10 +14,10 @@ function SignInPage(props: PropsFromRedux): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
+      dispatch(logInAction({
         login: loginRef.current.value,
         password: passwordRef.current.value,
-      });
+      }));
     }
   };
 
@@ -91,5 +78,4 @@ function SignInPage(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {SignInPage};
-export default connector(SignInPage);
+export default SignInPage;
