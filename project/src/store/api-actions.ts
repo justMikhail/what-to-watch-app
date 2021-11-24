@@ -24,7 +24,7 @@ import {
   loadAllFilmsData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
-  redirectToRoute
+  redirectToRoute, loadFilmReviews
 } from './action';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
@@ -102,6 +102,17 @@ export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
       const {data: serverCurrentFilm} = await api.get(filmPath);
       const currentFilmData = adaptServerFilmToClient(serverCurrentFilm);
       dispatch(loadCurrentFilmData(currentFilmData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const fetchFilmReviewAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const filmPath = generatePath(ApiRoute.FilmComments, {id});
+      const {data} = await api.get(filmPath);
+      dispatch(loadFilmReviews(data));
     } catch (error) {
       toast.info(SOMETHING_ERROR_MESSAGE);
     }

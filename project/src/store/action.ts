@@ -5,6 +5,7 @@ import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {AppRoute} from '../const/routs';
 import {UserInfoType} from '../types/user-info-type';
+import {ReviewType} from '../types/review-type';
 
 export const requireAuthorizationStatus = createAction(
   ActionType.RequireAuthorizationStatus,
@@ -47,6 +48,13 @@ export const loadCurrentFilmData = createAction(
   ActionType.LoadCurrentFilmData,
   (currentFilmData: FilmType) => ({
     payload: currentFilmData,
+  }),
+);
+
+export const loadFilmReviews = createAction(
+  ActionType.LoadFilmReview,
+  (filmReview: ReviewType) => ({
+    payload: filmReview,
   }),
 );
 

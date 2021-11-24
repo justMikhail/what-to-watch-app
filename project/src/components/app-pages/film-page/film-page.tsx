@@ -106,8 +106,8 @@ function FilmPage(): JSX.Element {
                   height={327}
                 />
               </div>
-              <div className="film-card__desc">
 
+              <div className="film-card__desc">
                 <nav className="film-nav film-card__nav">
                   <ul className="film-nav__list">
                     <li className="film-nav__item film-nav__item--active">

@@ -1,6 +1,6 @@
 import {RootState} from '../store/root-reducer';
 import {FilmType} from './film-type';
-import {CommentType} from './CommentType';
+import {ReviewType} from './review-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {UserInfoType} from './user-info-type';
 
@@ -20,7 +20,7 @@ export type FilmsData = {
 export type CurrentFilmData = {
   currentFilm: FilmType | null;
   similarFilms: FilmType[];
-  filmComments: CommentType[];
+  filmReviews: ReviewType[] | [];
   isCurrentFilmLoaded: boolean;
   isCommentPosting: boolean;
 }

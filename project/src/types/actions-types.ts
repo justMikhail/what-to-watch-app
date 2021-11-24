@@ -11,6 +11,7 @@ import {
   loadAllFilmsData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
+  loadFilmReviews,
   selectGenre,
   setActiveFilmId,
   redirectToRoute
@@ -25,6 +26,7 @@ export enum ActionType {
   LoadAllFilmsData = 'data/loadAllFilmsData',
   LoadCurrentFilmData = 'data/loadCurrentFilmData',
   LoadSimilarFilmsData = 'data/loadSimilarFilmsData',
+  LoadFilmReview = 'data/loadFilmReview',
   SelectGenre = 'data/selectGenre',
   SetActiveFilmId = 'data/setActiveFilmId',
   RedirectToRoute = 'app/redirectToRoute',
@@ -38,6 +40,7 @@ export type Actions =
   | ReturnType<typeof loadAllFilmsData>
   | ReturnType<typeof loadCurrentFilmData>
   | ReturnType<typeof loadSimilarFilmsData>
+  | ReturnType<typeof loadFilmReviews>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
   | ReturnType<typeof redirectToRoute>;

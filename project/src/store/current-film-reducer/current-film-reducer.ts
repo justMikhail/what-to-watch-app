@@ -2,13 +2,14 @@ import {createReducer} from '@reduxjs/toolkit';
 import {CurrentFilmData} from '../../types/state';
 import {
   loadCurrentFilmData,
-  loadSimilarFilmsData
+  loadSimilarFilmsData,
+  loadFilmReviews
 } from '../action';
 
 const initialState: CurrentFilmData = {
   currentFilm: null,
   similarFilms: [],
-  filmComments: [],
+  filmReviews: [],
   isCurrentFilmLoaded: false,
   isCommentPosting: false,
 };
@@ -21,5 +22,8 @@ export const currentFilmDataReducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadSimilarFilmsData, (state, action) => {
       state.similarFilms = action.payload;
+    })
+    .addCase(loadFilmReviews, (state, action) => {
+      state.filmReviews = action.payload;
     });
 });
