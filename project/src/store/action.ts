@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+
 import {ActionType} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
@@ -25,6 +26,13 @@ export const loadAllFilmsData = createAction(
   ActionType.LoadAllFilmsData,
   (allFilmsData: FilmType[]) => ({
     payload: allFilmsData,
+  }),
+);
+
+export const loadCurrentFilmData = createAction(
+  ActionType.LoadCurrentFilmData,
+  (currentFilmData: FilmType) => ({
+    payload: currentFilmData,
   }),
 );
 

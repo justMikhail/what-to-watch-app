@@ -8,6 +8,7 @@ import {
   setUserInfo,
   requireLogout,
   loadAllFilmsData,
+  loadCurrentFilmData,
   selectGenre,
   setActiveFilmId,
   redirectToRoute
@@ -19,6 +20,7 @@ export enum ActionType {
   SetUserInfo = 'user/setUserInfo',
   RequireLogout = 'user/requireLogout',
   LoadAllFilmsData = 'data/loadAllFilmsData',
+  LoadCurrentFilmData = 'data/loadCurrentFilmData',
   SelectGenre = 'main/selectGenre',
   SetActiveFilmId = 'data/setActiveFilmId',
   RedirectToRoute = 'app/redirectToRoute',
@@ -29,6 +31,7 @@ export type Actions =
   | ReturnType<typeof setUserInfo>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadAllFilmsData>
+  | ReturnType<typeof loadCurrentFilmData>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
   | ReturnType<typeof redirectToRoute>;
