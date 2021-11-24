@@ -5,6 +5,7 @@ import {State} from './state';
 
 import {
   requireAuthorizationStatus,
+  setUserInfo,
   requireLogout,
   loadAllFilmsData,
   selectGenre,
@@ -15,6 +16,7 @@ import {
 
 export enum ActionType {
   RequireAuthorizationStatus = 'user/requireAuthorizationStatus',
+  SetUserInfo = 'user/setUserInfo',
   RequireLogout = 'user/requireLogout',
   LoadAllFilmsData = 'data/loadAllFilmsData',
   SelectGenre = 'main/selectGenre',
@@ -24,6 +26,7 @@ export enum ActionType {
 
 export type Actions =
   | ReturnType<typeof requireAuthorizationStatus>
+  | ReturnType<typeof setUserInfo>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadAllFilmsData>
   | ReturnType<typeof selectGenre>

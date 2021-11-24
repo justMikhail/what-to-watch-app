@@ -1,7 +1,7 @@
 import {toast} from 'react-toastify';
 
 import {saveToken, dropToken, Token} from '../services/token';
-import {adaptServerFilmsToClient} from '../services/adapter';
+import {adaptServerFilmsToClient, adaptServerUserInfoToClient} from '../services/adapter';
 
 import {AppRoute} from '../const/routs';
 import {ApiRoute} from '../const/routs';
@@ -15,10 +15,11 @@ import {
   requireAuthorizationStatus,
   requireLogout,
   loadAllFilmsData,
-  redirectToRoute
+  redirectToRoute, setUserInfo
 } from './action';
 
-const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
+const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -30,19 +31,26 @@ export const checkAuthStatusAction = (): ThunkActionResult =>
     }
   };
 
-export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
+export const logInAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    try {
+      const {data} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+      dispatch(setUserInfo(adaptServerUserInfoToClient(data)));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch (error) {
+      toast.info(SIGN_IN_FAIL_MESSAGE);
+    }
   };
 
 
-export const logoutAction = (): ThunkActionResult =>
+export const logOutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     api.delete(ApiRoute.Logout);
     dropToken();
+    dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(setUserInfo(null));
     dispatch(requireLogout());
   };
 

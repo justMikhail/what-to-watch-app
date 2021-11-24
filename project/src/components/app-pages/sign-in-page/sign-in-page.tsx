@@ -1,7 +1,7 @@
 import {useRef, FormEvent} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {loginAction} from '../../../store/api-actions';
+import {logInAction} from '../../../store/api-actions';
 import {ThunkAppDispatch} from '../../../types/actions-types';
 import {AuthData} from '../../../types/auth-data';
 
@@ -9,7 +9,7 @@ import Logo from '../../logo/Logo';
 
 const mapDispatchTpProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
+    dispatch(logInAction(authData));
   },
 });
 

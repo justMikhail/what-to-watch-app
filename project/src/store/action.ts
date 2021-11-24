@@ -3,6 +3,7 @@ import {ActionType} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {AppRoute} from '../const/routs';
+import {UserInfoType} from '../types/user-info-type';
 
 export const requireAuthorizationStatus = createAction(
   ActionType.RequireAuthorizationStatus,
@@ -12,6 +13,13 @@ export const requireAuthorizationStatus = createAction(
 );
 
 export const requireLogout = createAction(ActionType.RequireLogout);
+
+export const setUserInfo = createAction(
+  ActionType.SetUserInfo,
+  (userInfo: UserInfoType) => ({
+    payload: userInfo,
+  }),
+);
 
 export const loadAllFilmsData = createAction(
   ActionType.LoadAllFilmsData,
