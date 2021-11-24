@@ -27,13 +27,22 @@ import {
   loadCurrentFilmData,
   loadSimilarFilmsData,
   redirectToRoute,
-  loadFilmReviews
+  loadFilmReviews,
+  isReviewsPosting
 } from './action';
-import {ReviewType} from '../types/review-type';
+import {ReviewFormType, ReviewType} from '../types/review-type';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
 const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
 const SOMETHING_ERROR_MESSAGE = 'Something went wrong try again later';
+
+const TOAST_CLOSE_TIMEOUT = 3000;
+
+export enum ToastMessage {
+  POST_SUCCESS = 'Congrats! Your review has been posted! You will be redirected to the film page shortly.',
+  POST_FAIL = 'Something went wrong. Comment hasn\'t been posted.',
+  POST_PROCESSING = 'Just a sec. Your review is posting now.',
+}
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -125,5 +134,31 @@ export const fetchFilmReviewsAction = (id: number): ThunkActionResult =>
       dispatch(loadFilmReviews(data));
     } catch (error) {
       toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const postFilmComment = (id: number, payload: ReviewFormType): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const postCommentPath = generatePath(ApiRoute.FilmComments, {id});
+    const filmPath = generatePath(AppRoute.Film, {id});
+
+    dispatch(isReviewsPosting(true));
+    toast.info(ToastMessage.POST_PROCESSING);
+
+    try {
+      await api.post<{token: Token}>(postCommentPath, payload);
+
+      toast.dismiss();
+      toast.success(ToastMessage.POST_SUCCESS, {autoClose: TOAST_CLOSE_TIMEOUT});
+
+      setTimeout(() => {
+        dispatch(redirectToRoute(filmPath));
+      }, TOAST_CLOSE_TIMEOUT);
+      dispatch(isReviewsPosting(false));
+
+    } catch (error) {
+      toast.dismiss();
+      toast.error(ToastMessage.POST_FAIL);
+      dispatch(isReviewsPosting(false));
     }
   };

@@ -14,7 +14,7 @@ import {
   loadFilmReviews,
   selectGenre,
   setActiveFilmId,
-  postFilmReviews,
+  isReviewsPosting,
   redirectToRoute
 } from '../store/action';
 
@@ -45,7 +45,7 @@ export type Actions =
   | ReturnType<typeof loadFilmReviews>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
-  | ReturnType<typeof postFilmReviews>
+  | ReturnType<typeof isReviewsPosting>
   | ReturnType<typeof redirectToRoute>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

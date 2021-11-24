@@ -1,7 +1,8 @@
 import {Fragment, ChangeEvent, useState} from 'react';
 
 type FormForAddReviewType = {
-  onPost: (post: { rating: number, comment: string }) => void;
+  currentFilmId: number;
+  onPost: (id: number, post: { rating: number, comment: string }) => void;
 }
 
 function FormForAddReview (props: FormForAddReviewType): JSX.Element {
@@ -23,7 +24,7 @@ function FormForAddReview (props: FormForAddReviewType): JSX.Element {
   };
 
   const handlePost = () => {
-    props.onPost({ rating: currentRating, comment: reviewText });
+    props.onPost(props.currentFilmId, { rating: currentRating, comment: reviewText });
   };
 
   return (
