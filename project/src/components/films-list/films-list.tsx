@@ -1,28 +1,44 @@
-import {useSelector} from 'react-redux';
-
-import {filterFilmsBySelectedGenre} from '../../utils/utils';
+import {useState} from 'react';
 
 import FilmCard from '../film-card/film-card';
-import {getAllFilmsData, getSelectedGenre} from '../../store/all-films-data/selectors';
+import {FilmType} from '../../types/film-type';
 
-// type FilmListProps = {
-// }
+type FilmListType = {
+  filmsForRender: FilmType[];
+}
 
-function FilmsList(): JSX.Element {
-  const selectedGenre = useSelector(getSelectedGenre);
-  const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
+function FilmsList(props: FilmListType): JSX.Element {
+  const {filmsForRender} = props;
+  const [visibleFilms, setVisibleFilms] = useState(8);
+
+  const onShowMoreButtonClickHandler = () => {
+    setVisibleFilms((prevValue) => prevValue + 8);
+  };
 
   return (
-    <div className="catalog__films-list">
-      {filmForRender.map((film) =>
-        (
-          <FilmCard
-            film={film}
-            key={film.id}
-          />
-        ),
+    <>
+      <div className="catalog__films-list">
+        {filmsForRender.slice(0, visibleFilms).map((film) =>
+          (
+            <FilmCard
+              film={film}
+              key={film.id}
+            />
+          ),
+        )}
+      </div>
+      {visibleFilms <= filmsForRender.length && (
+        <div className="catalog__more">
+          <button
+            className="catalog__button"
+            type="button"
+            onClick={onShowMoreButtonClickHandler}
+          >
+            Show more
+          </button>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

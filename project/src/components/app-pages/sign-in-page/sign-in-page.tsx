@@ -1,24 +1,12 @@
 import {useRef, FormEvent} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import {loginAction} from '../../../store/api-actions';
-import {ThunkAppDispatch} from '../../../types/actions-types';
-import {AuthData} from '../../../types/auth-data';
+import {logInAction} from '../../../store/api-actions';
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
 
-import Logo from '../../logo/Logo';
-
-const mapDispatchTpProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(null, mapDispatchTpProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function SignInPage(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+function SignInPage(): JSX.Element {
+  const dispatch = useDispatch();
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -27,19 +15,20 @@ function SignInPage(props: PropsFromRedux): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
+      dispatch(logInAction({
         login: loginRef.current.value,
         password: passwordRef.current.value,
-      });
+      }));
     }
   };
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo/>
+
+      <Header userPage>
         <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      </Header>
+
       <div className="sign-in user-page__content">
         <form
           className="sign-in__form"
@@ -81,15 +70,9 @@ function SignInPage(props: PropsFromRedux): JSX.Element {
           </div>
         </form>
       </div>
-      <footer className="page-footer">
-        <Logo isLight/>
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
 
-export {SignInPage};
-export default connector(SignInPage);
+export default SignInPage;

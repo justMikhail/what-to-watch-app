@@ -1,8 +1,11 @@
 import {createAction} from '@reduxjs/toolkit';
+
 import {ActionType} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {AppRoute} from '../const/routs';
+import {UserInfoType} from '../types/user-info-type';
+import {ReviewType} from '../types/review-type';
 
 export const requireAuthorizationStatus = createAction(
   ActionType.RequireAuthorizationStatus,
@@ -13,10 +16,45 @@ export const requireAuthorizationStatus = createAction(
 
 export const requireLogout = createAction(ActionType.RequireLogout);
 
+export const setUserInfo = createAction(
+  ActionType.SetUserInfo,
+  (userInfo: UserInfoType) => ({
+    payload: userInfo,
+  }),
+);
+
+export const loadPromoFilmData = createAction(
+  ActionType.LoadPromoFilmData,
+  (promoFilmData: FilmType) => ({
+    payload: promoFilmData,
+  }),
+);
+
 export const loadAllFilmsData = createAction(
   ActionType.LoadAllFilmsData,
   (allFilmsData: FilmType[]) => ({
     payload: allFilmsData,
+  }),
+);
+
+export const loadSimilarFilmsData = createAction(
+  ActionType.LoadSimilarFilmsData,
+  (similarFilmsData: FilmType[]) => ({
+    payload: similarFilmsData,
+  }),
+);
+
+export const loadCurrentFilmData = createAction(
+  ActionType.LoadCurrentFilmData,
+  (currentFilmData: FilmType) => ({
+    payload: currentFilmData,
+  }),
+);
+
+export const loadFilmReviews = createAction(
+  ActionType.LoadFilmReview,
+  (filmReviews: ReviewType[]) => ({
+    payload: filmReviews,
   }),
 );
 
@@ -34,9 +72,16 @@ export const setActiveFilmId = createAction(
   }),
 );
 
+export const isReviewsPosting = createAction(
+  ActionType.PostFilmReviews,
+  (isCommentPosted: boolean) => ({
+    payload: isCommentPosted,
+  }),
+);
+
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
-  (url: AppRoute) => ({
+  (url: AppRoute | string) => ({
     payload: url,
   }),
 );

@@ -1,8 +1,13 @@
 import {Fragment, ChangeEvent, useState} from 'react';
 
-function AddReviewForm (): JSX.Element {
+type FormForAddReviewType = {
+  currentFilmId: number;
+  onPost: (id: number, post: { rating: number, comment: string }) => void;
+}
+
+function FormForAddReview (props: FormForAddReviewType): JSX.Element {
   const RATING_SCALE_STEPS_COUNT = 10;
-  const MIN_REVIEW_LENGTH = 50;
+  const MIN_REVIEW_LENGTH = 10; //todo 50
   const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');
@@ -18,8 +23,12 @@ function AddReviewForm (): JSX.Element {
     setCurrentRating(+evt.target.value);
   };
 
+  const handlePost = () => {
+    props.onPost(props.currentFilmId, { rating: currentRating, comment: reviewText });
+  };
+
   return (
-    <form action="#" className="add-review__form">
+    <form className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
           {ratingScaleSteps.map((idx: number) => {
@@ -59,7 +68,8 @@ function AddReviewForm (): JSX.Element {
         <div className="add-review__submit">
           <button
             className="add-review__btn"
-            type="submit"
+            type="button"
+            onClick={handlePost}
             disabled={reviewText.length < MIN_REVIEW_LENGTH || reviewText.length > MAX_REVIEW_LENGTH || currentRating === 0}
           >
             Post
@@ -70,4 +80,5 @@ function AddReviewForm (): JSX.Element {
   );
 }
 
-export default AddReviewForm;
+export default FormForAddReview;
+

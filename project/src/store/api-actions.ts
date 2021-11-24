@@ -1,7 +1,12 @@
 import {toast} from 'react-toastify';
+import {generatePath} from 'react-router-dom';
 
 import {saveToken, dropToken, Token} from '../services/token';
-import {adaptServerFilmsToClient} from '../services/adapter';
+import {
+  adaptServerFilmsToClient,
+  adaptServerUserInfoToClient,
+  adaptServerFilmToClient
+} from '../services/adapter';
 
 import {AppRoute} from '../const/routs';
 import {ApiRoute} from '../const/routs';
@@ -11,44 +16,149 @@ import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
 
+import {getToken} from '../services/token';
+
 import {
   requireAuthorizationStatus,
+  setUserInfo,
   requireLogout,
+  loadPromoFilmData,
   loadAllFilmsData,
-  redirectToRoute
+  loadCurrentFilmData,
+  loadSimilarFilmsData,
+  redirectToRoute,
+  loadFilmReviews,
+  isReviewsPosting
 } from './action';
+import {ReviewFormType, ReviewType} from '../types/review-type';
 
-const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
+const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
+const SOMETHING_ERROR_MESSAGE = 'Something went wrong try again later';
+
+const TOAST_CLOSE_TIMEOUT = 3000;
+
+export enum ToastMessage {
+  POST_SUCCESS = 'Congrats! Your review has been posted! You will be redirected to the film page shortly.',
+  POST_FAIL = 'Something went wrong. Comment hasn\'t been posted.',
+  POST_PROCESSING = 'Just a sec. Your review is posting now.',
+}
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
+  async (dispatch, _getState, api): Promise<void> => {
     try {
+      // This API call is required
       await api.get(ApiRoute.Login);
-      dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+      const token = getToken();
+      if (token) {
+        dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+      } else {
+        dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+      }
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
     }
   };
 
-export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+export const logInAction = ({login: email, password}: AuthData): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+      dispatch(setUserInfo(adaptServerUserInfoToClient(data)));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch (error) {
+      toast.info(SIGN_IN_FAIL_MESSAGE);
+    }
   };
 
 
-export const logoutAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
+export const logOutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
     api.delete(ApiRoute.Logout);
     dropToken();
+    dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(setUserInfo(null));
     dispatch(requireLogout());
   };
 
-export const fetchFilmAction = (): ThunkActionResult =>
+export const fetchPromoFilmDataAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await  api.get((ApiRoute.Promo));
+      const adaptedData = adaptServerFilmToClient(data);
+      dispatch(loadPromoFilmData(adaptedData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const fetchAllFilmsDataAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
     const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
     dispatch(loadAllFilmsData(adaptedData));
+  };
+
+export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const similarFilmsPath = generatePath(ApiRoute.SimilarFilms, {id});
+      const {data} = await api.get<FilmType[]>(similarFilmsPath);
+      const adaptedData = data.map((serverFilm) =>
+        adaptServerFilmsToClient(serverFilm)).filter((film) => film.id !== id);
+      dispatch(loadSimilarFilmsData(adaptedData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const filmPath = generatePath(AppRoute.Film, {id});
+      const {data: serverCurrentFilm} = await api.get(filmPath);
+      const currentFilmData = adaptServerFilmToClient(serverCurrentFilm);
+      dispatch(loadCurrentFilmData(currentFilmData));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const fetchFilmReviewsAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const filmPath = generatePath(ApiRoute.FilmComments, {id});
+      const {data} = await api.get<ReviewType[]>(filmPath);
+      dispatch(loadFilmReviews(data));
+    } catch (error) {
+      toast.info(SOMETHING_ERROR_MESSAGE);
+    }
+  };
+
+export const postFilmComment = (id: number, payload: ReviewFormType): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const postCommentPath = generatePath(ApiRoute.FilmComments, {id});
+    const filmPath = generatePath(AppRoute.Film, {id});
+
+    dispatch(isReviewsPosting(true));
+    toast.info(ToastMessage.POST_PROCESSING);
+
+    try {
+      await api.post<{token: Token}>(postCommentPath, payload);
+
+      toast.dismiss();
+      toast.success(ToastMessage.POST_SUCCESS, {autoClose: TOAST_CLOSE_TIMEOUT});
+
+      setTimeout(() => {
+        dispatch(redirectToRoute(filmPath));
+      }, TOAST_CLOSE_TIMEOUT);
+      dispatch(isReviewsPosting(false));
+
+    } catch (error) {
+      toast.dismiss();
+      toast.error(ToastMessage.POST_FAIL);
+      dispatch(isReviewsPosting(false));
+    }
   };

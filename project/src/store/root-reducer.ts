@@ -1,15 +1,19 @@
 import {combineReducers} from 'redux';
-import {userData} from './user-data/user-data';
-import {allFilmsData} from './all-films-data/all-films-data';
+import {filmsDataReducer} from './films-data-reducer/films-data-reducer';
+import {currentFilmDataReducer} from './current-film-reducer/current-film-reducer';
+import {userDataReducer} from './user-data-reducer/user-data-reducer';
+
 
 export enum NameSpace {
-  dataUser = 'DATA_USER',
-  dataAllFilms = 'DATA_ALL_FILMS',
+  filmsData = 'FILMS_DATA',
+  currentFilmData = 'CURRENT_FILM_DATA',
+  userData = 'USER_DATA',
 }
 
 export const rootReducer = combineReducers({
-  [NameSpace.dataUser]: userData,
-  [NameSpace.dataAllFilms]: allFilmsData,
+  [NameSpace.filmsData]: filmsDataReducer,
+  [NameSpace.currentFilmData]: currentFilmDataReducer,
+  [NameSpace.userData]: userDataReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
