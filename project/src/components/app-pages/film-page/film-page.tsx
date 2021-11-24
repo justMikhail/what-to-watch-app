@@ -1,19 +1,19 @@
+import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {generatePath, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect} from 'react';
 
 import {AppRoute} from '../../../const/routs';
-import {FilmType} from '../../../types/film-type';
-
-import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
-import {getSimilarFilmsData} from '../../../store/current-film-reducer/selectors';
-import {fetchSimilarFilmsDataAction} from '../../../store/api-actions';
+import {getCurrentFilmData, getSimilarFilmsData} from '../../../store/current-film-reducer/selectors';
+import {fetchCurrentFilmDataAction, fetchSimilarFilmsDataAction} from '../../../store/api-actions';
 
 import Loader from '../../loader/loader';
-import Logo from '../../logo/Logo';
 import FilmsList from '../../films-list/films-list';
 import Footer from '../../footer/footer';
+import Header from '../../header/header';
+import NotFoundPage from '../not-found-page/not-found-page';
+import PlayBtn from '../../buttons/play-btn.tsx/play-btn';
+import AddToMyListBtn from '../../buttons/add-to-my-list-btn/add-to-my-list-btn';
 
 type FilmPageParams = {
   id: string;
@@ -22,19 +22,22 @@ type FilmPageParams = {
 function FilmPage(): JSX.Element {
 
   const dispatch = useDispatch();
+  const currentFilmData = useSelector(getCurrentFilmData);
   const similarFilms = useSelector(getSimilarFilmsData);
-  const allFilms = useSelector(getAllFilmsData);
   const params = useParams<FilmPageParams>();
   const paramsId = parseInt(params.id, 10);
-  const film: FilmType | undefined = allFilms.find((item) => item.id === paramsId);
 
   useEffect(() => {
+    dispatch(fetchCurrentFilmDataAction(paramsId));
     dispatch(fetchSimilarFilmsDataAction(paramsId));
   }, [dispatch, paramsId]);
 
+  if (!currentFilmData) {
+    return <NotFoundPage />;
+  }
 
-  if (film) {
-    const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: film.id});
+  if (currentFilmData) {
+    const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: currentFilmData.id});
 
     return (
       <>
@@ -42,54 +45,30 @@ function FilmPage(): JSX.Element {
           <div className="film-card__hero">
             <div className="film-card__bg">
               <img
-                src={film.backgroundImage}
-                alt={film.name}
+                src={currentFilmData.backgroundImage}
+                alt={currentFilmData.name}
               />
             </div>
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <header className="page-header film-card__head">
-              <Logo/>
-              <ul className="user-block">
-                <li className="user-block__item">
-                  <div className="user-block__avatar">
-                    <img
-                      src="img/avatar.jpg"
-                      alt="User avatar"
-                      width={63}
-                      height={63}
-                    />
-                  </div>
-                </li>
-                <li className="user-block__item">
-                  <a className="user-block__link">Sign out</a>
-                </li>
-              </ul>
-            </header>
+            <Header filmCard/>
 
             <div className="film-card__wrap">
               <div className="film-card__desc">
-                <h2 className="film-card__title">{film.name}</h2>
+
+                <h2 className="film-card__title">{currentFilmData.name}</h2>
                 <p className="film-card__meta">
-                  <span className="film-card__genre">{film.genre}</span>
-                  <span className="film-card__year">{film.released}</span>
+                  <span className="film-card__genre">{currentFilmData.genre}</span>
+                  <span className="film-card__year">{currentFilmData.released}</span>
                 </p>
+
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width={19} height={19}>
-                      <use xlinkHref="#play-s" />
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                  <button className="btn btn--list film-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width={19} height={20}>
-                      <use xlinkHref="#add" />
-                    </svg>
-                    <span>My list</span>
-                  </button>
+                  <PlayBtn />
+                  <AddToMyListBtn />
                   <Link className="btn film-card__button" to={generatedAddReviewPagePath}>Add review</Link>
                 </div>
+
               </div>
             </div>
           </div>
@@ -98,8 +77,8 @@ function FilmPage(): JSX.Element {
             <div className="film-card__info">
               <div className="film-card__poster film-card__poster--big">
                 <img
-                  src={film.posterImage}
-                  alt={film.name}
+                  src={currentFilmData.posterImage}
+                  alt={currentFilmData.name}
                   width={218}
                   height={327}
                 />
@@ -125,7 +104,7 @@ function FilmPage(): JSX.Element {
                   </ul>
                 </nav>
                 <div className="film-rating">
-                  <div className="film-rating__score">{film.rating}</div>
+                  <div className="film-rating__score">{currentFilmData.rating}</div>
                   <p className="film-rating__meta">
                     <span className="film-rating__level">Very good</span>
                     <span className="film-rating__count">240 ratings</span>
@@ -133,19 +112,20 @@ function FilmPage(): JSX.Element {
                 </div>
                 <div className="film-card__text">
                   <p>
-                    {film.description}
+                    {currentFilmData.description}
                   </p>
                   <p className="film-card__director">
-                    <strong>Director: {film.director}</strong>
+                    <strong>Director: {currentFilmData.director}</strong>
                   </p>
                   <p className="film-card__starring">
-                    <strong>Starring: {film.starring}</strong>
+                    <strong>Starring: {currentFilmData.starring}</strong>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
         <div className="page-content">
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
