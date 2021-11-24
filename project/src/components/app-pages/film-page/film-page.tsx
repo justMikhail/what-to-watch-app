@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {Link} from 'react-router-dom';
 import {generatePath, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -12,8 +11,8 @@ import FilmsList from '../../films-list/films-list';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
 import NotFoundPage from '../not-found-page/not-found-page';
-import PlayBtn from '../../buttons/play-btn.tsx/play-btn';
-import AddToMyListBtn from '../../buttons/add-to-my-list-btn/add-to-my-list-btn';
+import PrimaryButton from '../../primary-button/primary-button';
+import {redirectToRoute} from '../../../store/action';
 
 type FilmPageParams = {
   id: string;
@@ -25,12 +24,12 @@ function FilmPage(): JSX.Element {
   const currentFilmData = useSelector(getCurrentFilmData);
   const similarFilms = useSelector(getSimilarFilmsData);
   const params = useParams<FilmPageParams>();
-  const paramsId = parseInt(params.id, 10);
+  const filmId = parseInt(params.id, 10);
 
   useEffect(() => {
-    dispatch(fetchCurrentFilmDataAction(paramsId));
-    dispatch(fetchSimilarFilmsDataAction(paramsId));
-  }, [dispatch, paramsId]);
+    dispatch(fetchCurrentFilmDataAction(filmId));
+    dispatch(fetchSimilarFilmsDataAction(filmId));
+  }, [dispatch, filmId]);
 
   if (!currentFilmData) {
     return <NotFoundPage />;
@@ -38,6 +37,18 @@ function FilmPage(): JSX.Element {
 
   if (currentFilmData) {
     const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: currentFilmData.id});
+
+    const onPlayButtonClickHandler = () => {
+
+    };
+
+    const onAddToMyListButtonClickHandler = () => {
+
+    };
+
+    const onAddReviewButtonClickHandler = () => {
+      dispatch(redirectToRoute(generatedAddReviewPagePath));
+    };
 
     return (
       <>
@@ -64,9 +75,21 @@ function FilmPage(): JSX.Element {
                 </p>
 
                 <div className="film-card__buttons">
-                  <PlayBtn />
-                  <AddToMyListBtn />
-                  <Link className="btn film-card__button" to={generatedAddReviewPagePath}>Add review</Link>
+
+                  <PrimaryButton buttonText="Play" onButtonClickHandler={onPlayButtonClickHandler}>
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s" />
+                    </svg>
+                  </PrimaryButton>
+
+                  <PrimaryButton buttonText="My List" onButtonClickHandler={onAddToMyListButtonClickHandler}>
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#add" />
+                    </svg>
+                  </PrimaryButton>
+
+                  <PrimaryButton buttonText="Add review" onButtonClickHandler={onAddReviewButtonClickHandler}/>
+
                 </div>
 
               </div>
@@ -84,6 +107,7 @@ function FilmPage(): JSX.Element {
                 />
               </div>
               <div className="film-card__desc">
+
                 <nav className="film-nav film-card__nav">
                   <ul className="film-nav__list">
                     <li className="film-nav__item film-nav__item--active">
@@ -103,6 +127,7 @@ function FilmPage(): JSX.Element {
                     </li>
                   </ul>
                 </nav>
+
                 <div className="film-rating">
                   <div className="film-rating__score">{currentFilmData.rating}</div>
                   <p className="film-rating__meta">
@@ -110,6 +135,7 @@ function FilmPage(): JSX.Element {
                     <span className="film-rating__count">240 ratings</span>
                   </p>
                 </div>
+
                 <div className="film-card__text">
                   <p>
                     {currentFilmData.description}
@@ -121,6 +147,7 @@ function FilmPage(): JSX.Element {
                     <strong>Starring: {currentFilmData.starring}</strong>
                   </p>
                 </div>
+
               </div>
             </div>
           </div>
