@@ -23,12 +23,16 @@ function Header(props: HeaderProps): JSX.Element {
 
   const className = (`page-header ${userPage && 'user-page__head'} ${filmCard && 'film-card__head'}`);
 
-  const onLogInButtonClickHandler = () => {
+  const HandleLogInButtonClick = () => {
     dispatch(redirectToRoute(AppRoute.SignIn));
   };
 
-  const onLogOutButtonClickHandler = () => {
+  const HandleLogOutButtonClick = () => {
     dispatch(logOutAction());
+  };
+
+  const handleUserAvatarClick = () => {
+    dispatch(redirectToRoute(AppRoute.MyList));
   };
 
   return (
@@ -38,8 +42,9 @@ function Header(props: HeaderProps): JSX.Element {
       <UserBlock
         isAuthorizedUser={isAuthorizedUser}
         userInfo={userInfo}
-        onLogInButtonClickHandler={onLogInButtonClickHandler}
-        onLogOutButtonClickHandler={onLogOutButtonClickHandler}
+        onLogInButtonClickHandler={HandleLogInButtonClick}
+        onLogOutButtonClickHandler={HandleLogOutButtonClick}
+        onUserAvatarButtonClick={handleUserAvatarClick}
       />
     </header>
   );

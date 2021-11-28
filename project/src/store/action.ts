@@ -24,7 +24,7 @@ export const setUserInfo = createAction(
   }),
 );
 
-export const setFavoriteFilmsListAction = createAction(
+export const loadUserFavoriteFilmsListAction = createAction(
   ActionType.PostFilmReviews,
   (filmsData: FilmType[]) => ({
     payload: filmsData,

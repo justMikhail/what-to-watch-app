@@ -5,16 +5,24 @@ type UserBlockProps = {
   userInfo: UserInfoType;
   onLogInButtonClickHandler: () => void;
   onLogOutButtonClickHandler: () => void;
+  onUserAvatarButtonClick: () => void;
 }
 
 function UserBlock(props: UserBlockProps): JSX.Element {
-  const {isAuthorizedUser, userInfo, onLogInButtonClickHandler, onLogOutButtonClickHandler} = props;
+  const {
+    isAuthorizedUser,
+    userInfo,
+    onLogInButtonClickHandler,
+    onLogOutButtonClickHandler,
+    onUserAvatarButtonClick,
+  } = props;
+
   const avatarPlaceholder = 'https://via.placeholder.com/63';
 
   const forAuthorizedUserView = (
     <ul className="user-block">
       <li className="user-block__item">
-        <div className="user-block__avatar">
+        <div className="user-block__avatar" onClick={onUserAvatarButtonClick}>
           <img
             src={userInfo ? userInfo.avatarUrl : avatarPlaceholder}
             alt="User avatar"
@@ -32,10 +40,7 @@ function UserBlock(props: UserBlockProps): JSX.Element {
 
   const forNoAuthorizedUserView = (
     <div className="user-block">
-      <span
-        className="user-block__link"
-        onClick={onLogInButtonClickHandler}
-      >
+      <span className="user-block__link" onClick={onLogInButtonClickHandler}>
         Sign in
       </span>
     </div>

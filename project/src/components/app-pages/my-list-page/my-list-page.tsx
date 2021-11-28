@@ -1,35 +1,25 @@
-import Logo from '../../logo/Logo';
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
+import {useSelector} from 'react-redux';
+import {getUserFavirteFilmsList} from '../../../store/redusers/user-data-reducer/selectors';
+import FilmsList from '../../films-list/films-list';
 
 function MyListPage(): JSX.Element {
+  const userFavoriteFilmsList = useSelector(getUserFavirteFilmsList);
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo />
-        <h1 className="page-title user-page__title">My list</h1>
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
-      </header>
+
+      <Header userPage>
+        <h1 className="page-title user-page__title">Sign in</h1>
+      </Header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        {/*<FilmsList />*/}
+        <FilmsList filmsForRender={userFavoriteFilmsList} />
       </section>
 
-      <footer className="page-footer">
-        <Logo isLight/>
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
