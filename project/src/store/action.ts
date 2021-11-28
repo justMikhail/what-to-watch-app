@@ -23,6 +23,13 @@ export const setUserInfo = createAction(
   }),
 );
 
+export const setFavoriteFilmsList = createAction(
+  ActionType.PostFilmReviews,
+  (filmsData: FilmType[]) => ({
+    payload: filmsData,
+  }),
+);
+
 export const loadPromoFilmData = createAction(
   ActionType.LoadPromoFilmData,
   (promoFilmData: FilmType) => ({

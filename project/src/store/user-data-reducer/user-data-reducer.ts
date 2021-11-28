@@ -5,12 +5,14 @@ import {UserData} from '../../types/state';
 import {
   requireAuthorizationStatus,
   requireLogout,
-  setUserInfo
+  setUserInfo,
+  setFavoriteFilmsList
 } from '../action';
 
 const initialState: UserData = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: null,
+  userFavoriteFilmsList: [],
 };
 
 export const userDataReducer = createReducer(initialState, (builder) => {
@@ -23,5 +25,8 @@ export const userDataReducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserInfo, (state, action) => {
       state.userInfo = action.payload;
+    })
+    .addCase(setFavoriteFilmsList, (state, action) => {
+      state.userFavoriteFilmsList = action.payload;
     });
 });

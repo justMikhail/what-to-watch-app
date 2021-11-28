@@ -7,6 +7,7 @@ import {UserInfoType} from './user-info-type';
 export type UserData = {
   authorizationStatus: AuthorizationStatus;
   userInfo: UserInfoType;
+  userFavoriteFilmsList: FilmType[];
 }
 
 export type FilmsData = {
