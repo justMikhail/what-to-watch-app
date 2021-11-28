@@ -1,16 +1,16 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {AuthorizationStatus} from '../../const/authorization-status';
-import {UserData} from '../../types/state';
+import {AuthorizationStatus} from '../../../const/authorization-status';
+import {UserData} from '../../../types/state';
 import {
   requireAuthorizationStatus,
   requireLogout,
   setUserInfo,
   setFavoriteFilmsList
-} from '../action';
+} from '../../action';
 
 const initialState: UserData = {
-  authorizationStatus: AuthorizationStatus.Unknown,
+  userAuthorizationStatus: AuthorizationStatus.Unknown,
   userInfo: null,
   userFavoriteFilmsList: [],
 };
@@ -18,10 +18,10 @@ const initialState: UserData = {
 export const userDataReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(requireAuthorizationStatus, (state, action) => {
-      state.authorizationStatus = action.payload;
+      state.userAuthorizationStatus = action.payload;
     })
     .addCase(requireLogout, (state) => {
-      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userAuthorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(setUserInfo, (state, action) => {
       state.userInfo = action.payload;

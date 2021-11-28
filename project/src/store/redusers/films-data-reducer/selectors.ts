@@ -1,6 +1,6 @@
-import {NameSpace} from '../root-reducer';
-import {State} from '../../types/state';
-import {FilmType} from '../../types/film-type';
+import {NameSpace} from '../../root-reducer';
+import {State} from '../../../types/state';
+import {FilmType} from '../../../types/film-type';
 
 export const getLoadedDataStatus = (state: State): boolean => state[NameSpace.filmsData].isDataLoaded;
 export const getAllFilmsData = (state: State): FilmType[] => state[NameSpace.filmsData].allFilmsData;

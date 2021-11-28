@@ -6,6 +6,7 @@ import {AuthorizationStatus} from '../const/authorization-status';
 import {AppRoute} from '../const/routs';
 import {UserInfoType} from '../types/user-info-type';
 import {ReviewType} from '../types/review-type';
+import {FetchStatus} from '../const/fetch-status';
 
 export const requireAuthorizationStatus = createAction(
   ActionType.RequireAuthorizationStatus,
@@ -37,7 +38,7 @@ export const loadPromoFilmData = createAction(
   }),
 );
 
-export const loadAllFilmsData = createAction(
+export const loadAllFilmsListData = createAction(
   ActionType.LoadAllFilmsData,
   (allFilmsData: FilmType[]) => ({
     payload: allFilmsData,
@@ -90,5 +91,62 @@ export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (url: AppRoute | string) => ({
     payload: url,
+  }),
+);
+
+//Fetch Api Status
+export const setPostStatusAction = createAction(
+  ActionType.SetPostStatus,
+  (postStatus: FetchStatus) => ({
+    payload: postStatus,
+  }),
+);
+
+export const setCommentPostStatusAction = createAction(
+  ActionType.SetCommentPostStatus,
+  (postStatus: FetchStatus) => ({
+    payload: postStatus,
+  }),
+);
+
+export const setPromoGetStatusAction = createAction(
+  ActionType.SetPromoGetStatus,
+  (status: FetchStatus) => ({
+    payload: status,
+  }),
+);
+
+export const setFilmsGetStatusAction = createAction(
+  ActionType.SetFilmsGetStatus,
+  (status: FetchStatus) => ({
+    payload: status,
+  }),
+);
+
+export const setFilmGetStatusAction = createAction(
+  ActionType.SetFilmGetStatus,
+  (status: FetchStatus) => ({
+    payload: status,
+  }),
+);
+
+export const setSimilarGetStatusAction = createAction(
+  ActionType.SetSimilarGetStatus,
+  (getStatus: FetchStatus) => ({
+    payload: getStatus,
+  }),
+);
+
+export const setCommentsGetStatusAction = createAction(
+  ActionType.SetCommentsGetStatus,
+  (status: FetchStatus) => ({
+    payload: status,
+  }),
+);
+
+export const setFavoritesGetStatusAction = createAction(
+  ActionType.SetFavoritesGetStatus,
+  (status: FetchStatus) => ({
+    payload: status,
   }),
 );

@@ -8,7 +8,7 @@ import {
   setUserInfo,
   requireLogout,
   loadPromoFilmData,
-  loadAllFilmsData,
+  loadAllFilmsListData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
   loadFilmReviews,
@@ -32,6 +32,15 @@ export enum ActionType {
   SetActiveFilmId = 'data/setActiveFilmId',
   PostFilmReviews = 'data/postFilmReviews',
   RedirectToRoute = 'app/redirectToRoute',
+  //SetFetchApiStatus
+  SetPromoGetStatus = 'status/setPromoGetStatus',
+  SetFilmsGetStatus = 'status/setFilmsGetStatus',
+  SetFilmGetStatus = 'status/setFilmGetStatus',
+  SetSimilarGetStatus = 'status/setSimilarGetStatus',
+  SetCommentsGetStatus = 'status/setCommentsGetStatus',
+  SetFavoritesGetStatus = 'status/setFavoritesGetStatus',
+  SetPostStatus = 'status/setPostStatus',
+  SetCommentPostStatus = 'status/setCommentPostStatus',
 }
 
 export type Actions =
@@ -39,7 +48,7 @@ export type Actions =
   | ReturnType<typeof setUserInfo>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadPromoFilmData>
-  | ReturnType<typeof loadAllFilmsData>
+  | ReturnType<typeof loadAllFilmsListData>
   | ReturnType<typeof loadCurrentFilmData>
   | ReturnType<typeof loadSimilarFilmsData>
   | ReturnType<typeof loadFilmReviews>

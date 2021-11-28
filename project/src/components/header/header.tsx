@@ -6,7 +6,7 @@ import {AppRoute} from '../../const/routs';
 import Logo from '../logo/Logo';
 import UserBlock from '../user-block/user-block';
 import {redirectToRoute} from '../../store/action';
-import {getAuthorizationStatus, getUserInfo} from '../../store/user-data-reducer/selectors';
+import {getAuthorizationStatus, getUserInfo} from '../../store/redusers/user-data-reducer/selectors';
 import {AuthorizationStatus} from '../../const/authorization-status';
 
 type HeaderProps = {

@@ -3,9 +3,10 @@ import {FilmType} from './film-type';
 import {ReviewType} from './review-type';
 import {AuthorizationStatus} from '../const/authorization-status';
 import {UserInfoType} from './user-info-type';
+import {FetchStatus} from '../const/fetch-status';
 
 export type UserData = {
-  authorizationStatus: AuthorizationStatus;
+  userAuthorizationStatus: AuthorizationStatus;
   userInfo: UserInfoType;
   userFavoriteFilmsList: FilmType[];
 }
@@ -20,10 +21,21 @@ export type FilmsData = {
 
 export type CurrentFilmData = {
   currentFilm: FilmType | null;
-  similarFilms: FilmType[];
+  similarFilmsList: FilmType[];
   filmReviews: ReviewType[];
   isCurrentFilmLoaded: boolean;
   isCommentPosted: boolean;
+}
+
+export type FetchStatusListTypes = {
+  postStatus: FetchStatus,
+  commentPostStatus: FetchStatus,
+  promoGetStatus: FetchStatus,
+  filmsGetStatus: FetchStatus,
+  filmGetStatus: FetchStatus,
+  similarGetStatus: FetchStatus,
+  commentsGetStatus: FetchStatus,
+  favoritesGetStatus: FetchStatus,
 }
 
 export type State = RootState;

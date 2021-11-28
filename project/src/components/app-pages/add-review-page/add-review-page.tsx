@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+import {getAllFilmsData} from '../../../store/redusers/films-data-reducer/selectors';
 import {postFilmComment} from '../../../store/api-actions';
 
 import Header from '../../header/header';

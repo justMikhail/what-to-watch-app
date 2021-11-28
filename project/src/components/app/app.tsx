@@ -15,8 +15,8 @@ import AddReviewPage from '../app-pages/add-review-page/add-review-page';
 import PlayerPage from '../app-pages/player-page/player-page';
 import NotFoundPage from '../app-pages/not-found-page/not-found-page';
 import Loader from '../loader/loader';
-import {getAuthorizationStatus} from '../../store/user-data-reducer/selectors';
-import {getLoadedDataStatus} from '../../store/films-data-reducer/selectors';
+import {getAuthorizationStatus} from '../../store/redusers/user-data-reducer/selectors';
+import {getLoadedDataStatus} from '../../store/redusers/films-data-reducer/selectors';
 import {checkAuthStatusAction, fetchAllFilmsDataAction} from '../../store/api-actions';
 
 function App(): JSX.Element {

@@ -1,14 +1,14 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {FilmsData} from '../../types/state';
-import {Genre} from '../../const/const';
-import {filmTemplate} from '../../const/const';
+import {FilmsData} from '../../../types/state';
+import {Genre} from '../../../const/const';
+import {filmTemplate} from '../../../const/const';
 import {
-  loadAllFilmsData,
+  loadAllFilmsListData,
   loadPromoFilmData,
   selectGenre,
   setActiveFilmId
-} from '../action';
+} from '../../action';
 
 const initialState: FilmsData = {
   isDataLoaded: false,
@@ -20,7 +20,7 @@ const initialState: FilmsData = {
 
 export const filmsDataReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(loadAllFilmsData, (state, action) => {
+    .addCase(loadAllFilmsListData, (state, action) => {
       state.isDataLoaded = true;
       state.allFilmsData = action.payload;
     })

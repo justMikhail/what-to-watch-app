@@ -4,7 +4,7 @@ import {History} from 'history';
 import {AppRoute} from '../../const/routs';
 import {AuthorizationStatus} from '../../const/authorization-status';
 import {useSelector} from 'react-redux';
-import {getAuthorizationStatus} from '../../store/user-data-reducer/selectors';
+import {getAuthorizationStatus} from '../../store/redusers/user-data-reducer/selectors';
 
 type RenderFuncProps = {
   history: History<unknown>;

@@ -3,7 +3,7 @@ import {generatePath, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AppRoute} from '../../../const/routs';
-import {getCurrentFilmData, getSimilarFilmsData} from '../../../store/current-film-reducer/selectors';
+import {getCurrentFilmData, getSimilarFilmsData} from '../../../store/redusers/current-film-reducer/selectors';
 import {fetchCurrentFilmDataAction, fetchSimilarFilmsDataAction} from '../../../store/api-actions';
 
 import Loader from '../../loader/loader';

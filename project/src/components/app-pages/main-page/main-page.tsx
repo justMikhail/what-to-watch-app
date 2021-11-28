@@ -1,7 +1,7 @@
 import {useSelector, useDispatch} from 'react-redux';
 
-import {getPromoFilmsData, getSelectedGenre} from '../../../store/films-data-reducer/selectors';
-import {getAllFilmsData} from '../../../store/films-data-reducer/selectors';
+import {getPromoFilmsData, getSelectedGenre} from '../../../store/redusers/films-data-reducer/selectors';
+import {getAllFilmsData} from '../../../store/redusers/films-data-reducer/selectors';
 import {filterFilmsBySelectedGenre} from '../../../utils/utils';
 
 import FilmsList from '../../films-list/films-list';

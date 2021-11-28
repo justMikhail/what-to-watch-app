@@ -1,7 +1,6 @@
 import {toast} from 'react-toastify';
 import {generatePath} from 'react-router-dom';
 
-import {saveToken, dropToken, Token} from '../services/token';
 import {
   adaptServerFilmsToClient,
   adaptServerUserInfoToClient,
@@ -15,22 +14,22 @@ import {AuthorizationStatus} from '../const/authorization-status';
 import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
 import {AuthData} from '../types/auth-data';
+import {ReviewFormType, ReviewType} from '../types/review-type';
 
-import {getToken} from '../services/token';
+import {saveToken, dropToken, getToken, Token} from '../services/token';
 
 import {
   requireAuthorizationStatus,
   setUserInfo,
   requireLogout,
   loadPromoFilmData,
-  loadAllFilmsData,
+  loadAllFilmsListData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
   redirectToRoute,
   loadFilmReviews,
   isReviewsPosting
 } from './action';
-import {ReviewFormType, ReviewType} from '../types/review-type';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
 const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
@@ -98,7 +97,7 @@ export const fetchAllFilmsDataAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
     const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
-    dispatch(loadAllFilmsData(adaptedData));
+    dispatch(loadAllFilmsListData(adaptedData));
   };
 
 export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>

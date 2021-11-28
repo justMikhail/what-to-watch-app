@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getFilmReviewsData} from '../../../store/current-film-reducer/selectors';
+import {getFilmReviewsData} from '../../../store/redusers/current-film-reducer/selectors';
 
 import Review from './review/review';
 import {fetchFilmReviewsAction} from '../../../store/api-actions';
