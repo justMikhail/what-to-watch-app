@@ -10,6 +10,7 @@ import {
 import {AppRoute} from '../const/routs';
 import {ApiRoute} from '../const/routs';
 import {AuthorizationStatus} from '../const/authorization-status';
+import {FetchStatus} from '../const/fetch-status';
 
 import {ThunkActionResult} from '../types/actions-types';
 import {FilmType} from '../types/film-type';
@@ -28,7 +29,6 @@ import {
   loadSimilarFilmsData,
   redirectToRoute,
   loadFilmReviews,
-  isReviewsPosting,
   //favorites
   loadFavoriteFilmsListAction,
   setPromoIsFavoriteAction,
@@ -39,9 +39,8 @@ import {
   setCommentsGetStatusAction,
   setSimilarGetStatusAction,
   setCommentPostStatusAction,
-  setPostStatusAction,
+  setPostStatusAction
 } from './action';
-import {FetchStatus} from '../const/fetch-status';
 
 const TOAST_CLOSE_TIMEOUT = 2500;
 
@@ -101,8 +100,10 @@ export const fetchPromoFilmDataAction = (): ThunkActionResult =>
       .then(({data}) => {
         const adaptedData = adaptServerFilmToClient(data);
         dispatch(loadPromoFilmData(adaptedData));
+        dispatch(setPromoGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
+        dispatch(setPromoGetStatusAction(FetchStatus.Error));
         toast.info(ToastMessage.SOMETHING_ERROR);
       });
   };
@@ -131,51 +132,54 @@ export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
 
 export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const filmPath = generatePath(AppRoute.Film, {id});
-      const {data: serverCurrentFilm} = await api.get(filmPath);
-      const currentFilmData = adaptServerFilmToClient(serverCurrentFilm);
-      dispatch(loadCurrentFilmData(currentFilmData));
-    } catch (error) {
-      toast.info(ToastMessage.SOMETHING_ERROR);
-    }
+    dispatch(setFilmGetStatusAction(FetchStatus.InProgress));
+    const filmPath = generatePath(AppRoute.Film, {id});
+    await api.get(filmPath)
+      .then(({data}) => {
+        const currentFilmData = adaptServerFilmToClient(data);
+        dispatch(loadCurrentFilmData(currentFilmData));
+        dispatch(setFilmGetStatusAction(FetchStatus.Success));
+      })
+      .catch(() => {
+        toast.info(ToastMessage.SOMETHING_ERROR);
+      });
   };
 
-export const fetchFilmReviewsAction = (id: number): ThunkActionResult =>
+export const fetchCurrentFilmReviewsAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const filmPath = generatePath(ApiRoute.FilmComments, {id});
-      const {data} = await api.get<ReviewType[]>(filmPath);
-      dispatch(loadFilmReviews(data));
-    } catch (error) {
-      toast.info(ToastMessage.SOMETHING_ERROR);
-    }
+    dispatch(setCommentsGetStatusAction(FetchStatus.InProgress));
+    const filmPath = generatePath(ApiRoute.FilmComments, {id});
+    await api.get<ReviewType[]>(filmPath)
+      .then(({data}) => {
+        dispatch(loadFilmReviews(data));
+        dispatch(setCommentsGetStatusAction(FetchStatus.Success));
+      })
+      .catch(() => {
+        dispatch(setCommentsGetStatusAction(FetchStatus.Error));
+        toast.info(ToastMessage.SOMETHING_ERROR);
+      });
   };
 
-export const postFilmComment = (id: number, payload: ReviewFormType): ThunkActionResult =>
+export const postCurrentFilmComment = (id: number, payload: ReviewFormType): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const postCommentPath = generatePath(ApiRoute.FilmComments, {id});
     const filmPath = generatePath(AppRoute.Film, {id});
 
-    dispatch(isReviewsPosting(true));
-    toast.info(ToastMessage.POST_PROCESSING);
-
-    try {
-      await api.post<{token: Token}>(postCommentPath, payload);
-
-      toast.dismiss();
-      toast.success(ToastMessage.POST_SUCCESS, {autoClose: TOAST_CLOSE_TIMEOUT});
-
-      setTimeout(() => {
-        dispatch(redirectToRoute(filmPath));
-      }, TOAST_CLOSE_TIMEOUT);
-      dispatch(isReviewsPosting(false));
-
-    } catch (error) {
-      toast.dismiss();
-      toast.error(ToastMessage.POST_FAIL);
-      dispatch(isReviewsPosting(false));
-    }
+    await api.post<{token: Token}>(postCommentPath, payload)
+      .then(() => {
+        dispatch(setCommentPostStatusAction(FetchStatus.Success));
+        setTimeout(() => {
+          dispatch(redirectToRoute(filmPath));
+        }, TOAST_CLOSE_TIMEOUT);
+        toast.success(ToastMessage.POST_SUCCESS, {autoClose: TOAST_CLOSE_TIMEOUT});
+      })
+      .catch(() => {
+        dispatch(setCommentPostStatusAction(FetchStatus.Error));
+        toast.info(ToastMessage.POST_FAIL);
+      })
+      .finally(() => {
+        dispatch(setCommentPostStatusAction(FetchStatus.Unknown));
+      });
   };
 
 export const fetchFavoritesFilmsListAction = (): ThunkActionResult => (

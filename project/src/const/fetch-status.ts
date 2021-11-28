@@ -1,5 +1,5 @@
 export enum FetchStatus {
-  Undefined = 'Undefined',
+  Unknown = 'Unknown',
   InProgress = 'In progress',
   Success = 'Success',
   Error = 'Error',

@@ -80,13 +80,6 @@ export const setActiveFilmId = createAction(
   }),
 );
 
-export const isReviewsPosting = createAction(
-  ActionType.PostFilmReviews,
-  (isCommentPosted: boolean) => ({
-    payload: isCommentPosted,
-  }),
-);
-
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (url: AppRoute | string) => ({

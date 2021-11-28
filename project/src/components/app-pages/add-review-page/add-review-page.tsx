@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 import {getAllFilmsData} from '../../../store/redusers/films-data-reducer/selectors';
-import {postFilmComment} from '../../../store/api-actions';
+import {postCurrentFilmComment} from '../../../store/api-actions';
 
 import Header from '../../header/header';
 import FormForAddReview from '../../form-for-add-review/form-for-add-review';
@@ -15,7 +15,7 @@ function AddReviewPage(): JSX.Element {
   const currentFilm = useSelector(getAllFilmsData).find((filmItem) => filmItem.id === filmId);
 
   const onPostHandler = (currentFilmId: number, reviewData: {rating: number, comment: string}) => {
-    dispatch(postFilmComment(currentFilmId, reviewData));
+    dispatch(postCurrentFilmComment(currentFilmId, reviewData));
   };
 
   if (!currentFilm) {

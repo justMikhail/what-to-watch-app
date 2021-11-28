@@ -15,14 +15,14 @@ import {
 } from '../../action';
 
 const initialState: FetchStatusListTypes = {
-  postStatus: FetchStatus.Undefined,
-  commentPostStatus: FetchStatus.Undefined,
-  promoGetStatus: FetchStatus.Undefined,
-  filmsGetStatus: FetchStatus.Undefined,
-  filmGetStatus: FetchStatus.Undefined,
-  similarGetStatus: FetchStatus.Undefined,
-  commentsGetStatus: FetchStatus.Undefined,
-  favoritesGetStatus: FetchStatus.Undefined,
+  postStatus: FetchStatus.Success,
+  commentPostStatus: FetchStatus.Unknown,
+  promoGetStatus: FetchStatus.Success,
+  filmsGetStatus: FetchStatus.Success,
+  filmGetStatus: FetchStatus.Success,
+  similarGetStatus: FetchStatus.Success,
+  commentsGetStatus: FetchStatus.Success,
+  favoritesGetStatus: FetchStatus.Success,
 };
 
 export const fetchApiStatusReducer = createReducer(initialState, (builder) => {

@@ -16,7 +16,6 @@ import {
   loadFilmReviews,
   selectGenre,
   setActiveFilmId,
-  isReviewsPosting, //todo fix
   redirectToRoute,
   //favorites
   loadFavoriteFilmsListAction,
@@ -29,7 +28,7 @@ import {
   setCommentsGetStatusAction,
   setFavoritesGetStatusAction,
   setPostStatusAction,
-  setCommentPostStatusAction,
+  setCommentPostStatusAction
 } from '../store/action';
 
 
@@ -77,7 +76,6 @@ export type Actions =
   | ReturnType<typeof loadFilmReviews>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
-  | ReturnType<typeof isReviewsPosting>
   | ReturnType<typeof redirectToRoute>
   //favorites
   | ReturnType<typeof loadFavoriteFilmsListAction>
