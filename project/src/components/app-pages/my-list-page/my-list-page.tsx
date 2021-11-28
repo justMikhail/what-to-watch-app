@@ -1,11 +1,18 @@
 import Header from '../../header/header';
 import Footer from '../../footer/footer';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getUserFavirteFilmsList} from '../../../store/redusers/user-data-reducer/selectors';
 import FilmsList from '../../films-list/films-list';
+import {useEffect} from 'react';
+import {fetchFavoritesFilmsListAction} from '../../../store/api-actions';
 
 function MyListPage(): JSX.Element {
+  const dispatch = useDispatch();
   const userFavoriteFilmsList = useSelector(getUserFavirteFilmsList);
+
+  useEffect(() => {
+    dispatch(fetchFavoritesFilmsListAction());
+  }, [dispatch]);
 
   return (
     <div className="user-page">

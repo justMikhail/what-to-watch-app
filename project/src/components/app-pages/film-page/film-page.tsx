@@ -33,7 +33,7 @@ function FilmPage(): JSX.Element {
   }, [dispatch, filmId]);
 
   if (!currentFilmData) {
-    return <NotFoundPage />;
+    return <Loader />;
   }
 
   if (currentFilmData) {

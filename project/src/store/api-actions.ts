@@ -30,7 +30,7 @@ import {
   redirectToRoute,
   loadFilmReviews,
   //favorites
-  loadFavoriteFilmsListAction,
+  loadUserFavoriteFilmsListAction,
   setPromoIsFavoriteAction,
   //fetch Status
   setPromoGetStatusAction,
@@ -193,7 +193,7 @@ export const fetchFavoritesFilmsListAction = (): ThunkActionResult => (
     dispatch(setFavoritesGetStatusAction(FetchStatus.InProgress));
     await api.get(ApiRoute.Favorite)
       .then(({data}) => {
-        dispatch(loadFavoriteFilmsListAction(adaptServerFilmToClient(data)));
+        dispatch(loadUserFavoriteFilmsListAction(adaptServerFilmToClient(data)));
         dispatch(setFavoritesGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
@@ -202,9 +202,11 @@ export const fetchFavoritesFilmsListAction = (): ThunkActionResult => (
   }
 );
 
-export const postPromoIsFavoriteAction = (id: string, status: number): ThunkActionResult => (
+export const postPromoIsFavoriteAction = (idAsNumber: number, isFavorite: undefined | boolean): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(setPostStatusAction(FetchStatus.InProgress));
+    const id = idAsNumber.toString();
+    const status = isFavorite ? 0 : 1;
     const postPath = generatePath(`${ ApiRoute.Favorite }/${ id }/${ status }`, {id: id, status});
     await api.post(postPath)
       .then(({ data }) => {

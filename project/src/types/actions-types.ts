@@ -8,8 +8,10 @@ import {
   requireAuthorizationStatus,
   setUserInfo,
   requireLogout,
-  //data
+  //promo
   loadPromoFilmData,
+  setPromoIsFavoriteAction,
+  //data
   loadAllFilmsListData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
@@ -18,8 +20,7 @@ import {
   setActiveFilmId,
   redirectToRoute,
   //favorites
-  loadFavoriteFilmsListAction,
-  setPromoIsFavoriteAction,
+  loadUserFavoriteFilmsListAction,
   //fetch Status
   setPromoGetStatusAction,
   setFilmsGetStatusAction,
@@ -39,6 +40,7 @@ export enum ActionType {
   RequireLogout = 'user/requireLogout',
   //promo
   LoadPromoFilmData = 'promo/loadPromoFilmData',
+  SetPromoIsFavorite = 'promo/setPromoIsFavorite',
   //data
   LoadAllFilmsData = 'data/loadAllFilmsData',
   LoadCurrentFilmData = 'data/loadCurrentFilmData',
@@ -49,8 +51,7 @@ export enum ActionType {
   PostFilmReviews = 'data/postFilmReviews',
   RedirectToRoute = 'app/redirectToRoute',
   //favorites
-  LoadFavoriteFilms = 'favorite/setFavoriteFilms',
-  SetPromoIsFavorite = 'promo/setPromoIsFavorite',
+  LoadUserFavoriteFilmsListAction = 'favorite/loadUserFavoriteFilms',
   //fetch status
   SetPromoGetStatus = 'fetchStatus/setPromoGetStatus',
   SetFilmsGetStatus = 'fetchStatus/setFilmsGetStatus',
@@ -78,7 +79,7 @@ export type Actions =
   | ReturnType<typeof setActiveFilmId>
   | ReturnType<typeof redirectToRoute>
   //favorites
-  | ReturnType<typeof loadFavoriteFilmsListAction>
+  | ReturnType<typeof loadUserFavoriteFilmsListAction>
   | ReturnType<typeof setPromoIsFavoriteAction>
   //fetch status
   | ReturnType<typeof setPromoGetStatusAction>

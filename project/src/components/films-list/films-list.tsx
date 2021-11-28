@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import FilmCard from '../film-card/film-card';
+import SmallFilmCard from '../small-film-card/small-film-card';
 import {FilmType} from '../../types/film-type';
 
 type FilmListType = {
@@ -20,7 +20,7 @@ function FilmsList(props: FilmListType): JSX.Element {
       <div className="catalog__films-list">
         {filmsForRender.slice(0, visibleFilms).map((film) =>
           (
-            <FilmCard
+            <SmallFilmCard
               film={film}
               key={film.id}
             />

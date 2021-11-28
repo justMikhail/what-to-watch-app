@@ -25,7 +25,7 @@ export const setUserInfo = createAction(
 );
 
 export const loadUserFavoriteFilmsListAction = createAction(
-  ActionType.PostFilmReviews,
+  ActionType.LoadUserFavoriteFilmsListAction,
   (filmsData: FilmType[]) => ({
     payload: filmsData,
   }),
@@ -141,13 +141,6 @@ export const setFavoritesGetStatusAction = createAction(
   ActionType.SetFavoritesGetStatus,
   (status: FetchStatus) => ({
     payload: status,
-  }),
-);
-
-export const loadFavoriteFilmsListAction = createAction(
-  ActionType.LoadFavoriteFilms,
-  (favoriteFilms: FilmType[]) => ({
-    payload: favoriteFilms,
   }),
 );
 

@@ -1,7 +1,10 @@
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {getPromoFilmsData, getSelectedGenre} from '../../../store/redusers/films-data-reducer/selectors';
-import {getAllFilmsData} from '../../../store/redusers/films-data-reducer/selectors';
+import {
+  getAllFilmsData,
+  getPromoFilmsData,
+  getSelectedGenre
+} from '../../../store/redusers/films-data-reducer/selectors';
 import {filterFilmsBySelectedGenre} from '../../../utils/utils';
 
 import FilmsList from '../../films-list/films-list';
@@ -9,23 +12,33 @@ import GenreList from '../../genre-list/genre-list';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
 import {useEffect} from 'react';
-import {fetchPromoFilmDataAction} from '../../../store/api-actions';
+import {fetchPromoFilmDataAction, postPromoIsFavoriteAction} from '../../../store/api-actions';
 import PrimaryButton from '../../primary-button/primary-button';
 import {redirectToRoute} from '../../../store/action';
 import {AppRoute} from '../../../const/routs';
+import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
+import {AuthorizationStatus} from '../../../const/authorization-status';
 
 function MainPage(): JSX.Element {
   const dispatch = useDispatch();
   const promoFilm = useSelector(getPromoFilmsData);
   const selectedGenre = useSelector(getSelectedGenre);
   const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isFavorite = promoFilm.isFavorite;
 
-  const onPlayButtonClickHandler = () => {
+  const handlePlayButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
     dispatch(redirectToRoute(AppRoute.Player));
   };
 
-  const onAddToMyListButtonClickHandler = () => {
-    dispatch(redirectToRoute(AppRoute.Player));
+  const handleAddToMyListButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
+    dispatch(postPromoIsFavoriteAction(promoFilm.id, isFavorite));
   };
 
   useEffect(() => {
@@ -72,13 +85,13 @@ function MainPage(): JSX.Element {
 
               <div className="film-card__buttons">
 
-                <PrimaryButton buttonText="Play" onButtonClickHandler={onPlayButtonClickHandler}>
+                <PrimaryButton buttonText="Play" onButtonClickHandler={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s" />
                   </svg>
                 </PrimaryButton>
 
-                <PrimaryButton buttonText="My List" onButtonClickHandler={onAddToMyListButtonClickHandler}>
+                <PrimaryButton buttonText="My List" onButtonClickHandler={handleAddToMyListButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#add" />
                   </svg>

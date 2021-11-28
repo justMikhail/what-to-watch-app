@@ -14,7 +14,7 @@ type FilmCardProps = {
   film: FilmType,
 }
 
-function FilmCard(props: FilmCardProps): JSX.Element {
+function SmallFilmCard(props: FilmCardProps): JSX.Element {
   const {film} = props;
   const dispatch = useDispatch();
   const activeFilmId = useSelector(getActiveFilmId);
@@ -52,4 +52,4 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default SmallFilmCard;
