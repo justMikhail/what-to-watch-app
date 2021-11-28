@@ -28,35 +28,47 @@ import {
   loadSimilarFilmsData,
   redirectToRoute,
   loadFilmReviews,
-  isReviewsPosting
+  isReviewsPosting,
+  //favorites
+  loadFavoriteFilmsListAction,
+  setPromoIsFavoriteAction,
+  //fetch Status
+  setPromoGetStatusAction,
+  setFilmGetStatusAction,
+  setFavoritesGetStatusAction,
+  setCommentsGetStatusAction,
+  setSimilarGetStatusAction,
+  setCommentPostStatusAction,
+  setPostStatusAction,
 } from './action';
+import {FetchStatus} from '../const/fetch-status';
 
-const AUTH_FAIL_MESSAGE = 'Don\'t forget to sign in.';
-const SIGN_IN_FAIL_MESSAGE = 'Sign In Error. Please try again.';
-const SOMETHING_ERROR_MESSAGE = 'Something went wrong try again later';
-
-const TOAST_CLOSE_TIMEOUT = 3000;
+const TOAST_CLOSE_TIMEOUT = 2500;
 
 export enum ToastMessage {
+  SOMETHING_ERROR = 'Something went wrong try again later',
+  REMINDER_TO_SIGN_IN = 'Don\'t forget to sign in.',
   POST_SUCCESS = 'Congrats! Your review has been posted! You will be redirected to the film page shortly.',
   POST_FAIL = 'Something went wrong. Comment hasn\'t been posted.',
   POST_PROCESSING = 'Just a sec. Your review is posting now.',
+  SIGN_IN_FAIL = 'Sign In Error. Please try again.',
 }
 
 export const checkAuthStatusAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      // This API call is required
-      await api.get(ApiRoute.Login);
-      const token = getToken();
-      if (token) {
-        dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-      } else {
+    await api.get(ApiRoute.Login)
+      .then(() => {
+        const token = getToken();
+        if (token) {
+          dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+        } else {
+          dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
+        }
+      })
+      .catch(() => {
         dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
-      }
-    } catch {
-      toast.info(AUTH_FAIL_MESSAGE);
-    }
+        toast.info(ToastMessage.REMINDER_TO_SIGN_IN);
+      });
   };
 
 export const logInAction = ({login: email, password}: AuthData): ThunkActionResult =>
@@ -68,7 +80,7 @@ export const logInAction = ({login: email, password}: AuthData): ThunkActionResu
       dispatch(setUserInfo(adaptServerUserInfoToClient(data)));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
-      toast.info(SIGN_IN_FAIL_MESSAGE);
+      toast.info(ToastMessage.SIGN_IN_FAIL);
     }
   };
 
@@ -84,13 +96,15 @@ export const logOutAction = (): ThunkActionResult =>
 
 export const fetchPromoFilmDataAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const {data} = await  api.get((ApiRoute.Promo));
-      const adaptedData = adaptServerFilmToClient(data);
-      dispatch(loadPromoFilmData(adaptedData));
-    } catch (error) {
-      toast.info(SOMETHING_ERROR_MESSAGE);
-    }
+    dispatch(setPromoGetStatusAction(FetchStatus.InProgress));
+    await  api.get(ApiRoute.Promo)
+      .then(({data}) => {
+        const adaptedData = adaptServerFilmToClient(data);
+        dispatch(loadPromoFilmData(adaptedData));
+      })
+      .catch(() => {
+        toast.info(ToastMessage.SOMETHING_ERROR);
+      });
   };
 
 export const fetchAllFilmsDataAction = (): ThunkActionResult =>
@@ -102,15 +116,17 @@ export const fetchAllFilmsDataAction = (): ThunkActionResult =>
 
 export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const similarFilmsPath = generatePath(ApiRoute.SimilarFilms, {id});
-      const {data} = await api.get<FilmType[]>(similarFilmsPath);
-      const adaptedData = data.map((serverFilm) =>
-        adaptServerFilmsToClient(serverFilm)).filter((film) => film.id !== id);
-      dispatch(loadSimilarFilmsData(adaptedData));
-    } catch (error) {
-      toast.info(SOMETHING_ERROR_MESSAGE);
-    }
+    const similarFilmsPath = generatePath(ApiRoute.SimilarFilms, {id});
+    await api.get<FilmType[]>(similarFilmsPath)
+      .then(({data}) => {
+        const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm)).filter((film) => film.id !== id);
+        dispatch(loadSimilarFilmsData(adaptedData));
+        dispatch(setSimilarGetStatusAction(FetchStatus.Success));
+      })
+      .catch(() => {
+        dispatch(setSimilarGetStatusAction(FetchStatus.Error));
+        toast.info(ToastMessage.SOMETHING_ERROR);
+      });
   };
 
 export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
@@ -121,7 +137,7 @@ export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
       const currentFilmData = adaptServerFilmToClient(serverCurrentFilm);
       dispatch(loadCurrentFilmData(currentFilmData));
     } catch (error) {
-      toast.info(SOMETHING_ERROR_MESSAGE);
+      toast.info(ToastMessage.SOMETHING_ERROR);
     }
   };
 
@@ -132,7 +148,7 @@ export const fetchFilmReviewsAction = (id: number): ThunkActionResult =>
       const {data} = await api.get<ReviewType[]>(filmPath);
       dispatch(loadFilmReviews(data));
     } catch (error) {
-      toast.info(SOMETHING_ERROR_MESSAGE);
+      toast.info(ToastMessage.SOMETHING_ERROR);
     }
   };
 
@@ -161,3 +177,60 @@ export const postFilmComment = (id: number, payload: ReviewFormType): ThunkActio
       dispatch(isReviewsPosting(false));
     }
   };
+
+export const fetchFavoritesFilmsListAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api) => {
+    dispatch(setFavoritesGetStatusAction(FetchStatus.InProgress));
+    await api.get(ApiRoute.Favorite)
+      .then(({data}) => {
+        dispatch(loadFavoriteFilmsListAction(adaptServerFilmToClient(data)));
+        dispatch(setFavoritesGetStatusAction(FetchStatus.Success));
+      })
+      .catch(() => {
+        dispatch(setFavoritesGetStatusAction(FetchStatus.Error));
+      });
+  }
+);
+
+export const postPromoIsFavoriteAction = (id: string, status: number): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(setPostStatusAction(FetchStatus.InProgress));
+    const postPath = generatePath(`${ ApiRoute.Favorite }/${ id }/${ status }`, {id: id, status});
+    await api.post(postPath)
+      .then(({ data }) => {
+        dispatch(setPromoIsFavoriteAction(adaptServerFilmToClient(data).isFavorite));
+        dispatch(setPostStatusAction(FetchStatus.Success));
+      })
+      .then(() => {
+        dispatch(fetchFavoritesFilmsListAction());
+      })
+      .catch(() => {
+        dispatch(setPostStatusAction(FetchStatus.Error));
+        toast.error(ToastMessage.REMINDER_TO_SIGN_IN);
+      })
+      .finally(() => {
+        dispatch(setPostStatusAction(FetchStatus.Success));
+      });
+  }
+);
+
+export const postFilmIsFavoriteAction = (id: string, status: number): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(setPostStatusAction(FetchStatus.InProgress));
+    await api.post(`${ ApiRoute.Favorite }/${ id }/${ status }`)
+      .then(({data}) => {
+        dispatch(loadCurrentFilmData(adaptServerFilmToClient(data)));
+        dispatch(setPostStatusAction(FetchStatus.Success));
+      })
+      .then(() => {
+        dispatch(fetchFavoritesFilmsListAction());
+      })
+      .catch(() => {
+        dispatch(setPostStatusAction(FetchStatus.Error));
+        toast.error(ToastMessage.REMINDER_TO_SIGN_IN);
+      })
+      .finally(() => {
+        dispatch(setPostStatusAction(FetchStatus.Success));
+      });
+  }
+);

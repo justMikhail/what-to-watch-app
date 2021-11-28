@@ -6,7 +6,7 @@ import {
   requireAuthorizationStatus,
   requireLogout,
   setUserInfo,
-  setFavoriteFilmsList
+  setFavoriteFilmsListAction
 } from '../../action';
 
 const initialState: UserData = {
@@ -26,7 +26,7 @@ export const userDataReducer = createReducer(initialState, (builder) => {
     .addCase(setUserInfo, (state, action) => {
       state.userInfo = action.payload;
     })
-    .addCase(setFavoriteFilmsList, (state, action) => {
+    .addCase(setFavoriteFilmsListAction, (state, action) => {
       state.userFavoriteFilmsList = action.payload;
     });
 });
