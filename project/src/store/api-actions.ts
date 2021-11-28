@@ -34,6 +34,7 @@ import {
   setPromoIsFavoriteAction,
   //fetch Status
   setPromoGetStatusAction,
+  setFilmsGetStatusAction,
   setFilmGetStatusAction,
   setFavoritesGetStatusAction,
   setCommentsGetStatusAction,
@@ -49,7 +50,6 @@ export enum ToastMessage {
   REMINDER_TO_SIGN_IN = 'Don\'t forget to sign in.',
   POST_SUCCESS = 'Congrats! Your review has been posted! You will be redirected to the film page shortly.',
   POST_FAIL = 'Something went wrong. Comment hasn\'t been posted.',
-  POST_PROCESSING = 'Just a sec. Your review is posting now.',
   SIGN_IN_FAIL = 'Sign In Error. Please try again.',
 }
 
@@ -79,7 +79,7 @@ export const logInAction = ({login: email, password}: AuthData): ThunkActionResu
       dispatch(setUserInfo(adaptServerUserInfoToClient(data)));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
-      toast.info(ToastMessage.SIGN_IN_FAIL);
+      toast.error(ToastMessage.SIGN_IN_FAIL);
     }
   };
 
@@ -104,15 +104,21 @@ export const fetchPromoFilmDataAction = (): ThunkActionResult =>
       })
       .catch(() => {
         dispatch(setPromoGetStatusAction(FetchStatus.Error));
-        toast.info(ToastMessage.SOMETHING_ERROR);
+        toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
 
 export const fetchAllFilmsDataAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await  api.get<FilmType[]>(ApiRoute.Films);
-    const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
-    dispatch(loadAllFilmsListData(adaptedData));
+    await  api.get<FilmType[]>(ApiRoute.Films)
+      .then(({data}) => {
+        const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm));
+        dispatch(loadAllFilmsListData(adaptedData));
+      })
+      .catch(() => {
+        dispatch(setFilmsGetStatusAction(FetchStatus.Error));
+        toast.error(ToastMessage.SOMETHING_ERROR);
+      });
   };
 
 export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
@@ -126,7 +132,7 @@ export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
       })
       .catch(() => {
         dispatch(setSimilarGetStatusAction(FetchStatus.Error));
-        toast.info(ToastMessage.SOMETHING_ERROR);
+        toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
 
@@ -141,7 +147,7 @@ export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
         dispatch(setFilmGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
-        toast.info(ToastMessage.SOMETHING_ERROR);
+        toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
 
@@ -156,7 +162,7 @@ export const fetchCurrentFilmReviewsAction = (id: number): ThunkActionResult =>
       })
       .catch(() => {
         dispatch(setCommentsGetStatusAction(FetchStatus.Error));
-        toast.info(ToastMessage.SOMETHING_ERROR);
+        toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
 
