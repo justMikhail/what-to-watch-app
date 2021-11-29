@@ -1,13 +1,20 @@
+
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+
+import {fetchFavoritesFilmsListAction} from '../../../store/api-actions';
+import {getFavoritesFilmsListGetStatus} from '../../../store/redusers/fetch-status-reducer/selectors';
+import {getUserFavirteFilmsList} from '../../../store/redusers/user-data-reducer/selectors';
+import {FetchStatus} from '../../../const/fetch-status';
+
 import Header from '../../header/header';
 import Footer from '../../footer/footer';
-import {useDispatch, useSelector} from 'react-redux';
-import {getUserFavirteFilmsList} from '../../../store/redusers/user-data-reducer/selectors';
+import SmallLoader from '../../small-loader/small-loader';
 import FilmsList from '../../films-list/films-list';
-import {useEffect} from 'react';
-import {fetchFavoritesFilmsListAction} from '../../../store/api-actions';
 
 function MyListPage(): JSX.Element {
   const dispatch = useDispatch();
+  const userFavoriteFilmsListGetStatus = useSelector(getFavoritesFilmsListGetStatus);
   const userFavoriteFilmsList = useSelector(getUserFavirteFilmsList);
 
   useEffect(() => {
@@ -23,7 +30,9 @@ function MyListPage(): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList filmsForRender={userFavoriteFilmsList} />
+        {userFavoriteFilmsListGetStatus !== FetchStatus.Error
+          ? <FilmsList filmsForRender={userFavoriteFilmsList} />
+          : <SmallLoader />}
       </section>
 
       <Footer />

@@ -21,10 +21,7 @@ import FilmInfoTabs from '../../film-info-tabs/film-info-tabs';
 import {AddToMyListBurronIcon} from '../../../const/const';
 import {AuthorizationStatus} from '../../../const/authorization-status';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
-import {
-  getCurrentFilmGetStatus,
-  getSimilarFilmsListGetStatus
-} from '../../../store/redusers/fetch-status-reducer/selectors';
+import {getCurrentFilmGetStatus, getSimilarFilmsListGetStatus} from '../../../store/redusers/fetch-status-reducer/selectors';
 import {FetchStatus} from '../../../const/fetch-status';
 import SmallLoader from '../../small-loader/small-loader';
 

@@ -32,7 +32,6 @@ import {
   setCommentPostStatusAction
 } from '../store/action';
 
-
 export enum ActionType {
   //user
   RequireAuthorizationStatus = 'user/requireAuthorizationStatus',
@@ -51,7 +50,7 @@ export enum ActionType {
   PostFilmReviews = 'data/postFilmReviews',
   RedirectToRoute = 'app/redirectToRoute',
   //favorites
-  LoadUserFavoriteFilmsListAction = 'favorite/loadUserFavoriteFilms',
+  LoadUserFavoriteFilmsList = 'favorite/loadUserFavoriteFilms',
   //fetch status
   SetPromoGetStatus = 'fetchStatus/setPromoGetStatus',
   SetFilmsGetStatus = 'fetchStatus/setFilmsGetStatus',

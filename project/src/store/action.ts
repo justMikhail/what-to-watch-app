@@ -25,7 +25,7 @@ export const setUserInfo = createAction(
 );
 
 export const loadUserFavoriteFilmsListAction = createAction(
-  ActionType.LoadUserFavoriteFilmsListAction,
+  ActionType.LoadUserFavoriteFilmsList,
   (filmsData: FilmType[]) => ({
     payload: filmsData,
   }),
