@@ -3,11 +3,11 @@ import {generatePath, useParams, Link} from 'react-router-dom';
 
 import {getAllFilmsListData} from '../../../store/redusers/films-data-reducer/selectors';
 import {postCurrentFilmComment} from '../../../store/api-actions';
+import {AppRoute} from '../../../const/routs';
 
 import Header from '../../header/header';
 import FormForAddReview from '../../form-for-add-review/form-for-add-review';
 import NotFoundPage from '../not-found-page/not-found-page';
-import {AppRoute} from '../../../const/routs';
 
 const POSTER_WIDTH = 218;
 const POSTER_HEIGHT = 327;

@@ -4,11 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {FilmType} from '../../types/film-type';
 import {AppRoute} from '../../const/routs';
-
-import VideoPlayer from '../video-player/video-player';
 import {getActiveFilmId} from '../../store/redusers/films-data-reducer/selectors';
 import {setActiveFilmId} from '../../store/action';
 
+import VideoPlayer from '../video-player/video-player';
 
 type FilmCardProps = {
   film: FilmType,

@@ -13,6 +13,7 @@ import {
   fetchPromoFilmDataAction,
   postPromoIsFavoriteAction
 } from '../../../store/api-actions';
+
 import {redirectToRoute} from '../../../store/action';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
 import {getAllFilmsListGetStatus, getPromoFilmGetStatus} from '../../../store/redusers/fetch-status-reducer/selectors';
@@ -21,6 +22,7 @@ import {AuthorizationStatus} from '../../../const/authorization-status';
 import {filterFilmsBySelectedGenre} from '../../../utils/utils';
 import {AddToMyListBurronIcon} from '../../../const/const';
 import {AppRoute} from '../../../const/routs';
+import {FetchStatus} from '../../../const/fetch-status';
 
 import Header from '../../header/header';
 import Footer from '../../footer/footer';
@@ -28,7 +30,6 @@ import FilmsList from '../../films-list/films-list';
 import GenreList from '../../genre-list/genre-list';
 import PrimaryButton from '../../primary-button/primary-button';
 import Loader from '../../loader/loader';
-import {FetchStatus} from '../../../const/fetch-status';
 
 const POSTER_WIDTH = 218;
 const POSTER_HEIGHT = 327;

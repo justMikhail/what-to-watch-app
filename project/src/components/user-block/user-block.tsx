@@ -10,6 +10,7 @@ type UserBlockProps = {
 }
 
 function UserBlock(props: UserBlockProps): JSX.Element {
+
   const {
     isAuthorizedUser,
     userInfo,

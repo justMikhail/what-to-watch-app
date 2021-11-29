@@ -11,10 +11,6 @@ import {
   postFilmIsFavoriteAction
 } from '../../../store/api-actions';
 
-import Loader from '../../loader/loader';
-import FilmsList from '../../films-list/films-list';
-import Footer from '../../footer/footer';
-import Header from '../../header/header';
 import PrimaryButton from '../../primary-button/primary-button';
 import {redirectToRoute} from '../../../store/action';
 import FilmInfoTabs from '../../film-info-tabs/film-info-tabs';
@@ -23,7 +19,12 @@ import {AuthorizationStatus} from '../../../const/authorization-status';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
 import {getCurrentFilmGetStatus, getSimilarFilmsListGetStatus} from '../../../store/redusers/fetch-status-reducer/selectors';
 import {FetchStatus} from '../../../const/fetch-status';
+
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
 import SmallLoader from '../../small-loader/small-loader';
+import Loader from '../../loader/loader';
+import FilmsList from '../../films-list/films-list';
 
 type FilmPageParams = {
   id: string;
