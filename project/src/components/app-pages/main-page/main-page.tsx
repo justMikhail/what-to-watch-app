@@ -22,6 +22,7 @@ import GenreList from '../../genre-list/genre-list';
 import PrimaryButton from '../../primary-button/primary-button';
 
 function MainPage(): JSX.Element {
+
   const dispatch = useDispatch();
   const promoFilm = useSelector(getPromoFilmsData);
   const selectedGenre = useSelector(getSelectedGenre);
@@ -76,16 +77,10 @@ function MainPage(): JSX.Element {
             </div>
             <div className="film-card__desc">
 
-              <h2 className="film-card__title">
-                {promoFilm.name}
-              </h2>
+              <h2 className="film-card__title">{promoFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">
-                  {promoFilm.genre}
-                </span>
-                <span className="film-card__year">
-                  {promoFilm.released}
-                </span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">

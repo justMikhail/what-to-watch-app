@@ -4,16 +4,23 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {AppRoute} from '../../../const/routs';
 import {getCurrentFilmData, getSimilarFilmsData} from '../../../store/redusers/current-film-reducer/selectors';
-import {fetchCurrentFilmDataAction, fetchSimilarFilmsDataAction} from '../../../store/api-actions';
+
+import {
+  fetchCurrentFilmDataAction,
+  fetchSimilarFilmsDataAction,
+  postFilmIsFavoriteAction
+} from '../../../store/api-actions';
 
 import Loader from '../../loader/loader';
 import FilmsList from '../../films-list/films-list';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import NotFoundPage from '../not-found-page/not-found-page';
 import PrimaryButton from '../../primary-button/primary-button';
 import {redirectToRoute} from '../../../store/action';
 import FilmInfoTabs from '../../film-info-tabs/film-info-tabs';
+import {AddToMyListBurronIcon} from '../../../const/const';
+import {AuthorizationStatus} from '../../../const/authorization-status';
+import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
 
 type FilmPageParams = {
   id: string;
@@ -22,6 +29,7 @@ type FilmPageParams = {
 function FilmPage(): JSX.Element {
 
   const dispatch = useDispatch();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const currentFilmData = useSelector(getCurrentFilmData);
   const similarFilms = useSelector(getSimilarFilmsData);
   const params = useParams<FilmPageParams>();
@@ -39,12 +47,22 @@ function FilmPage(): JSX.Element {
   if (currentFilmData) {
     const generatedAddReviewPagePath = generatePath(AppRoute.AddReview, {id: currentFilmData.id});
 
-    const onPlayButtonClickHandler = () => {
+    const addToMyListButtonIcon = currentFilmData.isFavorite
+      ? AddToMyListBurronIcon.Favorite
+      : AddToMyListBurronIcon.NotFavorite;
+
+    const handlePlayButtonClick = () => {
+      if (authorizationStatus !== AuthorizationStatus.Auth) {
+        dispatch(redirectToRoute(AppRoute.SignIn));
+      }
       dispatch(redirectToRoute(AppRoute.Player));
     };
 
-    const onAddToMyListButtonClickHandler = () => {
-      dispatch(redirectToRoute(AppRoute.Player));
+    const handleAddToMyListButtonClick = () => {
+      if (authorizationStatus !== AuthorizationStatus.Auth) {
+        dispatch(redirectToRoute(AppRoute.SignIn));
+      }
+      dispatch(postFilmIsFavoriteAction(currentFilmData.id, currentFilmData.isFavorite));
     };
 
     const onAddReviewButtonClickHandler = () => {
@@ -77,15 +95,15 @@ function FilmPage(): JSX.Element {
 
                 <div className="film-card__buttons">
 
-                  <PrimaryButton buttonText="Play" onButtonClickHandler={onPlayButtonClickHandler}>
+                  <PrimaryButton buttonText="Play" onButtonClickHandler={handlePlayButtonClick}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s" />
                     </svg>
                   </PrimaryButton>
 
-                  <PrimaryButton buttonText="My List" onButtonClickHandler={onAddToMyListButtonClickHandler}>
+                  <PrimaryButton buttonText="My List" onButtonClickHandler={handleAddToMyListButtonClick}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#add" />
+                      <use xlinkHref={addToMyListButtonIcon} />
                     </svg>
                   </PrimaryButton>
 

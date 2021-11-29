@@ -21,19 +21,22 @@ import {saveToken, dropToken, getToken, Token} from '../services/token';
 import {saveUserAvatar, dropUserAvatar} from '../services/user-avatar';
 
 import {
+  //app
+  redirectToRoute,
+  //user
   requireAuthorizationStatus,
   setUserInfo,
   requireLogout,
+  //data
   loadPromoFilmData,
   loadAllFilmsListData,
   loadCurrentFilmData,
   loadSimilarFilmsData,
-  redirectToRoute,
   loadFilmReviews,
   //favorites
   loadUserFavoriteFilmsListAction,
   setPromoIsFavoriteAction,
-  //fetch Status
+  //fetch status
   setPromoGetStatusAction,
   setFilmsGetStatusAction,
   setFilmGetStatusAction,
@@ -232,9 +235,11 @@ export const postPromoIsFavoriteAction = (idAsNumber: number, isFavorite: undefi
   }
 );
 
-export const postFilmIsFavoriteAction = (id: string, status: number): ThunkActionResult => (
+export const postFilmIsFavoriteAction = (idAsNumber: number, isFavorite: undefined | boolean): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(setPostStatusAction(FetchStatus.InProgress));
+    const id = idAsNumber.toString();
+    const status = isFavorite ? 0 : 1;
     await api.post(`${ ApiRoute.Favorite }/${ id }/${ status }`)
       .then(({data}) => {
         dispatch(loadCurrentFilmData(adaptServerFilmToClient(data)));
