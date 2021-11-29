@@ -5,14 +5,14 @@ type FormForAddReviewType = {
   onPost: (id: number, post: { rating: number, comment: string }) => void;
 }
 
+const RATING_SCALE_STEPS_COUNT = 10;
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 400;
+
 function FormForAddReview (props: FormForAddReviewType): JSX.Element {
-  const RATING_SCALE_STEPS_COUNT = 10;
-  const MIN_REVIEW_LENGTH = 10; //todo 50
-  const MAX_REVIEW_LENGTH = 400;
 
   const [reviewText, setReviewText] = useState('');
   const [currentRating, setCurrentRating] = useState(0);
-
   const ratingScaleSteps: number[] = Array(RATING_SCALE_STEPS_COUNT).fill('').map((_, i) => i + 1).reverse();
 
   const handleReviewTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {

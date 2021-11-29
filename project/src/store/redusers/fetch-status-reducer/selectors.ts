@@ -2,8 +2,8 @@ import {NameSpace} from '../../root-reducer';
 import {State} from '../../../types/state';
 import {FetchStatus} from '../../../const/fetch-status';
 
-export const getPostStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].postStatus;
-export const getCommentPostStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].commentPostStatus;
+//export const getPostStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].postStatus;
+//export const getCommentPostStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].commentPostStatus;
 export const getPromoFilmGetStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].promoGetStatus;
 export const getAllFilmsListGetStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].filmsGetStatus;
 export const getCurrentFilmGetStatus = (state: State): FetchStatus  => state[NameSpace.fetchApiStatus].filmGetStatus;

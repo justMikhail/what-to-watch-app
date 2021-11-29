@@ -21,6 +21,12 @@ import FilmInfoTabs from '../../film-info-tabs/film-info-tabs';
 import {AddToMyListBurronIcon} from '../../../const/const';
 import {AuthorizationStatus} from '../../../const/authorization-status';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
+import {
+  getCurrentFilmGetStatus,
+  getSimilarFilmsListGetStatus
+} from '../../../store/redusers/fetch-status-reducer/selectors';
+import {FetchStatus} from '../../../const/fetch-status';
+import SmallLoader from '../../small-loader/small-loader';
 
 type FilmPageParams = {
   id: string;
@@ -30,6 +36,8 @@ function FilmPage(): JSX.Element {
 
   const dispatch = useDispatch();
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const currentFilmDataGetStatus = useSelector(getCurrentFilmGetStatus);
+  const similarFilmsListDataGetStatus = useSelector(getSimilarFilmsListGetStatus);
   const currentFilmData = useSelector(getCurrentFilmData);
   const similarFilms = useSelector(getSimilarFilmsData);
   const params = useParams<FilmPageParams>();
@@ -40,7 +48,7 @@ function FilmPage(): JSX.Element {
     dispatch(fetchSimilarFilmsDataAction(filmId));
   }, [dispatch, filmId]);
 
-  if (!currentFilmData) {
+  if (!currentFilmData || currentFilmDataGetStatus !== FetchStatus.Success) {
     return <Loader />;
   }
 
@@ -133,7 +141,9 @@ function FilmPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList filmsForRender={similarFilms} />
+          {similarFilmsListDataGetStatus !== FetchStatus.Error
+            ? <FilmsList filmsForRender={similarFilms} />
+            : <SmallLoader />}
         </section>
         <Footer />
       </div>

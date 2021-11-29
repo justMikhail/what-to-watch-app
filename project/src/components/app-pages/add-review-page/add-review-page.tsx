@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import {getAllFilmsData} from '../../../store/redusers/films-data-reducer/selectors';
+import {getAllFilmsListData} from '../../../store/redusers/films-data-reducer/selectors';
 import {postCurrentFilmComment} from '../../../store/api-actions';
 
 import Header from '../../header/header';
@@ -9,12 +9,13 @@ import FormForAddReview from '../../form-for-add-review/form-for-add-review';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function AddReviewPage(): JSX.Element {
+
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const filmId = parseInt(params.id, 10);
-  const currentFilm = useSelector(getAllFilmsData).find((filmItem) => filmItem.id === filmId);
+  const currentFilm = useSelector(getAllFilmsListData).find((filmItem) => filmItem.id === filmId);
 
-  const onPostHandler = (currentFilmId: number, reviewData: {rating: number, comment: string}) => {
+  const handlePostHandler = (currentFilmId: number, reviewData: {rating: number, comment: string}) => {
     dispatch(postCurrentFilmComment(currentFilmId, reviewData));
   };
 
@@ -48,7 +49,7 @@ function AddReviewPage(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <FormForAddReview currentFilmId={currentFilm.id} onPost={onPostHandler} />
+        <FormForAddReview currentFilmId={currentFilm.id} onPost={handlePostHandler} />
       </div>
     </section>
   );
