@@ -21,3 +21,9 @@ export const filmTemplate = {
   videoLink: 'http://media.xiph.org/mango/tears_of_steel_1080p.webm',
   previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
 };
+
+export enum AddToMyListBurronIcon {
+  Favorite = '#in-list',
+  NotFavorite = '#add',
+}
+

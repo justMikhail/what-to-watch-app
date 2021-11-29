@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
@@ -5,19 +6,20 @@ import {
   getPromoFilmsData,
   getSelectedGenre
 } from '../../../store/redusers/films-data-reducer/selectors';
-import {filterFilmsBySelectedGenre} from '../../../utils/utils';
 
-import FilmsList from '../../films-list/films-list';
-import GenreList from '../../genre-list/genre-list';
-import Footer from '../../footer/footer';
-import Header from '../../header/header';
-import {useEffect} from 'react';
 import {fetchPromoFilmDataAction, postPromoIsFavoriteAction} from '../../../store/api-actions';
-import PrimaryButton from '../../primary-button/primary-button';
 import {redirectToRoute} from '../../../store/action';
 import {AppRoute} from '../../../const/routs';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
 import {AuthorizationStatus} from '../../../const/authorization-status';
+import {filterFilmsBySelectedGenre} from '../../../utils/utils';
+import {AddToMyListBurronIcon} from '../../../const/const';
+
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
+import FilmsList from '../../films-list/films-list';
+import GenreList from '../../genre-list/genre-list';
+import PrimaryButton from '../../primary-button/primary-button';
 
 function MainPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -26,6 +28,9 @@ function MainPage(): JSX.Element {
   const filmForRender = filterFilmsBySelectedGenre(useSelector(getAllFilmsData), selectedGenre);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isFavorite = promoFilm.isFavorite;
+  const addToMyListButtonIcon = isFavorite
+    ? AddToMyListBurronIcon.Favorite
+    : AddToMyListBurronIcon.NotFavorite;
 
   const handlePlayButtonClick = () => {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
@@ -93,7 +98,7 @@ function MainPage(): JSX.Element {
 
                 <PrimaryButton buttonText="My List" onButtonClickHandler={handleAddToMyListButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#add" />
+                    <use xlinkHref={addToMyListButtonIcon} />
                   </svg>
                 </PrimaryButton>
 

@@ -215,6 +215,7 @@ export const postPromoIsFavoriteAction = (idAsNumber: number, isFavorite: undefi
       })
       .then(() => {
         dispatch(fetchFavoritesFilmsListAction());
+        dispatch(fetchPromoFilmDataAction());
       })
       .catch(() => {
         dispatch(setPostStatusAction(FetchStatus.Error));
