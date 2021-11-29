@@ -59,7 +59,8 @@ function FilmPage(): JSX.Element {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       dispatch(redirectToRoute(AppRoute.SignIn));
     }
-    dispatch(redirectToRoute(AppRoute.Player));
+    const generatedPlayerPath = generatePath(AppRoute.Player, {id: currentFilmData.id});
+    dispatch(redirectToRoute(generatedPlayerPath));
   };
 
   const handleAddToMyListButtonClick = () => {

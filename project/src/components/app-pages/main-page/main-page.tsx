@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import {generatePath} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
@@ -46,8 +47,9 @@ function MainPage(): JSX.Element {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       dispatch(redirectToRoute(AppRoute.SignIn));
     }
+    const generatedPlayerPath = generatePath(AppRoute.Player, {id: promoFilmData.id});
     dispatch(fetchCurrentFilmDataAction(promoFilmData.id));
-    dispatch(redirectToRoute(AppRoute.Player));
+    dispatch(redirectToRoute(generatedPlayerPath));
   };
 
   const handleAddToMyListButtonClick = () => {

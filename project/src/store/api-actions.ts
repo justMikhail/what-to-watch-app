@@ -155,6 +155,7 @@ export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
         dispatch(setCurrentFilmDataGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
+        dispatch(setCurrentFilmDataGetStatusAction(FetchStatus.Error));
         toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };

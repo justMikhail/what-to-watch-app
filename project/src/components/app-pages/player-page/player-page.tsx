@@ -108,6 +108,7 @@ function PlayerScreen(): JSX.Element {
     setCurrentTimePercentage(videoCurrentPercentage);
     progressElement.value = videoCurrentTime;
   };
+  console.log(duration);
 
   return (
     <div className="player">
