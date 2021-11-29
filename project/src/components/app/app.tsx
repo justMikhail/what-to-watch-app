@@ -27,7 +27,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthStatusAction());
     dispatch(fetchAllFilmsDataAction());
-  }, []);
+  }, [dispatch]);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

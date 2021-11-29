@@ -5,7 +5,7 @@ import {AuthorizationStatus} from '../const/authorization-status';
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-export const getGenresFromFilmList = (allFilms: FilmType[]) => {
+export const getGenresFromFilmList = (allFilms: FilmType[]): string[] => {
   const maxGenresCount = 10;
   const allGenres = [Genre.DefaultGenre, ...new Set(allFilms.map((film) => film.genre))];
 
