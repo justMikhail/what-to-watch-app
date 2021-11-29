@@ -18,6 +18,7 @@ import {AuthData} from '../types/auth-data';
 import {ReviewFormType, ReviewType} from '../types/review-type';
 
 import {saveToken, dropToken, getToken, Token} from '../services/token';
+import {saveUserAvatar, dropUserAvatar} from '../services/user-avatar';
 
 import {
   requireAuthorizationStatus,
@@ -72,15 +73,18 @@ export const checkAuthStatusAction = (): ThunkActionResult =>
 
 export const logInAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const {data} = await api.post<{token: Token}>(ApiRoute.Login, {email, password});
-      saveToken(data.token);
-      dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
-      dispatch(setUserInfo(adaptServerUserInfoToClient(data)));
-      dispatch(redirectToRoute(AppRoute.Main));
-    } catch (error) {
-      toast.error(ToastMessage.SIGN_IN_FAIL);
-    }
+    await api.post(ApiRoute.Login, {email, password})
+      .then(({data}) => {
+        const adaptedData = adaptServerUserInfoToClient(data);
+        saveToken(data.token);
+        saveUserAvatar(adaptedData.avatarUrl);
+        dispatch(requireAuthorizationStatus(AuthorizationStatus.Auth));
+        dispatch(setUserInfo(adaptedData));
+        dispatch(redirectToRoute(AppRoute.Main));
+      })
+      .catch(() => {
+        toast.error(ToastMessage.SIGN_IN_FAIL);
+      });
   };
 
 
@@ -88,6 +92,7 @@ export const logOutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     api.delete(ApiRoute.Logout);
     dropToken();
+    dropUserAvatar();
     dispatch(requireAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(setUserInfo(null));
     dispatch(requireLogout());
