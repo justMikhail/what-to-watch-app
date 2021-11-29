@@ -4,8 +4,8 @@ import {getUserAvatar} from '../../services/user-avatar';
 type UserBlockProps = {
   isAuthorizedUser: boolean;
   userInfo: UserInfoType;
-  onLogInButtonClickHandler: () => void;
-  onLogOutButtonClickHandler: () => void;
+  handleLogInButtonClick: () => void;
+  handleLogOutButtonClick: () => void;
   onUserAvatarButtonClick: () => void;
 }
 
@@ -13,8 +13,8 @@ function UserBlock(props: UserBlockProps): JSX.Element {
   const {
     isAuthorizedUser,
     userInfo,
-    onLogInButtonClickHandler,
-    onLogOutButtonClickHandler,
+    handleLogInButtonClick,
+    handleLogOutButtonClick,
     onUserAvatarButtonClick,
   } = props;
 
@@ -36,16 +36,16 @@ function UserBlock(props: UserBlockProps): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a href="#" className="user-block__link" onClick={onLogOutButtonClickHandler}>
+        <span className="user-block__link" onClick={handleLogOutButtonClick}>
           Sign out
-        </a>
+        </span>
       </li>
     </ul>
   );
 
   const forNoAuthorizedUserView = (
     <div className="user-block">
-      <span className="user-block__link" onClick={onLogInButtonClickHandler}>
+      <span className="user-block__link" onClick={handleLogInButtonClick}>
         Sign in
       </span>
     </div>

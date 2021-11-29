@@ -42,8 +42,8 @@ function Header(props: HeaderProps): JSX.Element {
       <UserBlock
         isAuthorizedUser={isAuthorizedUser}
         userInfo={userInfo}
-        onLogInButtonClickHandler={HandleLogInButtonClick}
-        onLogOutButtonClickHandler={HandleLogOutButtonClick}
+        handleLogInButtonClick={HandleLogInButtonClick}
+        handleLogOutButtonClick={HandleLogOutButtonClick}
         onUserAvatarButtonClick={handleUserAvatarClick}
       />
     </header>

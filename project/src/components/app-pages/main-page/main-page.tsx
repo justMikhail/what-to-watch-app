@@ -101,13 +101,13 @@ function MainPage(): JSX.Element {
 
               <div className="film-card__buttons">
 
-                <PrimaryButton buttonText="Play" onButtonClickHandler={handlePlayButtonClick}>
+                <PrimaryButton buttonText="Play" handleButtonClick={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s" />
                   </svg>
                 </PrimaryButton>
 
-                <PrimaryButton buttonText="My List" onButtonClickHandler={handleAddToMyListButtonClick}>
+                <PrimaryButton buttonText="My List" handleButtonClick={handleAddToMyListButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref={addToMyListButtonIcon} />
                   </svg>

@@ -2,7 +2,7 @@ import {Fragment, ChangeEvent, useState} from 'react';
 
 type FormForAddReviewType = {
   currentFilmId: number;
-  onPost: (id: number, post: { rating: number, comment: string }) => void;
+  handlePost: (id: number, post: { rating: number, comment: string }) => void;
 }
 
 const RATING_SCALE_STEPS_COUNT = 10;
@@ -24,7 +24,7 @@ function FormForAddReview (props: FormForAddReviewType): JSX.Element {
   };
 
   const handlePost = () => {
-    props.onPost(props.currentFilmId, { rating: currentRating, comment: reviewText });
+    props.handlePost(props.currentFilmId, { rating: currentRating, comment: reviewText });
   };
 
   return (

@@ -11,7 +11,7 @@ function FilmsList(props: FilmListType): JSX.Element {
   const {filmsForRender} = props;
   const [visibleFilms, setVisibleFilms] = useState(8);
 
-  const onShowMoreButtonClickHandler = () => {
+  const handleShowMoreButtonClick = () => {
     setVisibleFilms((prevValue) => prevValue + 8);
   };
 
@@ -32,7 +32,7 @@ function FilmsList(props: FilmListType): JSX.Element {
           <button
             className="catalog__button"
             type="button"
-            onClick={onShowMoreButtonClickHandler}
+            onClick={handleShowMoreButtonClick}
           >
             Show more
           </button>

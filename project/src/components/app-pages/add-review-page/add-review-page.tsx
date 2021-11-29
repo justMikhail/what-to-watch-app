@@ -16,7 +16,7 @@ function AddReviewPage(): JSX.Element {
   const filmId = parseInt(params.id, 10);
   const currentFilm = useSelector(getAllFilmsListData).find((filmItem) => filmItem.id === filmId);
 
-  const handlePostHandler = (currentFilmId: number, reviewData: {rating: number, comment: string}) => {
+  const handlePost = (currentFilmId: number, reviewData: {rating: number, comment: string}) => {
     dispatch(postCurrentFilmComment(currentFilmId, reviewData));
   };
 
@@ -65,7 +65,7 @@ function AddReviewPage(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <FormForAddReview currentFilmId={currentFilm.id} onPost={handlePostHandler} />
+        <FormForAddReview currentFilmId={currentFilm.id} handlePost={handlePost} />
       </div>
     </section>
   );

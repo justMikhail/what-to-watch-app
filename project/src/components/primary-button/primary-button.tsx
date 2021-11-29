@@ -1,14 +1,14 @@
 type PrimaryButtonType = {
   children?: React.ReactNode;
   buttonText: string;
-  onButtonClickHandler: () => void;
+  handleButtonClick: () => void;
 }
 
 function PrimaryButton(props: PrimaryButtonType): JSX.Element {
-  const {children, buttonText, onButtonClickHandler} = props ;
+  const {children, buttonText, handleButtonClick} = props ;
 
   return  (
-    <button className="btn btn--play film-card__button" type="button" onClick={onButtonClickHandler}>
+    <button className="btn btn--play film-card__button" type="button" onClick={handleButtonClick}>
       {children}
       <span>
         {buttonText}

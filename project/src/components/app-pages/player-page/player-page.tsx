@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchCurrentFilmDataAction} from '../../../store/api-actions';
 import {getCurrentFilmData} from '../../../store/redusers/current-film-reducer/selectors';
-import {formatToEclepsedTime} from '../../../utils/date';
+import {formatToEclipsedTime} from '../../../utils/date';
 
 import Loader from '../../loader/loader';
 import PlayIcon from './play-icon/play-icon';
@@ -58,7 +58,7 @@ function PlayerScreen(): JSX.Element {
   }, [filmId, currentFilmData?.id, dispatch]);
 
   useEffect(() => {
-    if (!videoElement) {
+    if (!videoElement || !videoElement.duration) {
       return;
     }
 
@@ -73,16 +73,16 @@ function PlayerScreen(): JSX.Element {
     const videoDuration = Math.round(videoElement.duration);
 
     setTimeDuration(() => ({
-      duration: videoDuration,
-      elapsedTime: videoDuration,
+      duration: videoDuration || duration,
+      elapsedTime: videoDuration || elapsedTime,
     }));
-  }, [isLoading, videoElement]);
+  }, [isLoading, videoElement, duration, elapsedTime]);
 
   if (!currentFilmData) {
     return <Loader />;
   }
 
-  const elapsedVideoTime = !isLoading ? formatToEclepsedTime(elapsedTime) : LOADING_PLACEHOLDER;
+  const elapsedVideoTime = !isLoading ? formatToEclipsedTime(elapsedTime) : LOADING_PLACEHOLDER;
 
   const handleVideoPlayClick = () => {
     setIsPlaying((prevState) => !prevState);
@@ -108,7 +108,6 @@ function PlayerScreen(): JSX.Element {
     setCurrentTimePercentage(videoCurrentPercentage);
     progressElement.value = videoCurrentTime;
   };
-  console.log(duration);
 
   return (
     <div className="player">
