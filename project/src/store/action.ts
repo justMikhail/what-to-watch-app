@@ -102,28 +102,28 @@ export const setCommentPostStatusAction = createAction(
   }),
 );
 
-export const setPromoGetStatusAction = createAction(
+export const setPromoFilmDataGetStatusAction = createAction(
   ActionType.SetPromoGetStatus,
   (status: FetchStatus) => ({
     payload: status,
   }),
 );
 
-export const setFilmsGetStatusAction = createAction(
+export const setAllFilmsListDataGetStatusAction = createAction(
   ActionType.SetFilmsGetStatus,
   (status: FetchStatus) => ({
     payload: status,
   }),
 );
 
-export const setFilmGetStatusAction = createAction(
+export const setCurrentFilmDataGetStatusAction = createAction(
   ActionType.SetFilmGetStatus,
   (status: FetchStatus) => ({
     payload: status,
   }),
 );
 
-export const setSimilarGetStatusAction = createAction(
+export const setSimilarFilmsListDataGetStatusAction = createAction(
   ActionType.SetSimilarGetStatus,
   (getStatus: FetchStatus) => ({
     payload: getStatus,
@@ -137,14 +137,14 @@ export const setCommentsGetStatusAction = createAction(
   }),
 );
 
-export const setFavoritesGetStatusAction = createAction(
+export const setUserFavoriteFilmsListGetStatusAction = createAction(
   ActionType.SetFavoritesGetStatus,
   (status: FetchStatus) => ({
     payload: status,
   }),
 );
 
-export const setPromoIsFavoriteAction = createAction(
+export const setFilmIsFavoriteAction = createAction(
   ActionType.SetPromoIsFavorite,
   (status: boolean) => ({
     payload: status,

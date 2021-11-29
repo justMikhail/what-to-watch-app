@@ -35,14 +35,14 @@ import {
   loadFilmReviews,
   //favorites
   loadUserFavoriteFilmsListAction,
-  setPromoIsFavoriteAction,
+  setFilmIsFavoriteAction,
   //fetch status
-  setPromoGetStatusAction,
-  setFilmsGetStatusAction,
-  setFilmGetStatusAction,
-  setFavoritesGetStatusAction,
+  setPromoFilmDataGetStatusAction,
+  setAllFilmsListDataGetStatusAction,
+  setCurrentFilmDataGetStatusAction,
+  setUserFavoriteFilmsListGetStatusAction,
   setCommentsGetStatusAction,
-  setSimilarGetStatusAction,
+  setSimilarFilmsListDataGetStatusAction,
   setCommentPostStatusAction,
   setPostStatusAction
 } from './action';
@@ -103,15 +103,15 @@ export const logOutAction = (): ThunkActionResult =>
 
 export const fetchPromoFilmDataAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    dispatch(setPromoGetStatusAction(FetchStatus.InProgress));
+    dispatch(setPromoFilmDataGetStatusAction(FetchStatus.InProgress));
     await  api.get(ApiRoute.Promo)
       .then(({data}) => {
         const adaptedData = adaptServerFilmToClient(data);
         dispatch(loadPromoFilmData(adaptedData));
-        dispatch(setPromoGetStatusAction(FetchStatus.Success));
+        dispatch(setPromoFilmDataGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
-        dispatch(setPromoGetStatusAction(FetchStatus.Error));
+        dispatch(setPromoFilmDataGetStatusAction(FetchStatus.Error));
         toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
@@ -124,7 +124,7 @@ export const fetchAllFilmsDataAction = (): ThunkActionResult =>
         dispatch(loadAllFilmsListData(adaptedData));
       })
       .catch(() => {
-        dispatch(setFilmsGetStatusAction(FetchStatus.Error));
+        dispatch(setAllFilmsListDataGetStatusAction(FetchStatus.Error));
         toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
@@ -136,23 +136,23 @@ export const fetchSimilarFilmsDataAction = (id: number): ThunkActionResult =>
       .then(({data}) => {
         const adaptedData = data.map((serverFilm) => adaptServerFilmsToClient(serverFilm)).filter((film) => film.id !== id);
         dispatch(loadSimilarFilmsData(adaptedData));
-        dispatch(setSimilarGetStatusAction(FetchStatus.Success));
+        dispatch(setSimilarFilmsListDataGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
-        dispatch(setSimilarGetStatusAction(FetchStatus.Error));
+        dispatch(setSimilarFilmsListDataGetStatusAction(FetchStatus.Error));
         toast.error(ToastMessage.SOMETHING_ERROR);
       });
   };
 
 export const fetchCurrentFilmDataAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    dispatch(setFilmGetStatusAction(FetchStatus.InProgress));
+    dispatch(setCurrentFilmDataGetStatusAction(FetchStatus.InProgress));
     const filmPath = generatePath(AppRoute.Film, {id});
     await api.get(filmPath)
       .then(({data}) => {
         const currentFilmData = adaptServerFilmToClient(data);
         dispatch(loadCurrentFilmData(currentFilmData));
-        dispatch(setFilmGetStatusAction(FetchStatus.Success));
+        dispatch(setCurrentFilmDataGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
         toast.error(ToastMessage.SOMETHING_ERROR);
@@ -198,14 +198,14 @@ export const postCurrentFilmComment = (id: number, payload: ReviewFormType): Thu
 
 export const fetchFavoritesFilmsListAction = (): ThunkActionResult => (
   async (dispatch, _getState, api) => {
-    dispatch(setFavoritesGetStatusAction(FetchStatus.InProgress));
+    dispatch(setUserFavoriteFilmsListGetStatusAction(FetchStatus.InProgress));
     await api.get(ApiRoute.Favorite)
       .then(({data}) => {
         dispatch(loadUserFavoriteFilmsListAction(adaptServerFilmToClient(data)));
-        dispatch(setFavoritesGetStatusAction(FetchStatus.Success));
+        dispatch(setUserFavoriteFilmsListGetStatusAction(FetchStatus.Success));
       })
       .catch(() => {
-        dispatch(setFavoritesGetStatusAction(FetchStatus.Error));
+        dispatch(setUserFavoriteFilmsListGetStatusAction(FetchStatus.Error));
       });
   }
 );
@@ -218,7 +218,7 @@ export const postPromoIsFavoriteAction = (idAsNumber: number, isFavorite: undefi
     const postPath = generatePath(`${ ApiRoute.Favorite }/${ id }/${ status }`, {id: id, status});
     await api.post(postPath)
       .then(({ data }) => {
-        dispatch(setPromoIsFavoriteAction(adaptServerFilmToClient(data).isFavorite));
+        dispatch(setFilmIsFavoriteAction(adaptServerFilmToClient(data).isFavorite));
         dispatch(setPostStatusAction(FetchStatus.Success));
       })
       .then(() => {

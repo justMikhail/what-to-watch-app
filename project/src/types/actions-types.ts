@@ -10,7 +10,7 @@ import {
   requireLogout,
   //promo
   loadPromoFilmData,
-  setPromoIsFavoriteAction,
+  setFilmIsFavoriteAction,
   //data
   loadAllFilmsListData,
   loadCurrentFilmData,
@@ -22,12 +22,12 @@ import {
   //favorites
   loadUserFavoriteFilmsListAction,
   //fetch Status
-  setPromoGetStatusAction,
-  setFilmsGetStatusAction,
-  setFilmGetStatusAction,
-  setSimilarGetStatusAction,
+  setPromoFilmDataGetStatusAction,
+  setAllFilmsListDataGetStatusAction,
+  setCurrentFilmDataGetStatusAction,
+  setSimilarFilmsListDataGetStatusAction,
   setCommentsGetStatusAction,
-  setFavoritesGetStatusAction,
+  setUserFavoriteFilmsListGetStatusAction,
   setPostStatusAction,
   setCommentPostStatusAction
 } from '../store/action';
@@ -47,7 +47,6 @@ export enum ActionType {
   LoadFilmReview = 'data/loadFilmReview',
   SelectGenre = 'data/selectGenre',
   SetActiveFilmId = 'data/setActiveFilmId',
-  PostFilmReviews = 'data/postFilmReviews',
   RedirectToRoute = 'app/redirectToRoute',
   //favorites
   LoadUserFavoriteFilmsList = 'favorite/loadUserFavoriteFilms',
@@ -79,14 +78,14 @@ export type Actions =
   | ReturnType<typeof redirectToRoute>
   //favorites
   | ReturnType<typeof loadUserFavoriteFilmsListAction>
-  | ReturnType<typeof setPromoIsFavoriteAction>
+  | ReturnType<typeof setFilmIsFavoriteAction>
   //fetch status
-  | ReturnType<typeof setPromoGetStatusAction>
-  | ReturnType<typeof setFilmsGetStatusAction>
-  | ReturnType<typeof setFilmGetStatusAction>
-  | ReturnType<typeof setSimilarGetStatusAction>
+  | ReturnType<typeof setPromoFilmDataGetStatusAction>
+  | ReturnType<typeof setAllFilmsListDataGetStatusAction>
+  | ReturnType<typeof setCurrentFilmDataGetStatusAction>
+  | ReturnType<typeof setSimilarFilmsListDataGetStatusAction>
   | ReturnType<typeof setCommentsGetStatusAction>
-  | ReturnType<typeof setFavoritesGetStatusAction>
+  | ReturnType<typeof setUserFavoriteFilmsListGetStatusAction>
   | ReturnType<typeof setPostStatusAction>
   | ReturnType<typeof setCommentPostStatusAction>
 
