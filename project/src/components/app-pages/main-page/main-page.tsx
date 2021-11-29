@@ -7,7 +7,11 @@ import {
   getSelectedGenre
 } from '../../../store/redusers/films-data-reducer/selectors';
 
-import {fetchPromoFilmDataAction, postPromoIsFavoriteAction} from '../../../store/api-actions';
+import {
+  fetchCurrentFilmDataAction,
+  fetchPromoFilmDataAction,
+  postPromoIsFavoriteAction
+} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
 import {getAuthorizationStatus} from '../../../store/redusers/user-data-reducer/selectors';
 import {getAllFilmsListGetStatus, getPromoFilmGetStatus} from '../../../store/redusers/fetch-status-reducer/selectors';
@@ -42,6 +46,7 @@ function MainPage(): JSX.Element {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       dispatch(redirectToRoute(AppRoute.SignIn));
     }
+    dispatch(fetchCurrentFilmDataAction(promoFilmData.id));
     dispatch(redirectToRoute(AppRoute.Player));
   };
 

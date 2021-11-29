@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchCurrentFilmDataAction} from '../../../store/api-actions';
 import {getCurrentFilmData} from '../../../store/redusers/current-film-reducer/selectors';
-import {formatTimeUntilTheEnd} from '../../../utils/date';
+import {formatToEclepsedTime} from '../../../utils/date';
 
 import Loader from '../../loader/loader';
 import PlayIcon from './play-icon/play-icon';
@@ -19,7 +19,7 @@ type PlayerPageParams = {
 }
 
 function PlayerScreen(): JSX.Element {
-  const film = useSelector(getCurrentFilmData);
+  const currentFilmData = useSelector(getCurrentFilmData);
   const params = useParams<PlayerPageParams>();
   const filmId = parseInt(params.id, 10);
 
@@ -51,12 +51,11 @@ function PlayerScreen(): JSX.Element {
   };
 
   useEffect(() => {
-    if (film?.id === +filmId) {
+    if (currentFilmData?.id === filmId) {
       return;
     }
-
     dispatch(fetchCurrentFilmDataAction(filmId));
-  }, [filmId, film?.id, dispatch]);
+  }, [filmId, currentFilmData?.id, dispatch]);
 
   useEffect(() => {
     if (!videoElement) {
@@ -79,11 +78,11 @@ function PlayerScreen(): JSX.Element {
     }));
   }, [isLoading, videoElement]);
 
-  if (!film) {
+  if (!currentFilmData) {
     return <Loader />;
   }
 
-  const elapsedVideoTime = !isLoading ? formatTimeUntilTheEnd(elapsedTime) : LOADING_PLACEHOLDER;
+  const elapsedVideoTime = !isLoading ? formatToEclepsedTime(elapsedTime) : LOADING_PLACEHOLDER;
 
   const handleVideoPlayClick = () => {
     setIsPlaying((prevState) => !prevState);
@@ -114,9 +113,9 @@ function PlayerScreen(): JSX.Element {
     <div className="player">
       {isLoading && <Loader />}
       <video
-        src={film.videoLink}
+        src={currentFilmData.videoLink}
         className="player__video"
-        poster={film.posterImage}
+        poster={currentFilmData.posterImage}
         ref={videoRef}
         onLoadedData={handleVideoLoaded}
         onTimeUpdate={handleProgressPosition}
@@ -129,7 +128,7 @@ function PlayerScreen(): JSX.Element {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" max={duration} ref={progressRef}></progress>
+            <progress className="player__progress" max={duration} ref={progressRef} />
             <div className="player__toggler" style={{left: `${currentTimePercentage}%`}}>
               Toggler
             </div>
@@ -142,7 +141,7 @@ function PlayerScreen(): JSX.Element {
             {isPlaying ? <PauseIcon /> : <PlayIcon />}
           </button>
 
-          <div className="player__name">{film.name}</div>
+          <div className="player__name">{currentFilmData.name}</div>
 
           <button type="button" className="player__full-screen" onClick={handleFullScreenClick}>
             <FullScreenIcon />

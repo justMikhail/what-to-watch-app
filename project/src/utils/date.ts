@@ -11,7 +11,7 @@ export const formatFilmDuration = (period: number): string => dayjs
   .duration(period, 'minutes')
   .format('HH[h] mm[m]');
 
-export const formatTimeUntilTheEnd = (time: number): string => {
+export const formatToEclepsedTime = (time: number): string => {
   const format = time >= HOUR_IN_MS
     ? '-HH:mm:ss'
     : '-mm:ss';
