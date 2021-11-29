@@ -30,6 +30,9 @@ import PrimaryButton from '../../primary-button/primary-button';
 import Loader from '../../loader/loader';
 import {FetchStatus} from '../../../const/fetch-status';
 
+const POSTER_WIDTH = 218;
+const POSTER_HEIGHT = 327;
+
 function MainPage(): JSX.Element {
 
   const dispatch = useDispatch();
@@ -87,8 +90,8 @@ function MainPage(): JSX.Element {
               <img
                 src={promoFilmData.posterImage}
                 alt={promoFilmData.name}
-                width={218}
-                height={327}
+                width={POSTER_WIDTH}
+                height={POSTER_HEIGHT}
               />
             </div>
             <div className="film-card__desc">

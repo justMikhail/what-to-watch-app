@@ -29,6 +29,9 @@ type FilmPageParams = {
   id: string;
 }
 
+const POSTER_WIDTH = 218;
+const POSTER_HEIGHT = 327;
+
 function FilmPage(): JSX.Element {
 
   const dispatch = useDispatch();
@@ -126,8 +129,8 @@ function FilmPage(): JSX.Element {
               <img
                 src={currentFilmData.posterImage}
                 alt={currentFilmData.name}
-                width={218}
-                height={327}
+                width={POSTER_WIDTH}
+                height={POSTER_HEIGHT}
               />
             </div>
 

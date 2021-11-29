@@ -9,6 +9,9 @@ import FormForAddReview from '../../form-for-add-review/form-for-add-review';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {AppRoute} from '../../../const/routs';
 
+const POSTER_WIDTH = 218;
+const POSTER_HEIGHT = 327;
+
 function AddReviewPage(): JSX.Element {
 
   const dispatch = useDispatch();
@@ -58,8 +61,8 @@ function AddReviewPage(): JSX.Element {
           <img
             src={currentFilm.posterImage}
             alt={currentFilm.name}
-            width={218}
-            height={327}
+            width={POSTER_WIDTH}
+            height={POSTER_HEIGHT}
           />
         </div>
       </div>

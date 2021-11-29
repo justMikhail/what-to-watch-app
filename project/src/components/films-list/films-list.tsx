@@ -7,12 +7,14 @@ type FilmListType = {
   filmsForRender: FilmType[];
 }
 
+const FILMS_COUNT_PER_SHOWING = 8;
+
 function FilmsList(props: FilmListType): JSX.Element {
   const {filmsForRender} = props;
-  const [visibleFilms, setVisibleFilms] = useState(8);
+  const [visibleFilms, setVisibleFilms] = useState(FILMS_COUNT_PER_SHOWING);
 
   const handleShowMoreButtonClick = () => {
-    setVisibleFilms((prevValue) => prevValue + 8);
+    setVisibleFilms((prevValue) => prevValue + FILMS_COUNT_PER_SHOWING);
   };
 
   return (
