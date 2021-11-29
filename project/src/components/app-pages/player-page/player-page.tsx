@@ -113,12 +113,12 @@ function PlayerScreen(): JSX.Element {
     <div className="player">
       {isLoading && <Loader />}
       <video
-        src={currentFilmData.videoLink}
         className="player__video"
+        src={currentFilmData.videoLink}
         poster={currentFilmData.posterImage}
-        ref={videoRef}
         onLoadedData={handleVideoLoaded}
         onTimeUpdate={handleProgressPosition}
+        ref={videoRef}
       />
 
       <button type="button" className="player__exit" onClick={handleVideoExitButtonClick}>

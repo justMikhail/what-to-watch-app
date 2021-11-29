@@ -33,13 +33,14 @@ import {
 } from '../store/action';
 
 export enum ActionType {
+  //app
+  RedirectToRoute = 'app/redirectToRoute',
   //user
   RequireAuthorizationStatus = 'user/requireAuthorizationStatus',
   SetUserInfo = 'user/setUserInfo',
   RequireLogout = 'user/requireLogout',
   //promo
   LoadPromoFilmData = 'promo/loadPromoFilmData',
-  SetPromoIsFavorite = 'promo/setPromoIsFavorite',
   //data
   LoadAllFilmsData = 'data/loadAllFilmsData',
   LoadCurrentFilmData = 'data/loadCurrentFilmData',
@@ -47,21 +48,23 @@ export enum ActionType {
   LoadFilmReview = 'data/loadFilmReview',
   SelectGenre = 'data/selectGenre',
   SetActiveFilmId = 'data/setActiveFilmId',
-  RedirectToRoute = 'app/redirectToRoute',
   //favorites
   LoadUserFavoriteFilmsList = 'favorite/loadUserFavoriteFilms',
+  SetFilmIsFavorite = 'promo/setFilmIsFavorite',
   //fetch status
-  SetPromoGetStatus = 'fetchStatus/setPromoGetStatus',
-  SetFilmsGetStatus = 'fetchStatus/setFilmsGetStatus',
-  SetFilmGetStatus = 'fetchStatus/setFilmGetStatus',
-  SetSimilarGetStatus = 'fetchStatus/setSimilarGetStatus',
+  SetPromoFilmGetStatus = 'fetchStatus/setPromoFilmGetStatus',
+  SetAllFilmsListGetStatus = 'fetchStatus/setAllFilmsListGetStatus',
+  SetCurrentFilmGetStatus = 'fetchStatus/setCurrentFilmGetStatus',
+  SetSimilarFilmsListGetStatus = 'fetchStatus/setSimilarFilmsListGetStatus',
   SetCommentsGetStatus = 'fetchStatus/setCommentsGetStatus',
-  SetFavoritesGetStatus = 'fetchStatus/setFavoritesGetStatus',
+  SetFavoriteFilmsListGetStatus = 'fetchStatus/setFavoriteFilmsListGetStatus',
   SetPostStatus = 'fetchStatus/setPostStatus',
   SetCommentPostStatus = 'fetchStatus/setCommentPostStatus',
 }
 
 export type Actions =
+  //app
+  | ReturnType<typeof redirectToRoute>
   //user
   | ReturnType<typeof requireAuthorizationStatus>
   | ReturnType<typeof setUserInfo>
@@ -75,7 +78,6 @@ export type Actions =
   | ReturnType<typeof loadFilmReviews>
   | ReturnType<typeof selectGenre>
   | ReturnType<typeof setActiveFilmId>
-  | ReturnType<typeof redirectToRoute>
   //favorites
   | ReturnType<typeof loadUserFavoriteFilmsListAction>
   | ReturnType<typeof setFilmIsFavoriteAction>
