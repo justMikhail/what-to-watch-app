@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {generatePath, useParams, Link} from 'react-router-dom';
 
 import {getAllFilmsListData} from '../../../store/redusers/films-data-reducer/selectors';
 import {postCurrentFilmComment} from '../../../store/api-actions';
@@ -7,6 +7,7 @@ import {postCurrentFilmComment} from '../../../store/api-actions';
 import Header from '../../header/header';
 import FormForAddReview from '../../form-for-add-review/form-for-add-review';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {AppRoute} from '../../../const/routs';
 
 function AddReviewPage(): JSX.Element {
 
@@ -23,6 +24,8 @@ function AddReviewPage(): JSX.Element {
     return <NotFoundPage />;
   }
 
+  const generatedFilmPagePath = generatePath(AppRoute.Film, {id: currentFilm.id});
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -36,7 +39,20 @@ function AddReviewPage(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header />
+        <Header>
+          <nav className="breadcrumbs">
+            <ul className="breadcrumbs__list">
+              <li className="breadcrumbs__item">
+                <Link to={generatedFilmPagePath} className="breadcrumbs__link">
+                  {currentFilm.name}
+                </Link>
+              </li>
+              <li className="breadcrumbs__item">
+                <span className="breadcrumbs__link">Add review</span>
+              </li>
+            </ul>
+          </nav>
+        </Header>
 
         <div className="film-card__poster film-card__poster--small">
           <img
